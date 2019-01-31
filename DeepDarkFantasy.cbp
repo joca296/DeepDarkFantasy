@@ -95,6 +95,9 @@
 		<Unit filename="C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/creature/Creature.h">
 			<Option target="DeepDarkFantasy"/>
 		</Unit>
+		<Unit filename="C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/functions.h">
+			<Option target="DeepDarkFantasy"/>
+		</Unit>
 		<Unit filename="C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/rapidjson/allocators.h">
 			<Option target="DeepDarkFantasy"/>
 		</Unit>

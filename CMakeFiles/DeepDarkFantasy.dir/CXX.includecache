@@ -9,9 +9,25 @@
 C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/creature/Creature.h
 iostream
 -
+fstream
+-
+../include/functions.h
+C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/functions.h
+../include/rapidjson/rapidjson.h
+C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/rapidjson/rapidjson.h
+
+C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/functions.h
+cstdlib
+-
+iostream
+-
+fstream
+-
 sstream
 -
-../include/rapidjson/rapidjson.h
+ctime
+-
+rapidjson/rapidjson.h
 C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/rapidjson/rapidjson.h
 
 C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/rapidjson/allocators.h
@@ -201,6 +217,8 @@ include/rapidjson/document.h
 C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/rapidjson/document.h
 creature/Creature.h
 C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/creature/Creature.h
+include/functions.h
+C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/functions.h
 
 include/rapidjson/error/error.h
 ../rapidjson.h

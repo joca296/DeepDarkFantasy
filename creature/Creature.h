@@ -1,5 +1,6 @@
 #include <iostream>
-#include <sstream>
+#include <fstream>
+#include "../include/functions.h"
 #include "../include/rapidjson/rapidjson.h"
 
 using namespace std;
@@ -104,7 +105,7 @@ public:
 
     void action(Creature tar){}
     string toString(){
-        string s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof);
+        string s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
         return s;
     }
 
