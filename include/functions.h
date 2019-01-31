@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
-#include "rapidjson/rapidjson.h"
+#include "rapidjson/document.h"
 
 using namespace std;
 using namespace rapidjson;

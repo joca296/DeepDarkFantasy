@@ -1,8 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "include/rapidjson/document.h"
-#include "creature/Creature.h"
+#include "include/Creature.h"
 #include "include/functions.h"
 
 using namespace std;

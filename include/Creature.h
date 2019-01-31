@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "../include/functions.h"
-#include "../include/rapidjson/rapidjson.h"
+#include "../include/rapidjson/document.h"
 
 using namespace std;
 using namespace rapidjson;
