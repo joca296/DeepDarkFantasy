@@ -11,5 +11,6 @@ using namespace rapidjson;
 int main(){
     Monster x("goblin");
     cout<<x.toString();
-    cout<<dRoll();
+    cout<<dRoll()<<endl;
+    system("PAUSE");
 }
