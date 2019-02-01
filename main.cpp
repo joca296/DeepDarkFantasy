@@ -11,5 +11,8 @@ int main(){
     srand(time(NULL));
     Monster x("goblin");
     cout<<x.toString()<<endl;
+    for(int i=0; i<10; i++){
+        int a = x.action(&x);
+    }
     system("PAUSE");
 }

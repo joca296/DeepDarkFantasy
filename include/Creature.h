@@ -105,12 +105,11 @@ public:
         Creature::CHA = CHA;
     }
 
-    virtual void action(Creature* tar)=0;
+    virtual int action(Creature* tar)=0;
     string toString(){
         string s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
         return s;
     }
-
 };
 
 class Monster: public Creature{
@@ -133,7 +132,7 @@ public:
             document.Parse(json);
 
             //setting base monster values
-            this->setName(document["name"].GetString());
+            this->setName(document["name"].GetString()+to_string(rand()%100));
             this->setMaxHP(document["hp"].GetInt());
             this->setCurHP(document["hp"].GetInt());
             this->setAc(document["ac"].GetInt());
@@ -166,7 +165,7 @@ public:
         f.close();
     }
 
-    void action (Creature* tar) override{
+    int action (Creature* tar) override{
         int choice = randomWeight(numberOfActions,actionWeight);
         string actionName = actionList[choice];
         string path = "items_and_spells\\"+actionName+".json";
@@ -181,10 +180,49 @@ public:
             Document document;
             document.Parse(json);
 
+            //determining type of attack
+            string type = document["type"].GetString();
+            switch (type[0]){
+                case 'w': {
+                    int damage = document["damage"].GetInt(), atcRoll, bonus;
+                    bool finesse = document["finesse"].GetBool();
 
+                    //determining attack roll
+                    if(finesse) bonus=this->getProf()+this->getDEX();
+                    else bonus=this->getProf()+this->getSTR();
+                    atcRoll = dRoll()+bonus;
+
+                    //attack success
+                    if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
+                        int dmgRoll = dRoll(damage,0) + ( finesse? this->getDEX():this->getSTR() );
+                        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0);
+                        tar->setCurHP(tar->getCurHP()-dmgRoll);
+
+                        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
+                        if(actionName[0]=='a') cout<<"an ";
+                        else cout<<"a ";
+                        cout<<actionName<<"."<<endl;
+
+                        if(tar->getCurHP() <= 0){
+                            cout<<tar->getName()<<" died."<<endl;
+                            return 1; //something died
+                        }
+                        else return 2; //something didn't die
+                    }
+
+                    //attack failed
+                    else {
+                        cout<<this->getName()<<" missed."<<endl;
+                        return 0;
+                    }
+                }
+                break;
+                case 's': /*wip*/ break;
+            }
         }
         else cout<<"File not open"<<endl;
         f.close();
+        return -1; //File error
     }
 };
 
