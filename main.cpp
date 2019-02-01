@@ -12,7 +12,7 @@ int main(){
     Monster x("goblin");
     cout<<x.toString()<<endl;
     for(int i=0; i<10; i++){
-        int a = x.action(&x);
+        int a = x.actionExec(&x,x.actionChoose());
     }
     system("PAUSE");
 }
