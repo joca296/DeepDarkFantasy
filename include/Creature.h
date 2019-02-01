@@ -1,7 +1,9 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "../include/functions.h"
 #include "../include/rapidjson/document.h"
+#define maxMonsterActions 10
 
 using namespace std;
 using namespace rapidjson;
@@ -103,7 +105,7 @@ public:
         Creature::CHA = CHA;
     }
 
-    void action(Creature tar){}
+    virtual void action(Creature* tar)=0;
     string toString(){
         string s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
         return s;
@@ -112,18 +114,25 @@ public:
 };
 
 class Monster: public Creature{
+private:
+    string actionList[maxMonsterActions];
+    int actionWeight[maxMonsterActions], numberOfActions;
+
 public:
     Monster(string name){
         ifstream f;
         string path = "monsters\\"+name+".json";
         f.open(path);
         if(f.is_open()){
+            //converting file to a char* to parse file
             stringstream stream;
             stream<<f.rdbuf();
             string str = stream.str();
             const char* json = str.c_str();
             Document document;
             document.Parse(json);
+
+            //setting base monster values
             this->setName(document["name"].GetString());
             this->setMaxHP(document["hp"].GetInt());
             this->setCurHP(document["hp"].GetInt());
@@ -135,6 +144,44 @@ public:
             this->setINT(document["int"].GetInt());
             this->setWIS(document["wis"].GetInt());
             this->setCHA(document["cha"].GetInt());
+
+            //setting actions
+            const Value& a = document["actionList"];
+            numberOfActions=0;
+            int j=0;
+            for (SizeType i = 0; i < a.Size(); i++){
+                actionList[j]=a[i].GetString();
+                j++;
+                numberOfActions++;
+            }
+
+            const Value& b = document["actionWeight"];
+            j=0;
+            for (SizeType i = 0; i < b.Size(); i++){
+                actionWeight[j]=b[i].GetInt();
+                j++;
+            }
+        }
+        else cout<<"File not open"<<endl;
+        f.close();
+    }
+
+    void action (Creature* tar) override{
+        int choice = randomWeight(numberOfActions,actionWeight);
+        string actionName = actionList[choice];
+        string path = "items_and_spells\\"+actionName+".json";
+        ifstream f;
+        f.open(path);
+        if(f.is_open()){
+            //converting file to a char* to parse file
+            stringstream stream;
+            stream<<f.rdbuf();
+            string str = stream.str();
+            const char* json = str.c_str();
+            Document document;
+            document.Parse(json);
+
+
         }
         else cout<<"File not open"<<endl;
         f.close();

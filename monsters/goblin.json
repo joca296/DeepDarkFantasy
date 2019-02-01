@@ -8,5 +8,7 @@
   "con" : 0,
   "int" : 0,
   "wis" : -1,
-  "cha" : -1
+  "cha" : -1,
+  "actionList" : ["schimitar","shortbow"],
+  "actionWeight" : [60, 40]
 }

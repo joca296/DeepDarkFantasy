@@ -8,8 +8,8 @@ using namespace std;
 using namespace rapidjson;
 
 int main(){
+    srand(time(NULL));
     Monster x("goblin");
-    cout<<x.toString();
-    cout<<dRoll()<<endl;
+    cout<<x.toString()<<endl;
     system("PAUSE");
 }

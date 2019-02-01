@@ -11,6 +11,8 @@ iostream
 -
 fstream
 -
+sstream
+-
 ../include/functions.h
 C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/functions.h
 ../include/rapidjson/document.h
