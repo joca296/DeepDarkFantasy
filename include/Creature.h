@@ -201,7 +201,9 @@ public:
                         cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
                         if(actionName[0]=='a') cout<<"an ";
                         else cout<<"a ";
-                        cout<<actionName<<"."<<endl;
+                        cout<<actionName<<".";
+                        if(atcRoll-bonus == 20) cout<<" (crit)";
+                        cout<<endl;
 
                         if(tar->getCurHP() <= 0){
                             cout<<tar->getName()<<" died."<<endl;
