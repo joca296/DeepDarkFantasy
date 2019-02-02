@@ -42,33 +42,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/include/Creature.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="740">
-              <caret line="251" column="17" selection-start-line="251" selection-start-column="17" selection-end-line="251" selection-end-column="17" />
+            <state relative-caret-position="-1096">
+              <caret line="175" column="42" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="42" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#403#454#0" />
-                <element signature="e#460#524#0" />
-                <element signature="e#530#578#0" />
-                <element signature="e#584#645#0" />
-                <element signature="e#651#701#0" />
-                <element signature="e#707#772#0" />
-                <element signature="e#778#828#0" />
-                <element signature="e#834#899#0" />
-                <element signature="e#905#949#0" />
-                <element signature="e#955#1008#0" />
-                <element signature="e#1014#1060#0" />
-                <element signature="e#1066#1123#0" />
-                <element signature="e#1129#1175#0" />
-                <element signature="e#1181#1238#0" />
-                <element signature="e#1244#1290#0" />
-                <element signature="e#1296#1353#0" />
-                <element signature="e#1359#1405#0" />
-                <element signature="e#1411#1468#0" />
-                <element signature="e#1474#1520#0" />
-                <element signature="e#1526#1583#0" />
-                <element signature="e#1589#1635#0" />
-                <element signature="e#1641#1698#0" />
-                <element signature="e#1741#1805#0" />
               </folding>
             </state>
           </provider>
@@ -77,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+            <state relative-caret-position="238">
+              <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -113,10 +90,13 @@
         <option value="$PROJECT_DIR$/monsters/package.json" />
         <option value="$PROJECT_DIR$/include/dRoll.h" />
         <option value="$PROJECT_DIR$/creature/Creature.h" />
-        <option value="$PROJECT_DIR$/items_and_spells/schimitar.json" />
         <option value="$PROJECT_DIR$/monsters/goblin.json" />
         <option value="$PROJECT_DIR$/include/functions.h" />
         <option value="$PROJECT_DIR$/items_and_spells/shortbow.json" />
+        <option value="$PROJECT_DIR$/heroClasses/barbarian.json" />
+        <option value="$PROJECT_DIR$/items_and_spells/schimitar.json" />
+        <option value="$PROJECT_DIR$/items_and_spells/greataxe.json" />
+        <option value="$PROJECT_DIR$/items_and_spells/javelin.json" />
         <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/include/Creature.h" />
       </list>
@@ -140,6 +120,11 @@
             <path>
               <item name="DeepDarkFantasy" type="b2602c69:ProjectViewProjectNode" />
               <item name="DeepDarkFantasy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DeepDarkFantasy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DeepDarkFantasy" type="462c0819:PsiDirectoryNode" />
+              <item name="heroClasses" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DeepDarkFantasy" type="b2602c69:ProjectViewProjectNode" />
@@ -217,19 +202,20 @@
       <workItem from="1549036983171" duration="4299000" />
       <workItem from="1549054195354" duration="75000" />
       <workItem from="1549057421360" duration="1865000" />
+      <workItem from="1549098333159" duration="711000" />
+      <workItem from="1549100080533" duration="1338000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27298000" />
+    <option name="totallyTimeSpent" value="29347000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.29317698" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.29957357" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32981783" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.32981783" />
@@ -348,27 +334,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/include/dRoll.h" />
-    <entry file="file://$PROJECT_DIR$/monsters/goblin.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/items_and_spells/shortbow.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/items_and_spells/schimitar.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/functions.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -381,10 +346,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/monsters/goblin.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/heroClasses/barbarian.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/items_and_spells/schimitar.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/items_and_spells/shortbow.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="2" lean-forward="true" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/items_and_spells/greataxe.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/items_and_spells/javelin.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        <state relative-caret-position="238">
+          <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -393,33 +400,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/include/Creature.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="740">
-          <caret line="251" column="17" selection-start-line="251" selection-start-column="17" selection-end-line="251" selection-end-column="17" />
+        <state relative-caret-position="-1096">
+          <caret line="175" column="42" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="42" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#403#454#0" />
-            <element signature="e#460#524#0" />
-            <element signature="e#530#578#0" />
-            <element signature="e#584#645#0" />
-            <element signature="e#651#701#0" />
-            <element signature="e#707#772#0" />
-            <element signature="e#778#828#0" />
-            <element signature="e#834#899#0" />
-            <element signature="e#905#949#0" />
-            <element signature="e#955#1008#0" />
-            <element signature="e#1014#1060#0" />
-            <element signature="e#1066#1123#0" />
-            <element signature="e#1129#1175#0" />
-            <element signature="e#1181#1238#0" />
-            <element signature="e#1244#1290#0" />
-            <element signature="e#1296#1353#0" />
-            <element signature="e#1359#1405#0" />
-            <element signature="e#1411#1468#0" />
-            <element signature="e#1474#1520#0" />
-            <element signature="e#1526#1583#0" />
-            <element signature="e#1589#1635#0" />
-            <element signature="e#1641#1698#0" />
-            <element signature="e#1741#1805#0" />
           </folding>
         </state>
       </provider>

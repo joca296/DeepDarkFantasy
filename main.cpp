@@ -9,10 +9,11 @@ using namespace rapidjson;
 
 int main(){
     srand(time(NULL));
-    Monster x("goblin");
-    cout<<x.toString()<<endl;
-    for(int i=0; i<10; i++){
-        int a = x.actionExec(&x,x.actionChoose());
-    }
+    Hero x("barbarian");
+    Monster y("goblin");
+    for(int i=0; i<3; i++)
+        if(x.actionExec(&y,x.actionChoose()) == 1 || y.actionExec(&x,y.actionChoose()) == 1) break;
+    cout<<x.toString();
+    cout<<y.toString();
     system("PAUSE");
 }

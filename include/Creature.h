@@ -172,7 +172,9 @@ public:
     };
 
     string toString(){
-        string s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
+        string s;
+        if(curHP<=0) s = name+" is dead.\n";
+        else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
         return s;
     }
 };
@@ -249,10 +251,49 @@ public:
             Document document;
             document.Parse(json);
 
-            //wip
+            //setting hero name
+            string name;
+            cout<<"Name your character."<<endl;
+            cin>>name;
+
+            //setting base hero values
+            this->setName(name);
+            this->setMaxHP(document["hp"].GetInt());
+            this->setCurHP(document["hp"].GetInt());
+            this->setAc(document["ac"].GetInt());
+            this->setProf(document["prof"].GetInt());
+            this->setSTR(document["str"].GetInt());
+            this->setDEX(document["dex"].GetInt());
+            this->setCON(document["con"].GetInt());
+            this->setINT(document["int"].GetInt());
+            this->setWIS(document["wis"].GetInt());
+            this->setCHA(document["cha"].GetInt());
+
+            //setting actions
+            const Value& a = document["actionList"];
+            numberOfActions=0;
+            int j=0;
+            for (SizeType i = 0; i < a.Size(); i++){
+                actionList[j]=a[i].GetString();
+                j++;
+                numberOfActions++;
+            }
         }
         else cout<<"File not open"<<endl;
         f.close();
+    }
+
+    string actionChoose() override{
+        while(1){
+            cout<<"Choose an action:"<<endl;
+            for(int i=0;i<numberOfActions;i++)
+                cout<<i<<". "<<actionList[i]<<endl;
+            int x;
+            cin>>x;
+            if(x<0 || x>=numberOfActions)
+                cout<<"Invalid input. Try again";
+            else return actionList[x];
+        }
     }
 };
 

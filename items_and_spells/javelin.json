@@ -1,6 +1,6 @@
 {
   "type" : "w",
-  "finesse" : true,
+  "finesse" : false,
   "damage" : 6,
   "diceCount" : 1
 }
