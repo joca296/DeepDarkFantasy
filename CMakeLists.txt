@@ -46,4 +46,4 @@ add_executable(DeepDarkFantasy
         include/rapidjson/stream.h
         include/rapidjson/stringbuffer.h
         include/rapidjson/writer.h
-        main.cpp creature/Creature.h include/functions.h)
+        main.cpp include/Creature.h include/functions.h)

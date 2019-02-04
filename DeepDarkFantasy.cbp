@@ -92,7 +92,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/creature/Creature.h">
+		<Unit filename="C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/Creature.h">
 			<Option target="DeepDarkFantasy"/>
 		</Unit>
 		<Unit filename="C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/include/functions.h">
