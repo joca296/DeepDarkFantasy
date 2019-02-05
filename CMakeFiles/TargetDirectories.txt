@@ -1,3 +1,0 @@
-C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/CMakeFiles/DeepDarkFantasy.dir
-C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/CMakeFiles/edit_cache.dir
-C:/Users/Jovan/Documents/GitHub/DeepDarkFantasy/CMakeFiles/rebuild_cache.dir
