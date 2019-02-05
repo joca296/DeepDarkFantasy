@@ -1,0 +1,14 @@
+{
+  "name" : "goblin",
+  "hp" : 7,
+  "ac" : 15,
+  "prof" : 2,
+  "str" : -1,
+  "dex" : 2,
+  "con" : 0,
+  "int" : 0,
+  "wis" : -1,
+  "cha" : -1,
+  "actionList" : ["schimitar","shortbow"],
+  "actionWeight" : [60, 40]
+}
