@@ -109,6 +109,7 @@ public:
     }
 
     virtual string actionChoose()=0;
+    virtual int isHero()=0;
 
     int actionExec(Creature* tar, string actionName){
         string path = "items_and_spells\\"+actionName+".json";
@@ -228,7 +229,9 @@ public:
         else cout<<"File not open"<<endl;
         f.close();
     }
-
+    int isHero() override{
+        return 0;
+    }
     string actionChoose() override{
         int choice = randomWeight(numberOfActions,actionWeight);
         string actionName = actionList[choice];
@@ -284,7 +287,9 @@ public:
         else cout<<"File not open"<<endl;
         f.close();
     }
-
+    int isHero() override{
+        return 1;
+    }
     string actionChoose() override{
         while(1){
             cout<<"Choose an action:"<<endl;
