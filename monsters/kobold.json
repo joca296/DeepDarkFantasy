@@ -1,0 +1,14 @@
+{
+  "name" : "Kobold",
+  "hp" : 5,
+  "ac" : 12,
+  "prof" : 2,
+  "str" : -2,
+  "dex" : 2,
+  "con" : -1,
+  "int" : -1,
+  "wis" : -2,
+  "cha" : -1,
+  "actionList" : ["dagger","sling"],
+  "actionWeight" : [100]
+}

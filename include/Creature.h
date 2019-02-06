@@ -192,6 +192,7 @@ public:
             string str = stream.str();
             const char* json = str.c_str();
             Document document;
+
             document.Parse(json);
 
             //setting base monster values
@@ -233,8 +234,9 @@ public:
         string actionName = actionList[choice];
         return actionName;
     }
-
+    Monster(){};
 };
+
 
 class Hero : public Creature{
 public:

@@ -1,34 +1,14 @@
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
-#include "include/Creature.h"
-#include "include/functions.h"
-#include "include/cList.h"
-#include "include/combat.h"
-
-using namespace std;
-using namespace rapidjson;
-
-/*int combat(Creature *h,string MonsterList[],int n,string combatText="combatText WIP");*/
-
-int main(){
-    srand(time(NULL));
-    Hero x("barbarian");
-    string s[]={"kobold","goblin","twigBlight"};
-    combat(&x,s,3);
-    /*Monster y("kobold");
-    for(int i=0; i<3; i++)
-        if(x.actionExec(&y,x.actionChoose()) == 1 || y.actionExec(&x,y.actionChoose()) == 1) break;
-    cout<<x.toString();
-    cout<<y.toString();*/
+#include "Creature.h"
+#include "functions.h"
 
 
+#ifndef COMBAT_H_INCLUDED
+#define COMBAT_H_INCLUDED
+
+int combat(Creature *h,string MonsterList[],int n,string combatText="combatText WIP");
 
 
-}
-
-/*int combat(Creature *h,string MonsterList[],int n,string combatText)
+int combat(Creature *h,string MonsterList[],int n,string combatText)
 {
     struct cList* head=NULL;
     struct cList* ptr=head;
@@ -57,11 +37,11 @@ int main(){
 
     int targetChoiceInt=1;
     int targetChoiceIntMax=n+1;
-    while(true)
+    while(true/*fightOverFlag==false*/)
     {
         ptr=head;
         ptr2=head;
-        while(ptr!=NULL )
+        while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
             ptr2=head;
             if(ptr->CPL->getName()==cp[n]->getName() && ptr->CPL->getCurHP()>0)
@@ -96,7 +76,7 @@ int main(){
                         head=NULL;
                         return 1;
                     }
-                    //prune list here
+                    //prune list here?
 
                 }
             }
@@ -108,7 +88,7 @@ int main(){
                        delete_cList(head);
                        head=NULL;
                        return -1;
-                       //prune list here
+
                    }
 
             }
@@ -117,7 +97,7 @@ int main(){
     }
     delete_cList(head);
     return 0;
-}*/
+}
 /*bool combatOverCheck(head,creature* p)
 {
 
@@ -128,3 +108,5 @@ int main(){
     }
     return true;
 }*/
+
+#endif // COMBAT_H_INCLUDED
