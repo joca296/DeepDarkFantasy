@@ -211,40 +211,38 @@ room* room::enterRoom(Creature *p)
         basic_choise_text(p);
         cin>>choice_container;
     switch(choice_container){
-    case 1:
-
-            if(current_tries_remain>0){
-                if(this->basic_checks(p)!=5)current_tries_remain--;
-            }
+        case 1:
+            if(current_tries_remain>0)
+                if(this->basic_checks(p)!=5) current_tries_remain--;
             else cout<<"You have no further interest in this place "<<endl;
-        break;
-    case 2:
-        cout<<"Special Interactions WIP "<<endl;
-        break;
-    case 3:
-        cout<<"Open Inventory WIP "<<endl;
-        break;
-    case 4:
-        cout<<"Open Spellbook WIP"<<endl;
-        break;
-    case 5:
-        cout<<"Open Stats WIP "<<endl;
-        cout<<p->toString()<<endl;
-        break;
-    case 6:
-        cout<<"EXIT WIP"<<endl;
-        eChoice=exit_room();
-        if(!eChoice.empty())
-        {
-            nRoom=new room(eChoice);
-            return nRoom;
+            break;
+        case 2:
+            cout<<"Special Interactions WIP "<<endl;
+            break;
+        case 3:
+            cout<<"Open Inventory WIP "<<endl;
+            break;
+        case 4:
+            cout<<"Open Spellbook WIP"<<endl;
+            break;
+        case 5:
+            cout<<"Open Stats WIP "<<endl;
+            cout<<p->toString()<<endl;
+            break;
+        case 6:
+            cout<<"EXIT WIP"<<endl;
+            eChoice=exit_room();
+            if(!eChoice.empty())
+            {
+                nRoom=new room(eChoice);
+                return nRoom;
+            }
+            break;
+        default:
+            cout<<"INVALID INPUT "<<endl;
         }
-        break;
-    default:
-        cout<<"INVALID INPUT "<<endl;
     }
-    }
-    return 0;
+    //return 0;
 }
 
 void room::basic_choise_text(Creature *p)
@@ -372,14 +370,7 @@ room::room(string name)
         string path = "rooms\\"+name+".json";
         f.open(path);
         if(f.is_open()){
-            //converting file to a char* to parse file
-            stringstream stream;
-            stream<<f.rdbuf();
-            string str = stream.str();
-            const char* json = str.c_str();
-            Document document;
-
-            document.Parse(json);
+            Document document = parseFromFile(&f);
 
             this->set_room_name(document["name"].GetString());
             this->setDC_Perception(document["DC_Perception"].GetInt());

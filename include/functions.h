@@ -15,6 +15,7 @@ using namespace rapidjson;
 
 int dRoll(int sideNum = 20, int adv = 0,int dNum = 1);
 int randomWeight(int numberOfChoices, int choiceWeight[]);
+Document parseFromFile(ifstream *f);
 
 //bool combatOverCheck(head,creature* p);
 
@@ -80,6 +81,17 @@ int randomWeight(int numberOfChoices, int choiceWeight[]){
         rnd -= choiceWeight[i];
     }
     assert(!"should never get here");
+}
+
+Document parseFromFile(ifstream *f){
+    //converting file to a char* to parse file
+    stringstream stream;
+    stream<<f->rdbuf();
+    string str = stream.str();
+    const char* json = str.c_str();
+    Document document;
+    document.Parse(json);
+    return document;
 }
 
 #endif // DEEPDARKFANTASY_FUNCTIONS_H

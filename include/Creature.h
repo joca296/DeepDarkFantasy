@@ -116,13 +116,7 @@ public:
         ifstream f;
         f.open(path);
         if(f.is_open()){
-            //converting file to a char* to parse file
-            stringstream stream;
-            stream<<f.rdbuf();
-            string str = stream.str();
-            const char* json = str.c_str();
-            Document document;
-            document.Parse(json);
+            Document document = parseFromFile(&f);
 
             //determining type of attack
             string type = document["type"].GetString();
@@ -187,14 +181,7 @@ public:
         string path = "monsters\\"+name+".json";
         f.open(path);
         if(f.is_open()){
-            //converting file to a char* to parse file
-            stringstream stream;
-            stream<<f.rdbuf();
-            string str = stream.str();
-            const char* json = str.c_str();
-            Document document;
-
-            document.Parse(json);
+            Document document = parseFromFile(&f);
 
             //setting base monster values
             this->setName(document["name"].GetString()+to_string(rand()%100));
@@ -248,13 +235,7 @@ public:
         string path = "heroClasses\\"+name+".json";
         f.open(path);
         if(f.is_open()){
-            //converting file to a char* to parse file
-            stringstream stream;
-            stream<<f.rdbuf();
-            string str = stream.str();
-            const char* json = str.c_str();
-            Document document;
-            document.Parse(json);
+            Document document = parseFromFile(&f);
 
             //setting hero name
             string name;
