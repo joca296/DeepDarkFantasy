@@ -409,13 +409,14 @@ room::room(string name)
              const Value& b = document["monsters"];              //setting monsters
             j=0;
             this->numberOfMonsters=0;
-            for (SizeType i = 0; i < b.Size(); i++){
-                this->room_monsters[j]=b[i].GetString();
-                cout<<this->room_monsters[j]<<endl;
-                j++;
-                this->numberOfMonsters++;
+            if(b.Size()>0){
+                for (SizeType i = 0; i < b.Size(); i++){
+                    this->room_monsters[j]=b[i].GetString();
+                    //cout<<this->room_monsters[j]<<endl;
+                    j++;
+                    this->numberOfMonsters++;
+                }
             }
-
 
 }
 else cout<<"room file not open"<<endl;
