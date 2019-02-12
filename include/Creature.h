@@ -139,7 +139,7 @@ public:
                     //attack success
                     if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
                         int dmgRoll = dRoll(damage,0) + ( finesse? this->getDEX():this->getSTR() );
-                        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0);
+                        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,document["diceCount"].GetInt());
                         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
                         //print
