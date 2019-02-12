@@ -44,7 +44,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
             ptr2=head;
-            if(ptr->CPL->getName()==cp[n]->getName() && ptr->CPL->getCurHP()>0)
+            if(ptr->CPL->isHero()==1 && ptr->CPL->getCurHP()>0) //If players turn
             {
 
                 cout<<"Choose your target (sorted by initiative) "<<endl;
