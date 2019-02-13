@@ -10,6 +10,7 @@
 #define MAX_CONNECTED_ROOMS 5
 #define MAX_ROOM_MONSTERS 10
 
+
 //cross-platform support
 #ifdef __linux__
 #define PLATFORM_NAME "linux"

@@ -65,11 +65,12 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                 {
                     ptr2=ptr2->next;
                 }
-                if(cp[n]->actionExec(ptr2->CPL,cp[n]->actionChoose())==1)
+                if(ptr->CPL->actionExec(ptr2->CPL,ptr->CPL->actionChoose())==1)
                 {
                     //cout<<ptr2->CPL->getName()<<" died"<<endl;
                     head=delete_node(head,ptr2);
                     dcount++;
+                    targetChoiceIntMax--;
                     if(dcount==n)
                     {
                         cout<<"BATTLE WON!!!"<<endl;
@@ -77,7 +78,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                         head=NULL;
                         return 1;
                     }
-                    //prune list here?
+
 
                 }
             }
