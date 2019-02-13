@@ -101,7 +101,7 @@ public:
     virtual int isHero()=0;
     int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
     int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
-    int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
+    int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature* tar, string actionName);
     int actionExec(Creature* tar, string actionName);
     string toString();
 };
@@ -332,7 +332,7 @@ int Creature::actionExec(Creature* tar, string actionName){
         switch (type[0]){
             case 'w': return this->execWeaponAttack(document["damage"].GetInt(),document["diceCount"].GetInt(),document["finesse"].GetBool(),tar,actionName);
             case 's': return this->execSpellAttackST(document["damage"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
-            case 'h': return this->execHeal(document["healing"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
+            case 'h': return this->execHeal(document["healing"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToHealing"].GetBool(),tar,actionName);
         }
     }
     else cout<<"action file not open"<<endl;
