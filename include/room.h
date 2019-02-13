@@ -35,6 +35,7 @@ private:
     int numberOfConnections,numberOfMonsters;
     string Perception_SUCC_text, Investigation_SUCC_text, Survival_SUCC_text, Arcana_SUCC_text, Perception_FAIL_text, Investigation_FAIL_text, Survival_FAIL_text, Arcana_FAIL_text;
     string room_name,room_desc,combat_desc;
+    bool roomEnteredFlag=false;
 public:
 
     void set_room_desc(string s)
@@ -181,6 +182,14 @@ public:
     {
         return Arcana_FAIL_text;
     }
+    void setRoomEnteredFlag(bool f)
+    {
+        roomEnteredFlag=f;
+    }
+    bool getRoomEnteredFlag()
+    {
+        return roomEnteredFlag;
+    }
 
 
     room* enterRoom(Creature *p);
@@ -202,15 +211,20 @@ public:
 room* room::enterRoom(Creature *p)
 {
     room *nRoom=NULL;
-
-    if(numberOfMonsters>0)
+    string eChoice;
+    if(this->getRoomEnteredFlag()==false)
     {
-        if(combat(p,room_monsters,numberOfMonsters,combat_desc)==-1) return nRoom;
+        setRoomEnteredFlag(true);
+
+        if(numberOfMonsters>0)
+        {
+            if(combat(p,room_monsters,numberOfMonsters,combat_desc)==-1) return nRoom;
+        }
     }
     int current_tries_remain = this->getMaxRollsAllowed();
 
     int choice_container;
-    string eChoice;
+
     //bool choice_made_flag=false;;
     cout<<this->get_room_desc()<<endl;
     while(true)
@@ -218,40 +232,44 @@ room* room::enterRoom(Creature *p)
         //choice_made_flag=false;
         basic_choise_text(p);
         cin>>choice_container;
-    switch(choice_container){
-        case 1:
-            if(current_tries_remain>0){
-                if(this->basic_checks(p)!=5) current_tries_remain--;
-            }
-            else cout<<"You have no further interest in this place "<<endl;
-            break;
-        case 2:
-            cout<<"Special Interactions WIP "<<endl;
-            break;
-        case 3:
-            cout<<"Open Inventory WIP "<<endl;
-            break;
-        case 4:
-            cout<<"Open Spellbook WIP"<<endl;
-            break;
-        case 5:
-            cout<<"Open Stats WIP "<<endl;
-            cout<<p->toString()<<endl;
-            break;
-        case 6:
-            cout<<"EXIT WIP"<<endl;
-            eChoice=exit_room();
-            if(!eChoice.empty())
-            {
-                nRoom=new room(eChoice);
-                return nRoom;
-            }
-            break;
-        default:
-            cout<<"INVALID INPUT "<<endl;
+        switch(choice_container)
+        {
+            case 1:
+                    if(current_tries_remain>0)
+                    {
+                        if(this->basic_checks(p)!=5) current_tries_remain--;
+                    }
+                else cout<<"You have no further interest in this place "<<endl;
+                break;
+            case 2:
+                cout<<"Special Interactions WIP "<<endl;
+                break;
+            case 3:
+                cout<<"Open Inventory WIP "<<endl;
+                break;
+            case 4:
+                cout<<"Open Spellbook WIP"<<endl;
+                break;
+            case 5:
+                cout<<"Open Stats WIP "<<endl;
+                cout<<p->toString()<<endl;
+                break;
+            case 6:
+                cout<<"EXIT WIP"<<endl;
+                eChoice=exit_room();
+                if(!eChoice.empty())
+                {
+                    nRoom=new room(eChoice);
+                    return nRoom;
+                }
+                break;
+            default:
+                cout<<"INVALID INPUT "<<endl;
         }
     }
-    //return 0;
+
+
+
 }
 
 void room::basic_choise_text(Creature *p)
