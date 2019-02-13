@@ -17,7 +17,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
     Creature *cp[n+1];
     int initiative[n+1];
     int dcount=0;
-    //cout<<combatText<<endl;
+    cout<<combatText<<endl;
     for(int i=0; i<n; i++)
     {
         cp[i]=new Monster(MonsterList[i]);
