@@ -16,6 +16,7 @@ struct cList* prefix_node(int n, Creature *c,struct cList *head);
 struct cList* insert_node(int n, Creature *c,struct cList *head);
 struct cList* swap_cLists(struct cList ptr1, struct Clist ptr2);
 void delete_cList(struct cList *head);
+struct cList *delete_node(struct cList *head,struct cList *TBD);
 void sortList(struct cList *head);
 void swapNode(struct cList *a, struct cList *b);
 int displayList(struct cList* head);
@@ -161,6 +162,28 @@ void sortList(struct cList *head)
     while (swapped);
 };
 
+struct cList *delete_node(struct cList *head,struct cList *TBD)
+{
+    struct cList *prev,*ptr;
+    ptr=head;
+    prev=ptr;
+    while(ptr!=TBD)
+    {
+        prev=ptr;
+        ptr=ptr->next;
+    }
+    if(ptr==head)
+    {
+       ptr=ptr->next;
+       cout<<"Deleting "<<head->CPL->getName()<<endl;
+       delete head;
+       return ptr;
+    }
+    if(prev!=ptr)prev->next=ptr->next;
+    cout<<"Deleting "<<ptr->CPL->getName()<<endl;
+    delete ptr;
+    return head;
+}
 
 
 #endif // CLIST_H_INCLUDED

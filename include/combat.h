@@ -68,6 +68,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                 if(cp[n]->actionExec(ptr2->CPL,cp[n]->actionChoose())==1)
                 {
                     //cout<<ptr2->CPL->getName()<<" died"<<endl;
+                    delete_node(head,ptr2);
                     dcount++;
                     if(dcount==n)
                     {
