@@ -28,164 +28,86 @@ public:
     string actionList[maxMonsterActions];
     int actionWeight[maxMonsterActions], numberOfActions;
 
+    //getters and setters
     string getName() const {
         return name;
     }
-
     void setName(string name) {
         Creature::name = name;
     }
-
     int getProf() const {
         return prof;
     }
-
     void setProf(int prof) {
         Creature::prof = prof;
     }
-
     int getMaxHP() const {
         return maxHP;
     }
-
     void setMaxHP(int maxHP) {
         Creature::maxHP = maxHP;
     }
-
     int getCurHP() const {
         return curHP;
     }
-
     void setCurHP(int curHP) {
         Creature::curHP = curHP;
     }
-
     int getAc() const {
         return ac;
     }
-
     void setAc(int ac) {
         Creature::ac = ac;
     }
-
     int getSTR() const {
         return STR;
     }
-
     void setSTR(int STR) {
         Creature::STR = STR;
     }
-
     int getDEX() const {
         return DEX;
     }
-
     void setDEX(int DEX) {
         Creature::DEX = DEX;
     }
-
     int getCON() const {
         return CON;
     }
-
     void setCON(int CON) {
         Creature::CON = CON;
     }
-
     int getINT() const {
         return INT;
     }
-
     void setINT(int INT) {
         Creature::INT = INT;
     }
-
     int getWIS() const {
         return WIS;
     }
-
     void setWIS(int WIS) {
         Creature::WIS = WIS;
     }
-
     int getCHA() const {
         return CHA;
     }
-
     void setCHA(int CHA) {
         Creature::CHA = CHA;
     }
 
+    //methods
     virtual string actionChoose()=0;
     virtual int isHero()=0;
-
-    int actionExec(Creature* tar, string actionName){
-        ifstream f;
-        string path;
-        if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+actionName+".json";
-        else path = "./items_and_spells/"+actionName+".json";
-        f.open(path);
-        if(f.is_open()){
-            Document document = parseFromFile(&f);
-
-            //determining type of attack
-            string type = document["type"].GetString();
-            switch (type[0]){
-                case 'w': {
-                    int damage = document["damage"].GetInt(), atcRoll, bonus;
-                    bool finesse = document["finesse"].GetBool();
-
-                    //determining attack roll
-                    if(finesse) bonus=this->getProf()+this->getDEX();
-                    else bonus=this->getProf()+this->getSTR();
-                    atcRoll = dRoll()+bonus;
-
-                    //attack success
-                    if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
-                        int dmgRoll = dRoll(damage,0) + ( finesse? this->getDEX():this->getSTR() );
-                        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,document["diceCount"].GetInt());
-                        tar->setCurHP(tar->getCurHP()-dmgRoll);
-
-                        //print
-                        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
-                        if(actionName[0]=='a') cout<<"an ";
-                        else cout<<"a ";
-                        cout<<actionName<<".";
-                        if(atcRoll-bonus == 20) cout<<" (crit)";
-                        cout<<endl;
-
-                        if(tar->getCurHP() <= 0){
-                            cout<<tar->getName()<<" died."<<endl;
-                            return 1; //something died
-                        }
-                        else return 2; //something didn't die
-                    }
-
-                        //attack failed
-                    else {
-                        cout<<this->getName()<<" missed."<<endl;
-                        return 0;
-                    }
-                }
-                    break;
-                case 's': /*wip*/ break;
-            }
-        }
-        else cout<<"action file not open"<<endl;
-        f.close();
-        return -1; //File error
-    };
-
-    string toString(){
-        string s;
-        if(curHP<=0) s = name+" is dead.\n";
-        else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
-        return s;
-    }
+    int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
+    int actionExec(Creature* tar, string actionName);
+    string toString();
 };
 
 class Monster: public Creature{
 public:
+    //constructors
+    Monster(){};
     Monster(string name){
         ifstream f;
         string path;
@@ -228,6 +150,8 @@ public:
         else cout<<"monster file not open"<<endl;
         f.close();
     }
+
+    //overrides
     int isHero() override{
         return 0;
     }
@@ -236,12 +160,13 @@ public:
         string actionName = actionList[choice];
         return actionName;
     }
-    Monster(){};
-};
 
+};
 
 class Hero : public Creature{
 public:
+    //constructors
+    Hero(){};
     Hero(string name){
         ifstream f;
         string path;
@@ -282,6 +207,8 @@ public:
         else cout<<"hero file not open"<<endl;
         f.close();
     }
+
+    //overrides
     int isHero() override{
         return 1;
     }
@@ -299,5 +226,67 @@ public:
     }
 };
 
+//Creature class method definitions
+int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName){
+    int atcRoll, bonus;
+
+    //determining attack roll
+    if(finesse) bonus=this->getProf()+this->getDEX();
+    else bonus=this->getProf()+this->getSTR();
+    atcRoll = dRoll()+bonus;
+
+    //attack success
+    if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
+        int dmgRoll = dRoll(damage,0) + ( finesse? this->getDEX():this->getSTR() );
+        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,diceCount);
+        tar->setCurHP(tar->getCurHP()-dmgRoll);
+
+        //print
+        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
+        if(actionName[0]=='a') cout<<"an ";
+        else cout<<"a ";
+        cout<<actionName<<".";
+        if(atcRoll-bonus == 20) cout<<" (crit)";
+        cout<<endl;
+
+        if(tar->getCurHP() <= 0){
+            cout<<tar->getName()<<" died."<<endl;
+            return 1; //something died
+        }
+        else return 2; //something didn't die
+    }
+
+        //attack failed
+    else {
+        cout<<this->getName()<<" missed."<<endl;
+        return 0;
+    }
+}
+int Creature::actionExec(Creature* tar, string actionName){
+    ifstream f;
+    string path;
+    if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+actionName+".json";
+    else path = "./items_and_spells/"+actionName+".json";
+    f.open(path);
+    if(f.is_open()){
+        Document document = parseFromFile(&f);
+
+        //determining type of attack
+        string type = document["type"].GetString();
+        switch (type[0]){
+            case 'w': return this->execWeaponAttack(document["damage"].GetInt(),document["diceCount"].GetInt(),document["finesse"].GetBool(),tar,actionName);
+            case 's': /*wip*/ break;
+        }
+    }
+    else cout<<"action file not open"<<endl;
+    f.close();
+    return -1; //File error
+};
+string Creature::toString(){
+    string s;
+    if(curHP<=0) s = name+" is dead.\n";
+    else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
+    return s;
+}
 
 #endif //DEEPDARKFANTASY_CREATURE_H
