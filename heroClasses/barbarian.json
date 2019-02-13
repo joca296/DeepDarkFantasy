@@ -8,5 +8,5 @@
   "int" : -1,
   "wis" : -1,
   "cha" : -1,
-  "actionList" : ["greataxe","javelin"]
+  "actionList" : ["greataxe","javelin","firebolt"]
 }

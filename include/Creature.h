@@ -100,6 +100,7 @@ public:
     virtual string actionChoose()=0;
     virtual int isHero()=0;
     int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
+    int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
     int actionExec(Creature* tar, string actionName);
     string toString();
 };
@@ -231,13 +232,13 @@ int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature
     int atcRoll, bonus;
 
     //determining attack roll
-    if(finesse) bonus=this->getProf()+this->getDEX();
-    else bonus=this->getProf()+this->getSTR();
-    atcRoll = dRoll()+bonus;
+    if(finesse) bonus=this->getDEX();
+    else bonus=this->getSTR();
+    atcRoll = dRoll()+bonus+this->getProf();
 
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
-        int dmgRoll = dRoll(damage,0) + ( finesse? this->getDEX():this->getSTR() );
+        int dmgRoll = dRoll(damage,0) + bonus;
         if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,diceCount);
         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
@@ -256,7 +257,45 @@ int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature
         else return 2; //something didn't die
     }
 
-        //attack failed
+    //attack failed
+    else {
+        cout<<this->getName()<<" missed."<<endl;
+        return 0;
+    }
+}
+int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName){
+    int atcRoll, bonus;
+
+    //setting bonus
+    if (spellCastMod == "int") bonus=this->getINT();
+    else if (spellCastMod == "wis") bonus=this->getWIS();
+    else bonus=this->getCHA();
+
+    //attack roll
+    atcRoll=dRoll()+bonus+this->getProf();
+
+    //attack success
+    if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
+        int dmgRoll = dRoll(damage,0) + ( spellCastModAddedToDamage? bonus:0 );
+        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,diceCount);
+        tar->setCurHP(tar->getCurHP()-dmgRoll);
+
+        //print
+        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
+        if(actionName[0]=='a') cout<<"an ";
+        else cout<<"a ";
+        cout<<actionName<<".";
+        if(atcRoll-bonus == 20) cout<<" (crit)";
+        cout<<endl;
+
+        if(tar->getCurHP() <= 0){
+            cout<<tar->getName()<<" died."<<endl;
+            return 1; //something died
+        }
+        else return 2; //something didn't die
+    }
+
+    //attack failed
     else {
         cout<<this->getName()<<" missed."<<endl;
         return 0;
@@ -275,7 +314,7 @@ int Creature::actionExec(Creature* tar, string actionName){
         string type = document["type"].GetString();
         switch (type[0]){
             case 'w': return this->execWeaponAttack(document["damage"].GetInt(),document["diceCount"].GetInt(),document["finesse"].GetBool(),tar,actionName);
-            case 's': /*wip*/ break;
+            case 's': return this->execSpellAttackST(document["damage"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
         }
     }
     else cout<<"action file not open"<<endl;
