@@ -220,8 +220,9 @@ room* room::enterRoom(Creature *p)
         cin>>choice_container;
     switch(choice_container){
         case 1:
-            if(current_tries_remain>0)
+            if(current_tries_remain>0){
                 if(this->basic_checks(p)!=5) current_tries_remain--;
+            }
             else cout<<"You have no further interest in this place "<<endl;
             break;
         case 2:
