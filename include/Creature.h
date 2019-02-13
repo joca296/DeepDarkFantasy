@@ -101,6 +101,7 @@ public:
     virtual int isHero()=0;
     int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
     int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
+    int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
     int actionExec(Creature* tar, string actionName);
     string toString();
 };
@@ -238,7 +239,7 @@ int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature
 
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
-        int dmgRoll = dRoll(damage,0) + bonus;
+        int dmgRoll = dRoll(damage,0,diceCount) + bonus;
         if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,diceCount);
         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
@@ -276,7 +277,7 @@ int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, 
 
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
-        int dmgRoll = dRoll(damage,0) + ( spellCastModAddedToDamage? bonus:0 );
+        int dmgRoll = dRoll(damage,0,diceCount) + ( spellCastModAddedToDamage? bonus:0 );
         if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,diceCount);
         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
@@ -301,6 +302,22 @@ int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, 
         return 0;
     }
 }
+int Creature::execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature *tar, string actionName) {
+    int bonus;
+
+    //setting bonus
+    if (spellCastMod == "int") bonus=this->getINT();
+    else if (spellCastMod == "wis") bonus=this->getWIS();
+    else bonus=this->getCHA();
+
+    //healing
+    int healRoll= dRoll(healing,0,diceCount) + (spellCastModAddedToHealing? bonus:0);
+    tar->setCurHP( tar->getCurHP()+healRoll > tar->getMaxHP()? tar->getMaxHP() : tar->getCurHP()+healRoll );
+
+    //print
+    cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<actionName<<"."<<endl;
+    return 2;
+}
 int Creature::actionExec(Creature* tar, string actionName){
     ifstream f;
     string path;
@@ -315,6 +332,7 @@ int Creature::actionExec(Creature* tar, string actionName){
         switch (type[0]){
             case 'w': return this->execWeaponAttack(document["damage"].GetInt(),document["diceCount"].GetInt(),document["finesse"].GetBool(),tar,actionName);
             case 's': return this->execSpellAttackST(document["damage"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
+            case 'h': return this->execHeal(document["healing"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
         }
     }
     else cout<<"action file not open"<<endl;
