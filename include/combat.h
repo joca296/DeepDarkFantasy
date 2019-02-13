@@ -55,11 +55,11 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                     if(ptr2==NULL) break;
 
                 }
-                    do
-                    {
-                        cin>>targetChoiceInt;
-                            if(targetChoiceInt>targetChoiceIntMax) cout<<"Invalid, try again "<<endl;
-                    }while(targetChoiceInt>targetChoiceIntMax);
+                do
+                {
+                    cin>>targetChoiceInt;
+                    if(targetChoiceInt>targetChoiceIntMax) cout<<"Invalid, try again "<<endl;
+                }while(targetChoiceInt>targetChoiceIntMax);
                 ptr2=head;
                 for(int i=1; i<targetChoiceInt; i++)
                 {

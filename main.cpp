@@ -6,7 +6,15 @@
 #include "include/functions.h"
 #include "include/cList.h"
 #include "include/combat.h"
-#include "room.h"
+#include "include/room.h"
+
+//cross-platform support
+#ifdef __linux__
+#define PLATFORM_NAME "linux"
+#elif _WIN32
+#define PLATFORM_NAME "windows"
+#else
+#endif
 
 using namespace std;
 using namespace rapidjson;

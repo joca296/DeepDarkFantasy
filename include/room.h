@@ -10,6 +10,14 @@
 #define MAX_CONNECTED_ROOMS 5
 #define MAX_ROOM_MONSTERS 10
 
+//cross-platform support
+#ifdef __linux__
+#define PLATFORM_NAME "linux"
+#elif _WIN32
+#define PLATFORM_NAME "windows"
+#else
+#endif
+
 using namespace std;
 
 string global_default_Perception_FAIL_text = "You don't see anything of value";
@@ -367,47 +375,49 @@ void room::basic_checks_text()
 room::room(string name)
 {
     ifstream f;
-        string path = "rooms\\"+name+".json";
-        f.open(path);
-        if(f.is_open()){
-            Document document = parseFromFile(&f);
+    string path;
+    if(PLATFORM_NAME == "windows") path = "rooms\\"+name+".json";
+    else path = "./rooms/"+name+".json";
+    f.open(path);
+    if(f.is_open()){
+        Document document = parseFromFile(&f);
 
-            this->set_room_name(document["name"].GetString());
-            this->setDC_Perception(document["DC_Perception"].GetInt());
-            this->setDC_Investigation(document["DC_Investigation"].GetInt());
-            this->setDC_Survival(document["DC_Survival"].GetInt());
-            this->setDC_Arcana(document["DC_Arcana"].GetInt());
-            this->setPerception_SUCC_text(document["Perc_SUCC"].GetString());
-            this->setInvestigation_SUCC_text(document["Invest_SUCC"].GetString());
-            this->setSurvival_SUCC_text(document["Surv_SUCC"].GetString());
-            this->setArcana_SUCC_text(document["Arc_SUCC"].GetString());
-            this->setPerception_FAIL_text(document["Perc_FAIL"].GetString());
-            this->setInvestigation_FAIL_text(document["Invest_FAIL"].GetString());
-            this->setSurvival_FAIL_text(document["Surv_FAIL"].GetString());
-            this->setArcana_FAIL_text(document["Arc_FAIL"].GetString());
-            this->set_combat_desc(document["combatDesc"].GetString());
-            this->setMaxRollsAllowed(document["maxRolls"].GetInt());
+        this->set_room_name(document["name"].GetString());
+        this->setDC_Perception(document["DC_Perception"].GetInt());
+        this->setDC_Investigation(document["DC_Investigation"].GetInt());
+        this->setDC_Survival(document["DC_Survival"].GetInt());
+        this->setDC_Arcana(document["DC_Arcana"].GetInt());
+        this->setPerception_SUCC_text(document["Perc_SUCC"].GetString());
+        this->setInvestigation_SUCC_text(document["Invest_SUCC"].GetString());
+        this->setSurvival_SUCC_text(document["Surv_SUCC"].GetString());
+        this->setArcana_SUCC_text(document["Arc_SUCC"].GetString());
+        this->setPerception_FAIL_text(document["Perc_FAIL"].GetString());
+        this->setInvestigation_FAIL_text(document["Invest_FAIL"].GetString());
+        this->setSurvival_FAIL_text(document["Surv_FAIL"].GetString());
+        this->setArcana_FAIL_text(document["Arc_FAIL"].GetString());
+        this->set_combat_desc(document["combatDesc"].GetString());
+        this->setMaxRollsAllowed(document["maxRolls"].GetInt());
 
-            const Value& a = document["connectedRooms"];              //setting connected rooms
-            int j=0;
-            this->numberOfConnections=0;
-            for (SizeType i = 0; i < a.Size(); i++){
-                this->room_next[j]=a[i].GetString();
+        const Value& a = document["connectedRooms"];              //setting connected rooms
+        int j=0;
+        this->numberOfConnections=0;
+        for (SizeType i = 0; i < a.Size(); i++){
+            this->room_next[j]=a[i].GetString();
+            j++;
+            this->numberOfConnections++;
+        }
+
+            const Value& b = document["monsters"];              //setting monsters
+        j=0;
+        this->numberOfMonsters=0;
+        if(b.Size()>0){
+            for (SizeType i = 0; i < b.Size(); i++){
+                this->room_monsters[j]=b[i].GetString();
+                //cout<<this->room_monsters[j]<<endl;
                 j++;
-                this->numberOfConnections++;
+                this->numberOfMonsters++;
             }
-
-             const Value& b = document["monsters"];              //setting monsters
-            j=0;
-            this->numberOfMonsters=0;
-            if(b.Size()>0){
-                for (SizeType i = 0; i < b.Size(); i++){
-                    this->room_monsters[j]=b[i].GetString();
-                    //cout<<this->room_monsters[j]<<endl;
-                    j++;
-                    this->numberOfMonsters++;
-                }
-            }
+        }
 
 }
 else cout<<"room file not open"<<endl;

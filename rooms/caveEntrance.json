@@ -15,5 +15,5 @@
   "maxRolls" : 3,
   "combatDesc" : "An ambush! Send these vermin a message: the rightful owner has returned, and their kind is no longer welcome.",
   "monsters" : [],
-  "connectedRooms" : ["CaveHallwayA"]
+  "connectedRooms" : ["caveHallwayA"]
 }

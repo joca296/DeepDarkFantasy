@@ -5,6 +5,14 @@
 #include "../include/rapidjson/document.h"
 #define maxMonsterActions 10
 
+//cross-platform support
+#ifdef __linux__
+#define PLATFORM_NAME "linux"
+#elif _WIN32
+#define PLATFORM_NAME "windows"
+#else
+#endif
+
 using namespace std;
 using namespace rapidjson;
 
@@ -112,8 +120,11 @@ public:
     virtual int isHero()=0;
 
     int actionExec(Creature* tar, string actionName){
-        string path = "items_and_spells\\"+actionName+".json";
         ifstream f;
+        string path;
+        if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+actionName+".json";
+        else path = "./items_and_spells/"+actionName+".json";
+        cout<<path<<endl;
         f.open(path);
         if(f.is_open()){
             Document document = parseFromFile(&f);
@@ -161,7 +172,7 @@ public:
                 case 's': /*wip*/ break;
             }
         }
-        else cout<<"File not open"<<endl;
+        else cout<<"action file not open"<<endl;
         f.close();
         return -1; //File error
     };
@@ -178,7 +189,9 @@ class Monster: public Creature{
 public:
     Monster(string name){
         ifstream f;
-        string path = "monsters\\"+name+".json";
+        string path;
+        if(PLATFORM_NAME == "windows") path = "monsters\\"+name+".json";
+        else path = "./monsters/"+name+".json";
         f.open(path);
         if(f.is_open()){
             Document document = parseFromFile(&f);
@@ -213,7 +226,7 @@ public:
                 j++;
             }
         }
-        else cout<<"File not open"<<endl;
+        else cout<<"monster file not open"<<endl;
         f.close();
     }
     int isHero() override{
@@ -232,7 +245,9 @@ class Hero : public Creature{
 public:
     Hero(string name){
         ifstream f;
-        string path = "heroClasses\\"+name+".json";
+        string path;
+        if(PLATFORM_NAME == "windows") path = "heroClasses\\"+name+".json";
+        else path = "./heroClasses/"+name+".json";
         f.open(path);
         if(f.is_open()){
             Document document = parseFromFile(&f);
@@ -265,7 +280,7 @@ public:
                 numberOfActions++;
             }
         }
-        else cout<<"File not open"<<endl;
+        else cout<<"hero file not open"<<endl;
         f.close();
     }
     int isHero() override{
