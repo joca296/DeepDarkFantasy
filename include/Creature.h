@@ -124,7 +124,6 @@ public:
         string path;
         if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+actionName+".json";
         else path = "./items_and_spells/"+actionName+".json";
-        cout<<path<<endl;
         f.open(path);
         if(f.is_open()){
             Document document = parseFromFile(&f);
