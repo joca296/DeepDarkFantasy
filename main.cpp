@@ -1,13 +1,6 @@
 #include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
-#include "include/functions.h"
 #include "include/Creature.h"
-#include "include/cList.h"
-#include "include/combat.h"
 #include "include/room.h"
-#include "include/rapidjson/document.h"
 
 //cross-platform support
 #ifdef __linux__
@@ -18,9 +11,6 @@
 #endif
 
 using namespace std;
-using namespace rapidjson;
-
-
 
 int main(){
     srand(time(NULL));
@@ -37,9 +27,5 @@ int main(){
         if(x.actionExec(&y,x.actionChoose()) == 1 || y.actionExec(&x,y.actionChoose()) == 1) break;
     cout<<x.toString();
     cout<<y.toString();*/
-
-
-
-
 }
 

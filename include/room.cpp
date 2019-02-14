@@ -1,8 +1,5 @@
 #include "room.h"
 
-
-
-
 void room::set_room_desc(string s)
     {
         room_desc=s;

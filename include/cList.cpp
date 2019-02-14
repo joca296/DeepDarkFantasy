@@ -1,11 +1,5 @@
 #include "cList.h"
 
-
-
-
-
-
-
 struct cList *append_node(int n, Creature *c,struct cList *head)
 {
 

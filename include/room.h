@@ -2,11 +2,11 @@
 #define ROOM_H
 
 #include <iostream>
-#include <sstream>
 #include <fstream>
 #include <string>
 #include "Creature.h"
 #include "combat.h"
+
 #define MAX_ROOM_MONSTERS 10
 #define MAX_CONNECTED_ROOMS 5
 
@@ -20,7 +20,6 @@
 #endif
 
 using namespace std;
-using namespace rapidjson;
 
 const string global_default_Perception_FAIL_text = "You don't see anything of value";
 const string global_default_Investigation_FAIL_text = "You don't find anything helpful";
@@ -52,7 +51,7 @@ public:
     int getMaxRollsAllowed();
     void setDC_Perception(int DC);
     int getDC_Perception();
-     void setDC_Survival(int DC);
+    void setDC_Survival(int DC);
     int getDC_Survival();
     void setDC_Investigation(int DC);
     int getDC_Investigation();
@@ -87,12 +86,5 @@ public:
 
 
 };
-
-
-
-
-
-
-
 
 #endif // ROOM_H_INCLUDED

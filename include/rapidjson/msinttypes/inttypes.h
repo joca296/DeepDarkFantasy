@@ -287,7 +287,7 @@ static
 #else // STATIC_IMAXDIV ][
 //_inline
 #endif // STATIC_IMAXDIV ]
-imaxdiv_t __cdecl imaxdiv(intmax_t numer, intmax_t denom)
+/*imaxdiv_t __cdecl imaxdiv(intmax_t numer, intmax_t denom)
 {
    imaxdiv_t result;
 
@@ -301,7 +301,7 @@ imaxdiv_t __cdecl imaxdiv(intmax_t numer, intmax_t denom)
    }
 
    return result;
-}
+}*/
 
 // 7.8.2.3 The strtoimax and strtoumax functions
 #define strtoimax _strtoi64

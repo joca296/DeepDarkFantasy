@@ -10,3 +10,4 @@ Makefile
 DeepDarkFantasy.depend
 DeepDarkFantasy.layout
 DeepDarkFantasy.out
+*.o

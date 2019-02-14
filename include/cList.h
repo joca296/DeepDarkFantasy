@@ -1,13 +1,7 @@
 #ifndef CLIST_H
 #define CLIST_H
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
 #include "Creature.h"
 
-
-using namespace rapidjson;
 using namespace std;
 
 struct cList
@@ -17,7 +11,6 @@ struct cList
     int cInit;
 
 };
-struct cList *head;
 
 struct cList* append_node(int n, Creature *c,struct cList *head);
 struct cList* prefix_node(int n, Creature *c,struct cList *head);

@@ -1,15 +1,12 @@
-
-
 #ifndef CREATURE_H
 #define CREATURE_H
+
 #include <iostream>
-#include <sstream>
 #include <fstream>
 #include <string>
 #include "functions.h"
-#include "rapidjson/document.h"
+
 using namespace std;
-using namespace rapidjson;
 
 //cross-platform support
 #ifdef __linux__
@@ -20,8 +17,6 @@ using namespace rapidjson;
 #endif
 
 #define maxMonsterActions 10
-
-
 
 class Creature {
 private:
@@ -63,7 +58,6 @@ public:
     int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
     int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
     int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature* tar, string actionName);
-
     string toString();
 
 };
@@ -88,11 +82,7 @@ public:
 
     //overrides
     int isHero() override;
-
     string actionChoose() override;
 };
-
-//Creature class method definitions
-
 
 #endif //DEEPDARKFANTASY_CREATURE_H
