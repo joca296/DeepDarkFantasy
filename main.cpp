@@ -2,11 +2,12 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-#include "include/Creature.h"
 #include "include/functions.h"
+#include "include/Creature.h"
 #include "include/cList.h"
 #include "include/combat.h"
 #include "include/room.h"
+#include "include/rapidjson/document.h"
 
 //cross-platform support
 #ifdef __linux__
