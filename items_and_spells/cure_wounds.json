@@ -1,0 +1,7 @@
+{
+  "type" : "h",
+  "spellCastMod" : "cha",
+  "spellCastModAddedToHealing" : true,
+  "healing" : 8,
+  "diceCount" : 1
+}

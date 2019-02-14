@@ -293,4 +293,22 @@ string Creature::toString(){
     return s;
 }
 
+int Creature::execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature *tar, string actionName) {
+    int bonus;
+
+    //setting bonus
+    if (spellCastMod == "int") bonus=this->getINT();
+    else if (spellCastMod == "wis") bonus=this->getWIS();
+    else bonus=this->getCHA();
+
+    //healing
+    int healRoll= dRoll(healing,0,diceCount) + (spellCastModAddedToHealing? bonus:0);
+    tar->setCurHP( tar->getCurHP()+healRoll > tar->getMaxHP()? tar->getMaxHP() : tar->getCurHP()+healRoll );
+
+    //print
+    cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<actionName<<"."<<endl;
+    return 2;
+}
+
+
 

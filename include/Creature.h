@@ -62,6 +62,7 @@ public:
     int actionExec(Creature* tar, string actionName);
     int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
     int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
+    int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature* tar, string actionName);
 
     string toString();
 
