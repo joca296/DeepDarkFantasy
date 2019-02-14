@@ -213,9 +213,6 @@ room* room::enterRoom(Creature *p)
                 cout<<"INVALID INPUT "<<endl;
         }
     }
-
-
-
 }
 
 void room::basic_choise_text(Creature *p)
