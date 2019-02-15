@@ -67,6 +67,8 @@ void Creature::setCHA(int CHA) {
     Creature::CHA = CHA;
 }
 
+
+//Monster::~Monster(){cout<<"This nigga dead "<<endl;}
 //Monster constructor
 Monster::Monster(string name){
     ifstream f;

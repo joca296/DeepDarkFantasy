@@ -59,12 +59,14 @@ public:
     int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
     int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature* tar, string actionName);
     string toString();
+    virtual ~Creature() {};    //virtual destructor
 
 };
 
 class Monster: public Creature{
 public:
     //constructors
+    //~Monster();
     Monster(){};
     Monster(string name);
 

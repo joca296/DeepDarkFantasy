@@ -65,6 +65,7 @@ void delete_cList(struct cList *head)
         ptr=head;
         head=head->next;
         //cout<<ptr->cInit<<" is to be deleted next "<<endl;
+        delete ptr->CPL;
         delete ptr;
     }
 
@@ -150,12 +151,14 @@ struct cList *delete_node(struct cList *head,struct cList *TBD)
     if(ptr==head)
     {
        ptr=ptr->next;
-       cout<<"Deleting "<<head->CPL->getName()<<endl;
+       //cout<<"Deleting "<<head->CPL->getName()<<endl;
+       delete head->CPL;
        delete head;
        return ptr;
     }
     if(prev!=ptr)prev->next=ptr->next;
-    cout<<"Deleting "<<ptr->CPL->getName()<<endl;
+    //cout<<"Deleting "<<ptr->CPL->getName()<<endl;
+    delete ptr->CPL;
     delete ptr;
     return head;
 }
