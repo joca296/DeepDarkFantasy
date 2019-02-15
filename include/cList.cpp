@@ -160,3 +160,20 @@ struct cList *delete_node(struct cList *head,struct cList *TBD)
     delete ptr;
     return head;
 }
+
+struct cList *prune_cList(struct cList* head)
+{
+    struct cList* ptr,*ptr2;
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        ptr2=ptr->next;
+        if(ptr->CPL->getCurHP()<1)
+        {
+            head=delete_node(head,ptr);
+        }
+        ptr=ptr2;
+    }
+    return head;
+
+};
