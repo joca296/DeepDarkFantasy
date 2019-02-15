@@ -1,13 +1,12 @@
 #include "cList.h"
 
-struct cList *append_node(int n, Creature *c,struct cList *head)
+struct cList *append_node(Creature *c,struct cList *head)
 {
 
     struct cList *newNode;
     struct cList *ptr;
     newNode=new struct cList;
 
-    newNode->cInit=n;
     newNode->CPL=c;
 
     if(head==NULL)
@@ -31,7 +30,7 @@ struct cList *append_node(int n, Creature *c,struct cList *head)
 
 }
 
-struct cList* prefix_node(int n,  Creature *c, struct cList* head)
+struct cList* prefix_node(  Creature *c, struct cList* head)
 {
     struct cList* newNode;
 
@@ -44,7 +43,7 @@ struct cList* prefix_node(int n,  Creature *c, struct cList* head)
 
         newNode=new struct cList;
 
-        newNode->cInit=n;
+
         newNode->CPL=c;
         newNode->next=head;
         head=newNode;
@@ -82,32 +81,31 @@ int displayList(struct cList* head)
     else
         while(ptr!=NULL)
         {
-            cout<<ptr->CPL->getName()<<" Init: "<<ptr->cInit<<endl;
+            cout<<ptr->CPL->getName()<<" Init: "<<ptr->CPL->getInit()<<endl;
             ptr=ptr->next;
         }
         cout<<endl;
         return 0;
 }
 
-struct cList* insert_node(int n, Creature *c,struct cList *head)
+struct cList* insert_node(Creature *c,struct cList *head)
 {
     if(head==NULL)
     {
-        return append_node(n,c,head);
+        return append_node(c,head);
     }
-    else if(n>head->cInit) return prefix_node(n,c,head);
-    else return append_node(n,c,head);
+    else if(c->getInit()>head->CPL->getInit()) return prefix_node(c,head);
+    else return append_node(c,head);
 
 };
 
 void swapNode(struct cList *a, struct cList *b)
 {
-    int temp = a->cInit;
+
     Creature* tempc=a->CPL;
     a->CPL=b->CPL;
     b->CPL=tempc;
-    a->cInit = b->cInit;
-    b->cInit = temp;
+
 };
 void sortList(struct cList *head)
 {
@@ -126,7 +124,7 @@ void sortList(struct cList *head)
 
         while (ptr1->next != lptr)
         {
-            if (ptr1->cInit < ptr1->next->cInit)
+            if (ptr1->CPL->getInit() < ptr1->next->CPL->getInit())
             {
                 swapNode(ptr1, ptr1->next);
                 swapped = 1;

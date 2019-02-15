@@ -308,14 +308,14 @@ int Creature::execAoE(struct cList* actors, int roll, int diceCount, int tarNumb
     //For now if target is hero .. spell will randomly take tarNumber-1 monsters for aoe
     //Monsters only target hero for now because party not implemented
     struct cList* targets=NULL;
-    insert_node(0,tar,targets);
+    insert_node(tar,targets);
 
     if(this->isHero()){
         struct cList* tmp=actors;
         int x = tarNumber-1;
         while(tmp!=NULL && x>0){
             if(tmp->CPL->isHero()==0){
-                insert_node(0,tmp->CPL,targets);
+                insert_node(tmp->CPL,targets);
                 x--;
             }
             tmp=tmp->next;

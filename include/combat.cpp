@@ -16,13 +16,15 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
 
         initiative[i]=dRoll()+cp[i]->getDEX();
         cout<<cp[i]->getName()<<" rolls "<<initiative[i]<<"("<<initiative[i]-cp[i]->getDEX()<<"+"<<cp[i]->getDEX()<<")"<<" initiative "<<endl;
-        head=insert_node(initiative[i],cp[i],head);
+        cp[i]->setInit(initiative[i]);
+        head=insert_node(cp[i],head);
 
     }
     cp[n]=h;
     initiative[n]=dRoll()+cp[n]->getDEX();
     cout<<cp[n]->getName()<<" rolls "<<initiative[n]<<"("<<initiative[n]-cp[n]->getDEX()<<"+"<<cp[n]->getDEX()<<")"<<" initiative "<<endl;
-    head=insert_node(initiative[n],cp[n],head);
+    cp[n]->setInit(initiative[n]);
+    head=insert_node(cp[n],head);
 
     sortList(head);
     displayList(head);
