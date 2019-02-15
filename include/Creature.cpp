@@ -1,4 +1,5 @@
 #include "Creature.h"
+#include "cList.h"
 
 string Creature::getName() const {
     return name;
@@ -65,6 +66,14 @@ int Creature::getCHA() const {
 }
 void Creature::setCHA(int CHA) {
     Creature::CHA = CHA;
+}
+
+int Creature::getInit() const {
+    return init;
+}
+
+void Creature::setInit(int init) {
+    Creature::init = init;
 }
 
 
@@ -183,6 +192,27 @@ string Hero::actionChoose() {
 }
 
 //Creature class method definitions
+int Creature::actionExec(struct cList* actors, Creature* tar, string actionName){
+    ifstream f;
+    string path;
+    if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+actionName+".json";
+    else path = "./items_and_spells/"+actionName+".json";
+    f.open(path);
+    if(f.is_open()){
+        Document document = parseFromFile(&f);
+
+        //determining type of attack
+        string type = document["type"].GetString();
+        switch (type[0]){
+            case 'w': return this->execWeaponAttack(document["damage"].GetInt(),document["diceCount"].GetInt(),document["finesse"].GetBool(),tar,actionName);
+            case 's': return this->execSpellAttackST(document["damage"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
+            case 'h': return this->execHeal(document["healing"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToHealing"].GetBool(),tar,actionName);
+        }
+    }
+    else cout<<"action file not open"<<endl;
+    f.close();
+    return -1; //File error
+}
 int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName){
     int atcRoll, bonus;
 
@@ -219,6 +249,8 @@ int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature
     }
 }
 int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName){
+    //Add saving throws
+
     int atcRoll, bonus;
 
     //setting bonus
@@ -272,26 +304,25 @@ int Creature::execHeal(int healing, int diceCount, string spellCastMod, bool spe
     cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<actionName<<"."<<endl;
     return 2;
 }
-int Creature::actionExec(Creature* tar, string actionName){
-    ifstream f;
-    string path;
-    if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+actionName+".json";
-    else path = "./items_and_spells/"+actionName+".json";
-    f.open(path);
-    if(f.is_open()){
-        Document document = parseFromFile(&f);
+int Creature::execAoE(struct cList* actors, int roll, int diceCount, int tarNumber, string spellCastMod, bool spellCastModAddedToRoll, Creature* tar, string actionName){
+    //For now if target is hero .. spell will randomly take tarNumber-1 monsters for aoe
+    //Monsters only target hero for now because party not implemented
+    struct cList* targets=NULL;
+    insert_node(0,tar,targets);
 
-        //determining type of attack
-        string type = document["type"].GetString();
-        switch (type[0]){
-            case 'w': return this->execWeaponAttack(document["damage"].GetInt(),document["diceCount"].GetInt(),document["finesse"].GetBool(),tar,actionName);
-            case 's': return this->execSpellAttackST(document["damage"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
-            case 'h': return this->execHeal(document["healing"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToHealing"].GetBool(),tar,actionName);
+    if(this->isHero()){
+        struct cList* tmp=actors;
+        int x = tarNumber-1;
+        while(tmp!=NULL && x>0){
+            if(tmp->CPL->isHero()==0){
+                insert_node(0,tmp->CPL,targets);
+                x--;
+            }
+            tmp=tmp->next;
         }
     }
-    else cout<<"action file not open"<<endl;
-    f.close();
-    return -1; //File error
+
+    //To be continued
 }
 string Creature::toString(){
     string s;

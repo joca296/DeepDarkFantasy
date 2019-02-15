@@ -20,7 +20,7 @@ using namespace std;
 
 class Creature {
 private:
-    int maxHP, curHP, ac, prof, STR, DEX, CON, INT, WIS, CHA;
+    int maxHP, curHP, ac, prof, STR, DEX, CON, INT, WIS, CHA, init;
     string name;
 public:
     string actionList[maxMonsterActions];
@@ -51,13 +51,17 @@ public:
     int getCHA() const;
     void setCHA(int CHA);
 
+    int getInit() const;
+    void setInit(int init);
+
     //methods
     virtual string actionChoose()=0;
     virtual int isHero()=0;
-    int actionExec(Creature* tar, string actionName);
+    int actionExec(struct cList* actors, Creature* tar, string actionName);
     int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
     int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
     int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature* tar, string actionName);
+    int execAoE(struct cList* actors, int roll, int diceCount, int tarNumber,string spellCastMod, bool spellCastModAddedToRoll, Creature* tar, string actionName);
     string toString();
     virtual ~Creature() {};    //virtual destructor
 

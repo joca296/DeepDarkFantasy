@@ -57,7 +57,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                 {
                     ptr2=ptr2->next;
                 }
-                if(ptr->CPL->actionExec(ptr2->CPL,ptr->CPL->actionChoose())==1)
+                if(ptr->CPL->actionExec(head,ptr2->CPL,ptr->CPL->actionChoose())==1)
                 {
                     //cout<<ptr2->CPL->getName()<<" died"<<endl;
                     head=delete_node(head,ptr2);
@@ -76,7 +76,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
             }
             else if(ptr->CPL->getCurHP()>0)
             {
-                if(ptr->CPL->actionExec(cp[n],ptr->CPL->actionChoose())==1)
+                if(ptr->CPL->actionExec(head,cp[n],ptr->CPL->actionChoose())==1)
                    {
                       // cout<<cp[n]->getName()<<" died"<<endl;
                        delete_cList(head);
