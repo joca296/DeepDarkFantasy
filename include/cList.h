@@ -8,8 +8,6 @@ struct cList
 {
     struct cList *next;
     Creature *CPL;
-
-
 };
 
 struct cList* append_node( Creature *c,struct cList *head);

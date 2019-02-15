@@ -64,7 +64,7 @@ void delete_cList(struct cList *head)
         ptr=head;
         head=head->next;
         //cout<<ptr->cInit<<" is to be deleted next "<<endl;
-        delete ptr->CPL;
+        if(ptr->CPL->isHero()==0) delete ptr->CPL;
         delete ptr;
     }
 

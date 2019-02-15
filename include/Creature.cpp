@@ -67,11 +67,9 @@ int Creature::getCHA() const {
 void Creature::setCHA(int CHA) {
     Creature::CHA = CHA;
 }
-
 int Creature::getInit() const {
     return init;
 }
-
 void Creature::setInit(int init) {
     Creature::init = init;
 }
@@ -104,15 +102,16 @@ Monster::Monster(string name){
         //setting actions
         const Value& a = document["actionList"];
         numberOfActions=0;
-        int j=0;
+        this->actionList = NULL;
         for (SizeType i = 0; i < a.Size(); i++){
-            actionList[j]=a[i].GetString();
-            j++;
+            Action* action = callConstuctor(a[i].GetString());
+            this->actionList = insert_action(action,this->actionList);
             numberOfActions++;
         }
 
+        //adding weights
         const Value& b = document["actionWeight"];
-        j=0;
+        int j=0;
         for (SizeType i = 0; i < b.Size(); i++){
             actionWeight[j]=b[i].GetInt();
             j++;
@@ -126,10 +125,15 @@ Monster::Monster(string name){
 int Monster::isHero() {
     return 0;
 }
-string Monster::actionChoose() {
+Action* Monster::actionChoose() {
     int choice = randomWeight(numberOfActions,actionWeight);
-    string actionName = actionList[choice];
-    return actionName;
+    ActionList* tmp=this->actionList;
+    int i=0;
+    while(tmp!=NULL){
+        if(i==choice) return tmp->action;
+        i++;
+        tmp=tmp->next;
+    }
 }
 
 //Hero constructor
@@ -163,75 +167,81 @@ Hero::Hero(string name){
         //setting actions
         const Value& a = document["actionList"];
         numberOfActions=0;
-        int j=0;
+        this->actionList = NULL;
         for (SizeType i = 0; i < a.Size(); i++){
-            actionList[j]=a[i].GetString();
-            j++;
+            Action* action = callConstuctor(a[i].GetString());
+            this->actionList = insert_action(action,this->actionList);
             numberOfActions++;
         }
     }
     else cout<<"hero file not open"<<endl;
     f.close();
 }
-
 //Hero overrides
 int Hero::isHero() {
     return 1;
 }
-string Hero::actionChoose() {
+Action* Hero::actionChoose() {
+    int i=0;
+    cout<<"Choose an action:"<<endl;
+    ActionList* tmp=this->actionList;
+    while(tmp!=NULL){
+        cout<<i<<". "<<tmp->action->getName()<<endl;
+        i++;
+        tmp=tmp->next;
+    }
     while(1){
-        cout<<"Choose an action:"<<endl;
-        for(int i=0;i<numberOfActions;i++)
-            cout<<i<<". "<<actionList[i]<<endl;
-        int x;
-        cin>>x;
-        if(x<0 || x>=numberOfActions)
-            cout<<"Invalid input. Try again";
-        else return actionList[x];
+        int choice;
+        cin>>choice;
+        if(choice<0 || choice>=numberOfActions)
+            cout<<"Invalid input. Try again"<<endl;
+        else{
+            i=0;
+            tmp=this->actionList;
+            while(tmp!=NULL){
+                if(i==choice) return tmp->action;
+                i++;
+                tmp=tmp->next;
+            }
+        }
     }
 }
 
 //Creature class method definitions
-int Creature::actionExec(struct cList* actors, Creature* tar, string actionName){
-    ifstream f;
-    string path;
-    if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+actionName+".json";
-    else path = "./items_and_spells/"+actionName+".json";
-    f.open(path);
-    if(f.is_open()){
-        Document document = parseFromFile(&f);
-
-        //determining type of attack
-        string type = document["type"].GetString();
-        switch (type[0]){
-            case 'w': return this->execWeaponAttack(document["damage"].GetInt(),document["diceCount"].GetInt(),document["finesse"].GetBool(),tar,actionName);
-            case 's': return this->execSpellAttackST(document["damage"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToDamage"].GetBool(),tar,actionName);
-            case 'h': return this->execHeal(document["healing"].GetInt(),document["diceCount"].GetInt(),document["spellCastMod"].GetString(),document["spellCastModAddedToHealing"].GetBool(),tar,actionName);
+int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
+    //rework
+    char type = action->getType();
+    switch(type){
+        case 'w':{
+            Weapon* weapon = (Weapon*) action;
+            return this->execWeaponAttack(weapon,tar);
+        }
+        case 's':{
+            Spell* spell = (Spell*) action;
+            if(!spell->isHeal()) return this->execSpellAttackST(spell,tar);
+            else return this->execHeal(spell,tar);
         }
     }
-    else cout<<"action file not open"<<endl;
-    f.close();
-    return -1; //File error
 }
-int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName){
+int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     int atcRoll, bonus;
 
     //determining attack roll
-    if(finesse) bonus=this->getDEX();
+    if(action->isFinesse()) bonus=this->getDEX();
     else bonus=this->getSTR();
     atcRoll = dRoll()+bonus+this->getProf();
 
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
-        int dmgRoll = dRoll(damage,0) + bonus;
-        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,diceCount);
+        int dmgRoll = dRoll(action->getRoll(),0) + bonus;
+        if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
         //print
         cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
-        if(actionName[0]=='a') cout<<"an ";
+        if(action->getName()[0]=='a') cout<<"an ";
         else cout<<"a ";
-        cout<<actionName<<".";
+        cout<<action->getName()<<".";
         if(atcRoll-bonus == 20) cout<<" (crit)";
         cout<<endl;
 
@@ -239,7 +249,7 @@ int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature
             cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
-        else return 2; //something didn't die
+        else return 0; //something didn't die
     }
 
     //attack failed
@@ -248,14 +258,14 @@ int Creature::execWeaponAttack(int damage, int diceCount, bool finesse, Creature
         return 0;
     }
 }
-int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName){
+int Creature::execSpellAttackST(Spell *action, Creature* tar){
     //Add saving throws
 
     int atcRoll, bonus;
 
     //setting bonus
-    if (spellCastMod == "int") bonus=this->getINT();
-    else if (spellCastMod == "wis") bonus=this->getWIS();
+    if (action->getSpellCastMod() == "int") bonus=this->getINT();
+    else if (action->getSpellCastMod() == "wis") bonus=this->getWIS();
     else bonus=this->getCHA();
 
     //attack roll
@@ -263,15 +273,15 @@ int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, 
 
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
-        int dmgRoll = dRoll(damage,0) + ( spellCastModAddedToDamage? bonus:0 );
-        if(atcRoll-bonus == 20) dmgRoll+=dRoll(damage,0,diceCount);
+        int dmgRoll = dRoll(action->getRoll(),0) + ( action->isSpellCastModAddedToRoll()? bonus:0 );
+        if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
         //print
         cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
-        if(actionName[0]=='a') cout<<"an ";
+        if(action->getName()[0]=='a') cout<<"an ";
         else cout<<"a ";
-        cout<<actionName<<".";
+        cout<<action->getName()<<".";
         if(atcRoll-bonus == 20) cout<<" (crit)";
         cout<<endl;
 
@@ -279,7 +289,7 @@ int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, 
             cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
-        else return 2; //something didn't die
+        else return 0; //something didn't die
     }
 
     //attack failed
@@ -288,23 +298,23 @@ int Creature::execSpellAttackST(int damage, int diceCount, string spellCastMod, 
         return 0;
     }
 }
-int Creature::execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature *tar, string actionName) {
+int Creature::execHeal(Spell *action, Creature* tar) {
     int bonus;
 
     //setting bonus
-    if (spellCastMod == "int") bonus=this->getINT();
-    else if (spellCastMod == "wis") bonus=this->getWIS();
+    if (action->getSpellCastMod() == "int") bonus=this->getINT();
+    else if (action->getSpellCastMod() == "wis") bonus=this->getWIS();
     else bonus=this->getCHA();
 
     //healing
-    int healRoll= dRoll(healing,0,diceCount) + (spellCastModAddedToHealing? bonus:0);
+    int healRoll= dRoll(action->getRoll(),0,action->getDiceNumber()) + (action->isSpellCastModAddedToRoll()? bonus:0);
     tar->setCurHP( tar->getCurHP()+healRoll > tar->getMaxHP()? tar->getMaxHP() : tar->getCurHP()+healRoll );
 
     //print
-    cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<actionName<<"."<<endl;
-    return 2;
+    cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<action->getName()<<"."<<endl;
+    return 0;
 }
-int Creature::execAoE(struct cList* actors, int roll, int diceCount, int tarNumber, string spellCastMod, bool spellCastModAddedToRoll, Creature* tar, string actionName){
+/*int Creature::execAoE(struct cList* actors, Action *action, Creature* tar){
     //For now if target is hero .. spell will randomly take tarNumber-1 monsters for aoe
     //Monsters only target hero for now because party not implemented
     struct cList* targets=NULL;
@@ -323,7 +333,7 @@ int Creature::execAoE(struct cList* actors, int roll, int diceCount, int tarNumb
     }
 
     //To be continued
-}
+}*/
 string Creature::toString(){
     string s;
     if(curHP<=0) s = name+" is dead.\n";

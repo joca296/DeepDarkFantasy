@@ -1,7 +1,10 @@
 {
-  "type" : "h",
+  "type" : "s",
+  "name" : "cure_wounds",
   "spellCastMod" : "cha",
-  "spellCastModAddedToHealing" : true,
-  "healing" : 8,
-  "diceCount" : 1
+  "heal" : true,
+  "spellCastModAddedToRoll" : true,
+  "savingThrowFlag" : false,
+  "roll" : 8,
+  "diceNumber" : 1
 }

@@ -1,6 +1,7 @@
 {
   "type" : "w",
+  "name" : "greataxe",
   "finesse" : false,
-  "damage" : 12,
-  "diceCount" : 1
+  "roll" : 12,
+  "diceNumber" : 1
 }

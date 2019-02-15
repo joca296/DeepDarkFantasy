@@ -1,7 +1,10 @@
 {
     "type" : "s",
+    "name" : "firebolt",
     "spellCastMod" : "int",
-    "spellCastModAddedToDamage" : false,
-    "damage" : 10,
-    "diceCount" : 2
+    "heal" : false,
+    "spellCastModAddedToRoll" : false,
+    "savingThrowFlag" : false,
+    "roll" : 10,
+    "diceNumber" : 1
 }

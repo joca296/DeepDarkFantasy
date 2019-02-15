@@ -1,6 +1,7 @@
 {
   "type" : "w",
+  "name" : "shortbow",
   "finesse" : true,
-  "damage" : 6,
-  "diceCount" : 1
+  "roll" : 6,
+  "diceNumber" : 1
 }

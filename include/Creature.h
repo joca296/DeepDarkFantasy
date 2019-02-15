@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Action.h"
+#include "ActionList.h"
 #include "functions.h"
 
 using namespace std;
@@ -16,15 +18,15 @@ using namespace std;
 #else
 #endif
 
-#define maxMonsterActions 10
+#define maxMonsterActions 100
 
 class Creature {
 private:
     int maxHP, curHP, ac, prof, STR, DEX, CON, INT, WIS, CHA, init;
     string name;
 public:
-    string actionList[maxMonsterActions];
-    int actionWeight[maxMonsterActions], numberOfActions;
+    ActionList* actionList;
+    int numberOfActions;
 
     //getters and setters
     string getName() const;
@@ -55,13 +57,13 @@ public:
     void setInit(int init);
 
     //methods
-    virtual string actionChoose()=0;
+    virtual Action* actionChoose()=0;
     virtual int isHero()=0;
-    int actionExec(struct cList* actors, Creature* tar, string actionName);
-    int execWeaponAttack(int damage, int diceCount, bool finesse, Creature* tar, string actionName);
-    int execSpellAttackST(int damage, int diceCount, string spellCastMod, bool spellCastModAddedToDamage, Creature* tar, string actionName);
-    int execHeal(int healing, int diceCount, string spellCastMod, bool spellCastModAddedToHealing, Creature* tar, string actionName);
-    int execAoE(struct cList* actors, int roll, int diceCount, int tarNumber,string spellCastMod, bool spellCastModAddedToRoll, Creature* tar, string actionName);
+    int actionExec(struct cList* actors, Creature* tar, Action *action);
+    int execWeaponAttack(Weapon *action, Creature* tar);
+    int execSpellAttackST(Spell *action, Creature* tar);
+    int execHeal(Spell *action, Creature* tar);
+    //int execAoE(struct cList* actors, Action *action, Creature* tar);
     string toString();
     virtual ~Creature() {};    //virtual destructor
 
@@ -69,6 +71,7 @@ public:
 
 class Monster: public Creature{
 public:
+    int actionWeight[maxMonsterActions];
     //constructors
     //~Monster();
     Monster(){};
@@ -76,7 +79,7 @@ public:
 
     //overrides
     int isHero() override;
-    string actionChoose() override;
+    Action* actionChoose() override;
 
 };
 
@@ -88,7 +91,7 @@ public:
 
     //overrides
     int isHero() override;
-    string actionChoose() override;
+    Action* actionChoose() override;
 };
 
 #endif //DEEPDARKFANTASY_CREATURE_H
