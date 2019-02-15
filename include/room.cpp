@@ -156,11 +156,12 @@ void room::set_room_desc(string s)
 
 room* room::enterRoom(Creature *p)
 {
+
     room *nRoom=NULL;
     string eChoice;
-    if(this->getRoomEnteredFlag()==false)
+    if(getRoomEnteredFlag()==false)
     {
-        setRoomEnteredFlag(true);
+
 
         if(numberOfMonsters>0)
         {
@@ -172,7 +173,7 @@ room* room::enterRoom(Creature *p)
     int choice_container;
 
     //bool choice_made_flag=false;;
-    cout<<this->get_room_desc()<<endl;
+    cout<<get_room_desc()<<endl;
     while(true)
     {
         //choice_made_flag=false;
@@ -181,9 +182,9 @@ room* room::enterRoom(Creature *p)
         switch(choice_container)
         {
             case 1:
-                    if(current_tries_remain>0)
+                    if(current_tries_remain>0 && this->getRoomEnteredFlag()==false)
                     {
-                        if(this->basic_checks(p)!=5) current_tries_remain--;
+                        if(basic_checks(p)!=5) current_tries_remain--;
                     }
                 else cout<<"You have no further interest in this place "<<endl;
                 break;
@@ -205,8 +206,24 @@ room* room::enterRoom(Creature *p)
                 eChoice=exit_room();
                 if(!eChoice.empty())
                 {
-                    nRoom=new room(eChoice);
-                    return nRoom;
+                    if(findRoom(rHead,eChoice)==NULL)
+                    {
+
+                        nRoom=new room(eChoice);
+                        //cout<<"Making new Room "<<nRoom->get_room_name()<<endl;
+                        if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
+                        setRoomEnteredFlag(true);
+                        return nRoom;
+                    }
+                    else
+                    {
+
+                        if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
+                       // cout<<"going into old room "<<endl;
+                        setRoomEnteredFlag(true);
+                        return findRoom(rHead,eChoice)->RPL;
+                    }
+
                 }
                 break;
             default:
@@ -409,4 +426,73 @@ string room::exit_room()
 
 }
 
+struct rList *append_node(room*r, struct rList *rHead)
+{
 
+    struct rList *newNode;
+    struct rList *ptr;
+    newNode=new struct rList;
+
+
+    newNode->RPL=r;
+
+    if(rHead==NULL)
+    {
+        rHead=newNode;
+        newNode->next=NULL;
+       // cout<<"APPENDING "<<rHead->RPL->get_room_name()<<endl;
+        return rHead;
+    }
+    else
+        {
+            ptr=rHead;
+            while(ptr->next!=NULL)
+            {
+            ptr=ptr->next;
+
+            }
+            ptr->next=newNode;
+            newNode->next=NULL;
+             //cout<<"APPENDING "<<newNode->RPL->get_room_name()<<endl;
+            return rHead;
+        }
+
+}
+
+
+void delete_rList(struct rList *rHead)
+{
+
+
+    struct rList* ptr;
+    struct rList* tmp;
+
+    while(rHead!=NULL)
+    {
+        ptr=rHead;
+        rHead=rHead->next;
+        //cout<<ptr->RPL->get_room_name()<<" is to be deleted next "<<endl;
+        delete ptr;
+    }
+
+}
+
+struct rList *findRoom(struct rList *rHead,string s)
+{
+    struct rList* ptr;
+    ptr=rHead;
+    while(ptr!=NULL)
+    {
+        //cout<<"COMPARING "<<ptr->RPL->get_room_name()<<" WITH "<<s<<endl;
+        if(ptr->RPL->get_room_name()==s)
+            {
+                return ptr;
+            }
+        ptr=ptr->next;
+    }
+    return NULL;
+}
+
+
+
+struct rList *rHead=NULL;

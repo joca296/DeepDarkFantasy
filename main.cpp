@@ -17,9 +17,11 @@ int main(){
     Hero x("barbarian");
     room* r;
     r=new room("caveEntrance");
+    //rHead=append_node(r,rHead);
     while(r!=NULL){
     r=r->enterRoom(&x);
     }
+    delete_rList(rHead);
    /* string s[]={"kobold","goblin","twigBlight"};
     combat(&x,s,3);
     Monster y("kobold");

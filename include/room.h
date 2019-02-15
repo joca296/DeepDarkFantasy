@@ -7,6 +7,7 @@
 #include "Creature.h"
 #include "combat.h"
 
+
 #define MAX_ROOM_MONSTERS 10
 #define MAX_CONNECTED_ROOMS 5
 
@@ -86,5 +87,18 @@ public:
 
 
 };
+
+struct rList
+{
+    struct rList *next;
+    room *RPL;
+
+};
+
+struct rList *append_node(room* r,struct rList *rHead);
+void delete_rList(struct rList *rHead);
+struct rList *findRoom(struct rList *rHead,string s);
+extern struct rList* rHead;
+
 
 #endif // ROOM_H_INCLUDED

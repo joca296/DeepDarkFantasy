@@ -1,5 +1,5 @@
 {
-  "name" : "Cave Entrance",
+  "name" : "caveEntrance",
   "DC_Perception" : 10,
   "DC_Investigation" : -1,
   "DC_Survival" : -1,
