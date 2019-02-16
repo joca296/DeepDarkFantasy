@@ -6,7 +6,7 @@
 #include <string>
 #include "Creature.h"
 #include "combat.h"
-
+#include "event.h"
 
 #define MAX_ROOM_MONSTERS 10
 #define MAX_CONNECTED_ROOMS 5

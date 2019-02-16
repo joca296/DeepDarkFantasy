@@ -1,6 +1,5 @@
 #include "Creature.h"
 #include "cList.h"
-
 string Creature::getName() const {
     return name;
 }
