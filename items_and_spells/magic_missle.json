@@ -1,0 +1,11 @@
+{
+  "type" : "a",
+  "name" : "magic_missle",
+  "spellCastMod" : "int",
+  "heal" : false,
+  "spellCastModAddedToRoll" : false,
+  "savingThrowFlag" : false,
+  "roll" : 6,
+  "diceNumber" : 1,
+  "numberOfTargets" : 3
+}

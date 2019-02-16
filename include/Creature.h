@@ -63,7 +63,7 @@ public:
     int execWeaponAttack(Weapon *action, Creature* tar);
     int execSpellAttackST(Spell *action, Creature* tar);
     int execHeal(Spell *action, Creature* tar);
-    //int execAoE(struct cList* actors, Action *action, Creature* tar);
+    int execAoE(struct cList* actors, SpellAoE *action, Creature* tar);
     string toString();
     virtual ~Creature() {};    //virtual destructor
 

@@ -209,7 +209,6 @@ Action* Hero::actionChoose() {
 
 //Creature class method definitions
 int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
-    //rework
     char type = action->getType();
     switch(type){
         case 'w':{
@@ -220,6 +219,10 @@ int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
             Spell* spell = (Spell*) action;
             if(!spell->isHeal()) return this->execSpellAttackST(spell,tar);
             else return this->execHeal(spell,tar);
+        }
+        case 'a':{
+            SpellAoE* spellAoE = (SpellAoE*) action;
+            return this->execAoE(actors,spellAoE,tar);
         }
     }
 }
@@ -314,26 +317,34 @@ int Creature::execHeal(Spell *action, Creature* tar) {
     cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<action->getName()<<"."<<endl;
     return 0;
 }
-/*int Creature::execAoE(struct cList* actors, Action *action, Creature* tar){
+int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
     //For now if target is hero .. spell will randomly take tarNumber-1 monsters for aoe
     //Monsters only target hero for now because party not implemented
     struct cList* targets=NULL;
-    insert_node(tar,targets);
+    targets=append_node(tar,targets);
 
     if(this->isHero()){
         struct cList* tmp=actors;
-        int x = tarNumber-1;
+        int x = action->getNumberOfTargets()-1;
         while(tmp!=NULL && x>0){
-            if(tmp->CPL->isHero()==0){
-                insert_node(tmp->CPL,targets);
+            if(tmp->CPL->isHero()==0 && tmp->CPL->getName()!=tar->getName()){
+                targets=append_node(tmp->CPL,targets);
                 x--;
             }
             tmp=tmp->next;
         }
     }
 
-    //To be continued
-}*/
+    struct cList* tmp=targets;
+    int deaths=0;
+    while(tmp!=NULL){
+        if(action->isHeal()) this->execHeal((Spell*)action,tmp->CPL);
+        else if(this->execSpellAttackST((Spell*)action,tmp->CPL)==1) deaths++;
+        tmp=tmp->next;
+    }
+
+    return deaths;
+}
 string Creature::toString(){
     string s;
     if(curHP<=0) s = name+" is dead.\n";

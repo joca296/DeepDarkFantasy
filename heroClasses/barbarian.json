@@ -8,5 +8,5 @@
   "int" : -1,
   "wis" : -1,
   "cha" : -1,
-  "actionList" : ["greataxe","javelin","firebolt","cure_wounds"]
+  "actionList" : ["greataxe","javelin","firebolt","cure_wounds","magic_missle"]
 }
