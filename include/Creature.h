@@ -7,7 +7,6 @@
 #include "Action.h"
 #include "ActionList.h"
 #include "functions.h"
-
 #include "event.h"
 
 using namespace std;
