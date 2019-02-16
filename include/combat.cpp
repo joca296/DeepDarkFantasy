@@ -59,12 +59,11 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                 {
                     ptr2=ptr2->next;
                 }
-                if(ptr->CPL->actionExec(head,ptr2->CPL,ptr->CPL->actionChoose())==1)
+                if((dcount = ptr->CPL->actionExec(head,ptr2->CPL,ptr->CPL->actionChoose()))>=1)
                 {
                     //cout<<ptr2->CPL->getName()<<" died"<<endl;
-                    head=delete_node(head,ptr2);
-                    dcount++;
-                    targetChoiceIntMax--;
+                    head=prune_cList(head);
+                    targetChoiceIntMax-=dcount;
                     if(dcount==n)
                     {
                         cout<<"BATTLE WON!!!"<<endl;
