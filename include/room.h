@@ -4,13 +4,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <math.h>
 #include "Creature.h"
 #include "combat.h"
 #include "event.h"
 
+
 #define MAX_ROOM_MONSTERS 10
 #define MAX_CONNECTED_ROOMS 5
-
+#define MAX_ROOM_TRAPS
 
 //cross-platform support
 #ifdef __linux__
@@ -31,14 +33,19 @@ class room
 {
 private:
     int DC_Perception, DC_Investigation, DC_Survival, DC_Arcana;
-    string room_next[MAX_CONNECTED_ROOMS];
-    string room_monsters[MAX_ROOM_MONSTERS];
+
     int maxRollsAllowed;
-    int numberOfConnections,numberOfMonsters;
+    int numberOfConnections,numberOfMonsters,numberOfEvents;
     string Perception_SUCC_text, Investigation_SUCC_text, Survival_SUCC_text, Arcana_SUCC_text, Perception_FAIL_text, Investigation_FAIL_text, Survival_FAIL_text, Arcana_FAIL_text;
     string room_name,room_desc,combat_desc;
+    string room_next[MAX_CONNECTED_ROOMS];
+    string room_monsters[MAX_ROOM_MONSTERS];
     bool roomEnteredFlag=false;
 public:
+
+
+    event* room_traps[MAX_ROOM_TRAPS];
+
 
     void set_room_desc(string s);
     string get_room_desc();
@@ -81,7 +88,8 @@ public:
     void basic_choise_text(Creature *p);
     int basic_checks(Creature *p);
     void basic_checks_text();
-    string exit_room();
+    void activateTrap(event* e,Creature *p);
+    string exit_room(Creature *p);
 
     room(string name);
 

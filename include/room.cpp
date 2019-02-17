@@ -159,6 +159,7 @@ room* room::enterRoom(Creature *p)
 
     room *nRoom=NULL;
     string eChoice;
+
     if(getRoomEnteredFlag()==false)
     {
 
@@ -203,7 +204,7 @@ room* room::enterRoom(Creature *p)
                 break;
             case 6:
                 cout<<"EXIT WIP"<<endl;
-                eChoice=exit_room();
+                eChoice=exit_room(p);
                 if(!eChoice.empty())
                 {
                     if(findRoom(rHead,eChoice)==NULL)
@@ -255,7 +256,7 @@ int room::basic_checks(Creature *p)
              if(dRoll()+p->getWIS() >= this->getDC_Perception() && getDC_Perception()>=0)
             {
                 cout<<this->getPerception_SUCC_text()<<endl;
-                                                            //check reward here
+                for(int i=0; i<this->numberOfEvents; i++)                                            //check reward here
                 return 11;
             }
             else
@@ -397,15 +398,34 @@ room::room(string name)
                 this->numberOfMonsters++;
             }
         }
+        const Value& c = document["events"];              //setting events
+        j=0;
+        this->numberOfEvents=0;
+        if(c.Size()>0){
+            for (SizeType i = 0; i <c.Size(); i++){
+
+                this->room_traps[j]=new trap(c[i].GetString());
+                //cout<<"ASS"<<endl;
+                //cout<<this->room_events[j]<<endl;
+                j++;
+                this->numberOfEvents++;
+            }
+        }
+
+
 
 }
 else cout<<"room file not open"<<endl;
         f.close();
 }
 
-string room::exit_room()
+string room::exit_room(Creature *p)
 {
     string s;
+    for(int i=0; i<numberOfEvents; i++)
+    {
+        if(this->numberOfEvents>0 && room_traps[i]->isDisarmed==false) activateTrap(room_traps[i],p);
+    }
     while(true){
     int cContainer=0;
     int j=0;
@@ -493,6 +513,45 @@ struct rList *findRoom(struct rList *rHead,string s)
     return NULL;
 }
 
+void room::activateTrap(event* e, Creature *p)
+{
+    int dimaga;
+    if(e->getSave()=="DEX")
+    {
+        if(dRoll(20,0,1)+p->getDEX()>=e->getSaveDC())
+        {
+            cout<<e->getSave_succ_text()<<endl;
+            dimaga=floor(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
+            cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
+            p->setCurHP(p->getCurHP()-dimaga);
+        }
+        else
+        {
+            cout<<e->getSave_fail_text()<<endl;
+            dimaga=dRoll(e->getDMG(),0,e->getDNum());
+            cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
+            p->setCurHP(p->getCurHP()-dimaga);
+        }
+    }
+    else if(e->getSave()=="STR")
+    {
+        if(dRoll(20,0,1)+p->getSTR()>=e->getSaveDC())
+        {
+            cout<<e->getSave_succ_text()<<endl;
+            dimaga=floor(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
+            cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
+            p->setCurHP(p->getCurHP()-dimaga);
+        }
+        else
+        {
+            cout<<e->getSave_fail_text()<<endl;
+            dimaga=dRoll(e->getDMG(),0,e->getDNum());
+            cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
+            p->setCurHP(p->getCurHP()-dimaga);
+        }
+    }
+    else cout<<"WTF? (can only roll DEX or STR against traps ATM "<<endl;
+}
 
 
 struct rList *rHead=NULL;

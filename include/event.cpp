@@ -93,7 +93,32 @@
         return save;
     }
 
+    void event::setDisarm_succ_text(string s)
+    {
+        disarm_succ_text=s;
+    }
+    string event::getDisarm_succ_text()
+    {
+        return disarm_succ_text;
+    }
 
+    void event::setDisarm_fail_text(string s)
+    {
+        disarm_fail_text=s;
+    }
+    string event::getDisarm_fail_text()
+    {
+        return disarm_fail_text;
+    }
+
+    void event::setSaveMulti(float f)
+    {
+        SaveMulti=f;
+    }
+    float event::getSaveMulti()
+    {
+        return SaveMulti;
+    }
 
 
     trap::trap(string name)
@@ -116,7 +141,11 @@
        this->setSave(document["Save"].GetString());
        this->setSave_succ_text(document["SaveSUCC"].GetString());
        this->setSave_fail_text(document["SaveFAIL"].GetString());
+       this->setSaveMulti(document["SaveMulti"].GetFloat());
        this->setDisarmDC(document["DisarmDC"].GetInt());
+       this->setDisarm_succ_text(document["DisSucc"].GetString());
+       //cout<<"PASS"<<endl;
+
 
 
     }

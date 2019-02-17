@@ -20,10 +20,11 @@ using namespace std;
 {
 private:
     int CheckDC,SaveDC,DisarmDC,DMG,dNum;
-    string interact_text, check_succ_text,save_succ_text,save_fail_text;
+    float SaveMulti;
+    string interact_text, check_succ_text,save_succ_text,save_fail_text,disarm_succ_text,disarm_fail_text;
     string skill;
     string save;
-    bool eDisc=false;
+
 
     public:
 
@@ -38,6 +39,9 @@ private:
     void setDisarmDC(int);
     int getDisarmDC();
 
+    void setSaveMulti(float);
+    float getSaveMulti();
+
     void setInteract_text(string);
     string getInteract_text();
     void setCheck_succ_text(string);
@@ -47,17 +51,28 @@ private:
     void setSave_fail_text(string);
     string getSave_fail_text();
 
+    void setDisarm_succ_text(string);
+    string getDisarm_succ_text();
+    void setDisarm_fail_text(string);
+    string getDisarm_fail_text();
+
+    bool eDisc=false;
+    bool isDisarmed=false;
+
+
+
     void setSkill(string);
     string getSkill();
     void setSave(string);
     string getSave();
-
+    //virtual void throwAwayFunction()=0;
     virtual ~event(){};
 
 };
 
 class trap:public event
 {
+    public:
     trap(string);
 };
 
