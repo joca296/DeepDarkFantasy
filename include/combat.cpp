@@ -29,77 +29,27 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
     sortList(head);
     displayList(head);
 
-    int targetChoiceInt=1;
-    int targetChoiceIntMax=n+1;
     while(true/*fightOverFlag==false*/)
     {
         ptr=head;
-        ptr2=head;
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
-            ptr2=head;
-            if(ptr->CPL->isHero()==1 && ptr->CPL->getCurHP()>0) //If players turn
-            {
-
-                cout<<"Choose your target (sorted by initiative) "<<endl;
-                for(int i=1; i<=n+1; i++)
-                {
-                    cout<<i<<". "<<ptr2->CPL->getName()<<" "<<ptr2->CPL->getCurHP()<<"/"<<ptr2->CPL->getMaxHP()<<" HP"<<endl;
-                    ptr2=ptr2->next;
-                    if(ptr2==NULL) break;
-
+            Creature* target = ptr->CPL->chooseTarget(head);
+            Action* action = ptr->CPL->actionChoose();
+            int deathsThisTurn = 0;
+            deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
+            if(deathsThisTurn>0){
+                dcount+=deathsThisTurn;
+                if(target->getCurHP()<1 && target->isHero()) return -1;
+                head=prune_cList(head);
+                if(dcount==n){
+                    cout<<"Battle won!"<<endl;
+                    delete_cList(head);
+                    head=NULL;
+                    return 1;
                 }
-                do
-                {
-                    cin>>targetChoiceInt;
-                    if(targetChoiceInt>targetChoiceIntMax) cout<<"Invalid, try again "<<endl;
-                }while(targetChoiceInt>targetChoiceIntMax);
-                ptr2=head;
-                for(int i=1; i<targetChoiceInt; i++)
-                {
-                    ptr2=ptr2->next;
-                }
-                if((dcount = ptr->CPL->actionExec(head,ptr2->CPL,ptr->CPL->actionChoose()))>=1)
-                {
-                    //cout<<ptr2->CPL->getName()<<" died"<<endl;
-                    head=prune_cList(head);
-                    targetChoiceIntMax-=dcount;
-                    if(dcount==n)
-                    {
-                        cout<<"BATTLE WON!!!"<<endl;
-                        delete_cList(head);
-                        head=NULL;
-                        return 1;
-                    }
-
-
-                }
-            }
-            else if(ptr->CPL->getCurHP()>0)
-            {
-                if(ptr->CPL->actionExec(head,cp[n],ptr->CPL->actionChoose())==1)
-                   {
-                      // cout<<cp[n]->getName()<<" died"<<endl;
-                       delete_cList(head);
-                       head=NULL;
-                       return -1;
-
-                   }
-
             }
             ptr=ptr->next;
         }
     }
-    delete_cList(head);
-    return 0;
 }
-/*bool combatOverCheck(head,creature* p)
-{
-
-    struct cList* tmp=head;
-    while(tmp!=NULL)
-    {
-
-    }
-    return true;
-}*/

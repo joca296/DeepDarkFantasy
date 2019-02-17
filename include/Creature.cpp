@@ -135,6 +135,14 @@ Action* Monster::actionChoose() {
         tmp=tmp->next;
     }
 }
+Creature* Monster::chooseTarget(struct cList* actors){
+    struct cList* tmp = actors;
+    while(tmp!=NULL){
+        if(tmp->CPL->isHero()) return tmp->CPL;
+        tmp=tmp->next;
+    }
+    return NULL;
+}
 
 //Hero constructor
 Hero::Hero(string name){
@@ -203,6 +211,26 @@ Action* Hero::actionChoose() {
                 i++;
                 tmp=tmp->next;
             }
+        }
+    }
+}
+Creature* Hero::chooseTarget(struct cList* actors){
+    struct cList* tmp = actors;
+    int numberOfTargets = 0;
+    cout<<"Choose your target (sorted by initiative) "<<endl;
+    while(tmp!=NULL){
+        cout<<numberOfTargets<<". "<<tmp->CPL->getName()<<" "<<tmp->CPL->getCurHP()<<"/"<<tmp->CPL->getMaxHP()<<" HP"<<endl;
+        numberOfTargets++;
+        tmp=tmp->next;
+    }
+    while(1){
+        int choice;
+        cin>>choice;
+        if(choice<0 || choice>numberOfTargets) cout<<"Invalid input, try again";
+        else{
+            tmp=actors;
+            for(int i=0; i<choice; i++) tmp=tmp->next;
+            return tmp->CPL;
         }
     }
 }

@@ -59,6 +59,7 @@ public:
 
     //methods
     virtual Action* actionChoose()=0;
+    virtual Creature* chooseTarget(struct cList* actors)=0;
     virtual int isHero()=0;
     int actionExec(struct cList* actors, Creature* tar, Action *action);
     int execWeaponAttack(Weapon *action, Creature* tar);
@@ -81,7 +82,7 @@ public:
     //overrides
     int isHero() override;
     Action* actionChoose() override;
-
+    Creature* chooseTarget(struct cList* actors) override;
 };
 
 class Hero : public Creature{
@@ -93,6 +94,7 @@ public:
     //overrides
     int isHero() override;
     Action* actionChoose() override;
+    Creature* chooseTarget(struct cList* actors) override;
 };
 
 #endif //DEEPDARKFANTASY_CREATURE_H
