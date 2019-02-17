@@ -213,17 +213,17 @@ Action* Hero::selectWeapon() {
     ActionList* tmp = this->weapons;
     int maxChoices = 0;
     while(tmp!=NULL){
-        cout<<maxChoices<<". "<<tmp->action->getName()<<endl;
         maxChoices++;
+        cout<<maxChoices<<". "<<tmp->action->getName()<<endl;
         tmp=tmp->next;
     }
     while(1){
         int choice;
         cin>>choice;
-        if(choice<0 || choice>maxChoices) cout<<"Invalid input, try again."<<endl;
+        if(choice<1 || choice>maxChoices) cout<<"Invalid input, try again."<<endl;
         else{
             tmp = this->weapons;
-            for(int i=0;i<choice;i++) tmp=tmp->next;
+            for(int i=1;i<choice;i++) tmp=tmp->next;
             return tmp->action;
         }
     }
@@ -232,17 +232,17 @@ Action* Hero::selectSpell() {
     ActionList* tmp = this->spellBook;
     int maxChoices = 0;
     while(tmp!=NULL){
-        cout<<maxChoices<<". "<<tmp->action->getName()<<endl;
         maxChoices++;
+        cout<<maxChoices<<". "<<tmp->action->getName()<<endl;
         tmp=tmp->next;
     }
     while(1){
         int choice;
         cin>>choice;
-        if(choice<0 || choice>maxChoices) cout<<"Invalid input, try again."<<endl;
+        if(choice<1 || choice>maxChoices) cout<<"Invalid input, try again."<<endl;
         else{
             tmp = this->spellBook;
-            for(int i=0;i<choice;i++) tmp=tmp->next;
+            for(int i=1;i<choice;i++) tmp=tmp->next;
             return tmp->action;
         }
     }
@@ -252,17 +252,17 @@ Creature* Hero::chooseTarget(struct cList* actors){
     int numberOfTargets = 0;
     cout<<"Choose your target (sorted by initiative) "<<endl;
     while(tmp!=NULL){
-        cout<<numberOfTargets<<". "<<tmp->CPL->getName()<<" "<<tmp->CPL->getCurHP()<<"/"<<tmp->CPL->getMaxHP()<<" HP"<<endl;
         numberOfTargets++;
+        cout<<numberOfTargets<<". "<<tmp->CPL->getName()<<" "<<tmp->CPL->getCurHP()<<"/"<<tmp->CPL->getMaxHP()<<" HP"<<endl;
         tmp=tmp->next;
     }
     while(1){
         int choice;
         cin>>choice;
-        if(choice<0 || choice>numberOfTargets) cout<<"Invalid input, try again.";
+        if(choice<1 || choice>numberOfTargets) cout<<"Invalid input, try again.";
         else{
             tmp=actors;
-            for(int i=0; i<choice; i++) tmp=tmp->next;
+            for(int i=1; i<choice; i++) tmp=tmp->next;
             return tmp->CPL;
         }
     }
@@ -314,7 +314,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     atcRoll = dRoll()+bonus+this->getProf();
 
     //attack success
-    if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
+    if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
         int dmgRoll = dRoll(action->getRoll(),0) + bonus;
         if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
         tar->setCurHP(tar->getCurHP()-dmgRoll);
@@ -354,7 +354,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
     atcRoll=dRoll()+bonus+this->getProf();
 
     //attack success
-    if(atcRoll >= tar->getAc() || atcRoll-bonus == 20){
+    if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
         int dmgRoll = dRoll(action->getRoll(),0) + ( action->isSpellCastModAddedToRoll()? bonus:0 );
         if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
         tar->setCurHP(tar->getCurHP()-dmgRoll);
@@ -417,8 +417,8 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
     struct cList* tmp=targets;
     int deaths=0;
     while(tmp!=NULL){
-        if(action->isHeal()) this->execHeal((Spell*)action,tmp->CPL);
-        else if(this->execSpellAttackST((Spell*)action,tmp->CPL)==1) deaths++;
+        if(action->isHeal()) deaths+=this->execHeal((Spell*)action,tmp->CPL);
+        else deaths+=this->execSpellAttackST((Spell*)action,tmp->CPL);
         tmp=tmp->next;
     }
 
