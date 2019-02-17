@@ -26,9 +26,6 @@ private:
     int maxHP, curHP, ac, prof, STR, DEX, CON, INT, WIS, CHA, init;
     string name;
 public:
-    ActionList* actionList;
-    int numberOfActions;
-
     //getters and setters
     string getName() const;
     void setName(string name);
@@ -73,7 +70,8 @@ public:
 
 class Monster: public Creature{
 public:
-    int actionWeight[maxMonsterActions];
+    ActionList* actionList;
+    int numberOfActions, actionWeight[maxMonsterActions];
     //constructors
     //~Monster();
     Monster(){};
@@ -87,14 +85,20 @@ public:
 
 class Hero : public Creature{
 public:
+    ActionList *weapons, *spellBook;
+
     //constructors
     Hero(){};
     Hero(string name);
 
-    //overrides
+    //overrides and methods
     int isHero() override;
     Action* actionChoose() override;
+    Action* selectSpell();
+    Action* selectWeapon();
     Creature* chooseTarget(struct cList* actors) override;
+    void listWeapons();
+    void listSpellBook();
 };
 
 #endif //DEEPDARKFANTASY_CREATURE_H
