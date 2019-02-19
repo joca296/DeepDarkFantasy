@@ -1,6 +1,6 @@
 {
   "name" : "caveEntrance",
-  "DC_Perception" : 10,
+  "DC_Perception" : -1,
   "DC_Investigation" : -1,
   "DC_Survival" : -1,
   "DC_Arcana" : -1,

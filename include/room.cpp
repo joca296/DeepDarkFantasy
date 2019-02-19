@@ -261,6 +261,7 @@ int room::basic_checks(Creature *p)
                  {
                      room_traps[i]->eDisc=true;
                      cout<<room_traps[i]->getCheck_succ_text()<<endl;
+                     return 10;
                  }
              }
              if(roll_container >= this->getDC_Perception() && getDC_Perception()>=0)
@@ -291,6 +292,7 @@ int room::basic_checks(Creature *p)
                  {
                      room_traps[i]->eDisc=true;
                      cout<<room_traps[i]->getCheck_succ_text()<<endl;
+                     return 20;
                  }
              }
             if(roll_container >= this->getDC_Investigation() && getDC_Investigation()>=0)
@@ -319,6 +321,7 @@ int room::basic_checks(Creature *p)
                  {
                      room_traps[i]->eDisc=true;
                      cout<<room_traps[i]->getCheck_succ_text()<<endl;
+                     return 30;
                  }
              }
               if(roll_container >= this->getDC_Survival() && getDC_Survival()>=0)
@@ -347,6 +350,7 @@ int room::basic_checks(Creature *p)
                  {
                      room_traps[i]->eDisc=true;
                      cout<<room_traps[i]->getCheck_succ_text()<<endl;
+                     return 40;
                  }
              }
             if(roll_container >= this->getDC_Arcana() && getDC_Arcana()>=0)
@@ -468,7 +472,8 @@ string room::exit_room(Creature *p)
     int j=0;
     for(int i=0; i<this->numberOfConnections; i++)
     {
-        cout<<i+1<<". "<<this->room_next[i]<<endl;
+        cout<<i+1<<". "<<this->room_next[i];if(findRoom(rHead,room_next[i])!=NULL)cout<<" (visited)";
+        cout<<endl;
         j=i+2;
     }
     cout<<j<<". Back "<<endl;
@@ -501,7 +506,7 @@ int room::special_interactions(Creature *p)
         cout<<counter<<". "<<"Back"<<endl;
         cin>>choice_container;
         if(choice_container>counter || choice_container<1) cout<<"Invalid input, try again! "<<endl;
-    }while(choice_container>counter);
+    }while(choice_container>counter || choice_container<1);
     if(choice_container==counter) return 0;
     else if(choice_container<counter-item_counter)
     {                                                                                   //trap disarm
@@ -598,7 +603,7 @@ void room::activateTrap(event* e, Creature *p)
     int dimaga;
     if(e->getSave()=="DEX")
     {
-        if(dRoll(20,0,1)+p->getDEX()>=e->getSaveDC())
+        if(dRoll()+p->getDEX()>=e->getSaveDC())
         {
             cout<<e->getSave_succ_text()<<endl;
             dimaga=floor(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
@@ -615,7 +620,7 @@ void room::activateTrap(event* e, Creature *p)
     }
     else if(e->getSave()=="STR")
     {
-        if(dRoll(20,0,1)+p->getSTR()>=e->getSaveDC())
+        if(dRoll()+p->getSTR()>=e->getSaveDC())
         {
             cout<<e->getSave_succ_text()<<endl;
             dimaga=floor(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
