@@ -206,7 +206,7 @@ room* room::enterRoom(Creature *p)
                 cout<<p->toString()<<endl;
                 break;
             case 6:
-                cout<<"EXIT WIP"<<endl;
+                //cout<<"EXIT WIP"<<endl;
                 eChoice=exit_room(p);
                 if(p->getCurHP()<1)
                 {
@@ -649,6 +649,8 @@ void room::activateTrap(event* e, Creature *p)
         }
     }
     else cout<<"WTF? (can only roll DEX or STR against traps ATM) "<<endl;
+
+    e->isDisarmed=true;
 }
 
 
