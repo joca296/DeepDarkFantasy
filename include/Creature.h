@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Item.h"
+#include "ItemList.h"
 #include "Action.h"
 #include "ActionList.h"
 #include "functions.h"
@@ -54,6 +56,9 @@ public:
     int getInit() const;
     void setInit(int init);
 
+    //Inventory
+    ItemList* inventory;
+
     //methods
     virtual Action* actionChoose()=0;
     virtual Creature* chooseTarget(struct cList* actors)=0;
@@ -64,6 +69,8 @@ public:
     int execHeal(Spell *action, Creature* tar);
     int execAoE(struct cList* actors, SpellAoE *action, Creature* tar);
     string toString();
+    virtual void listSpellBook();
+    virtual void listWeapons();
     virtual ~Creature() {};    //virtual destructor
 
 };
@@ -86,6 +93,7 @@ public:
 class Hero : public Creature{
 public:
     ActionList *weapons, *spellBook;
+    Armor armor;
 
     //constructors
     Hero(){};
@@ -97,8 +105,8 @@ public:
     Action* selectSpell();
     Action* selectWeapon();
     Creature* chooseTarget(struct cList* actors) override;
-    void listWeapons();
-    void listSpellBook();
+    void listWeapons() override;
+    void listSpellBook() override;
 };
 
 #endif //DEEPDARKFANTASY_CREATURE_H

@@ -105,7 +105,7 @@ Monster::Monster(string name){
         this->actionList = NULL;
         for (SizeType i = 0; i < a.Size(); i++){
             Action* action = callConstuctor(a[i].GetString());
-            this->actionList = insert_action(action,this->actionList);
+            this->actionList = insert_node(action,this->actionList);
             numberOfActions++;
         }
 
@@ -177,14 +177,14 @@ Hero::Hero(string name){
         this->weapons = NULL;
         for (SizeType i = 0; i < a.Size(); i++){
             Action* action = callConstuctor(a[i].GetString());
-            this->weapons = insert_action(action,this->weapons);
+            this->weapons = insert_node(action,this->weapons);
         }
 
         const Value& b = document["spellBook"];
         this->spellBook = NULL;
         for (SizeType i = 0; i < b.Size(); i++){
             Action* action = callConstuctor(b[i].GetString());
-            this->spellBook = insert_action(action,this->spellBook);
+            this->spellBook = insert_node(action,this->spellBook);
         }
     }
     else cout<<"hero file not open"<<endl;
@@ -273,6 +273,7 @@ void Hero::listWeapons() {
     else{
         while(tmp!=NULL){
             cout<<tmp->action->getName()<<endl;
+            tmp=tmp->next;
         }
     }
 }
@@ -282,6 +283,7 @@ void Hero::listSpellBook() {
     else{
         while(tmp!=NULL){
             cout<<tmp->action->getName()<<endl;
+            tmp=tmp->next;
         }
     }
 }
@@ -430,3 +432,5 @@ string Creature::toString(){
     else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
     return s;
 }
+void Creature::listSpellBook(){};
+void Creature::listWeapons(){};

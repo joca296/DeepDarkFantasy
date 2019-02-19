@@ -195,9 +195,11 @@ room* room::enterRoom(Creature *p)
                 break;
             case 3:
                 cout<<"Open Inventory WIP "<<endl;
+                p->listWeapons();
                 break;
             case 4:
-                cout<<"Open Spellbook WIP"<<endl;
+                //cout<<"Open Spellbook WIP"<<endl;
+                p->listSpellBook();
                 break;
             case 5:
                 //cout<<"Open Stats WIP "<<endl;

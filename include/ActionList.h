@@ -7,6 +7,6 @@ struct ActionList{
     struct ActionList* next;
     Action* action;
 };
-struct ActionList* insert_action(Action* action, struct ActionList* head);
+struct ActionList* insert_node(Action* action, struct ActionList* head);
 
 #endif //DEEPDARKFANTASY_ACTIONLIST_H

@@ -1,6 +1,0 @@
-#ifndef INTERACT_H_INCLUDED
-#define INTERACT_H_INCLUDED
-
-
-
-#endif // INTERACT_H_INCLUDED

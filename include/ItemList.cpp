@@ -1,11 +1,11 @@
-#include "ActionList.h"
+#include "ItemList.h"
 
-struct ActionList* insert_node(Action* action, struct ActionList* head){
-    struct ActionList* newNode;
-    struct ActionList* ptr;
+struct ItemList* insert_node(Item* item, ItemList* head){
+    struct ItemList* newNode;
+    struct ItemList* ptr;
 
-    newNode=new struct ActionList;
-    newNode->action=action;
+    newNode=new struct ItemList;
+    newNode->item=item;
     newNode->next=NULL;
 
     if(head == NULL){
