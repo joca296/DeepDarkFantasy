@@ -4,10 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "Item.h"
-#include "ItemList.h"
 #include "Action.h"
-#include "ActionList.h"
 #include "functions.h"
 #include "event.h"
 
@@ -57,7 +56,7 @@ public:
     void setInit(int init);
 
     //Inventory
-    ItemList* inventory;
+    vector<Item*> inventory;
 
     //methods
     virtual Action* actionChoose()=0;
@@ -77,8 +76,9 @@ public:
 
 class Monster: public Creature{
 public:
-    ActionList* actionList;
-    int numberOfActions, actionWeight[maxMonsterActions];
+    vector<Action*> actionList;
+    vector<int> actionWeight;
+
     //constructors
     //~Monster();
     Monster(){};
@@ -92,7 +92,7 @@ public:
 
 class Hero : public Creature{
 public:
-    ActionList *weapons, *spellBook;
+    vector<Action*> weapons, spellBook;
     Armor armor;
 
     //constructors

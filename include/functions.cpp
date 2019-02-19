@@ -1,3 +1,4 @@
+#include <vector>
 #include "functions.h"
 
 int dRoll(int sideNum, int adv, int dNum)
@@ -49,13 +50,13 @@ int dRoll(int sideNum, int adv, int dNum)
     return 0;
 }
 
-int randomWeight(int numberOfChoices, int choiceWeight[]){
+int randomWeight(const vector<int>& choiceWeight){
     int sum_of_weight = 0;
-    for(int i=0; i<numberOfChoices; i++) {
+    for(int i=0; i<choiceWeight.size(); i++) {
         sum_of_weight += choiceWeight[i];
     }
     int rnd = rand()%sum_of_weight;
-    for(int i=0; i<numberOfChoices; i++) {
+    for(int i=0; i<choiceWeight.size(); i++) {
         if(rnd < choiceWeight[i]){
             return i;
         }

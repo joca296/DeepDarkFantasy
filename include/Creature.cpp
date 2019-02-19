@@ -101,20 +101,15 @@ Monster::Monster(string name){
 
         //setting actions
         const Value& a = document["actionList"];
-        numberOfActions=0;
-        this->actionList = NULL;
         for (SizeType i = 0; i < a.Size(); i++){
             Action* action = callConstuctor(a[i].GetString());
-            this->actionList = insert_node(action,this->actionList);
-            numberOfActions++;
+            actionList.push_back(action);
         }
 
         //adding weights
         const Value& b = document["actionWeight"];
-        int j=0;
         for (SizeType i = 0; i < b.Size(); i++){
-            actionWeight[j]=b[i].GetInt();
-            j++;
+            actionWeight.push_back(b[i].GetInt());
         }
     }
     else cout<<"monster file not open"<<endl;
@@ -126,14 +121,8 @@ int Monster::isHero() {
     return 0;
 }
 Action* Monster::actionChoose() {
-    int choice = randomWeight(numberOfActions,actionWeight);
-    ActionList* tmp=this->actionList;
-    int i=0;
-    while(tmp!=NULL){
-        if(i==choice) return tmp->action;
-        i++;
-        tmp=tmp->next;
-    }
+    int choice = randomWeight(actionWeight);
+    return actionList[choice];
 }
 Creature* Monster::chooseTarget(struct cList* actors){
     struct cList* tmp = actors;
@@ -174,17 +163,15 @@ Hero::Hero(string name){
 
         //setting actions
         const Value& a = document["weapons"];
-        this->weapons = NULL;
         for (SizeType i = 0; i < a.Size(); i++){
             Action* action = callConstuctor(a[i].GetString());
-            this->weapons = insert_node(action,this->weapons);
+            weapons.push_back(action);
         }
 
         const Value& b = document["spellBook"];
-        this->spellBook = NULL;
         for (SizeType i = 0; i < b.Size(); i++){
             Action* action = callConstuctor(b[i].GetString());
-            this->spellBook = insert_node(action,this->spellBook);
+            spellBook.push_back(action);
         }
     }
     else cout<<"hero file not open"<<endl;
@@ -196,7 +183,7 @@ int Hero::isHero() {
 }
 Action* Hero::actionChoose() {
     cout<<"Choose an action:"<<endl;
-    if(this->weapons!=NULL && this->spellBook!=NULL){
+    if(weapons.size()>0 && spellBook.size()>0){
         cout<<"1. Weapon"<<endl<<"2. Spell"<<endl;
         while(1){
             int choice;
@@ -206,45 +193,29 @@ Action* Hero::actionChoose() {
             else cout<<"Invalid input, try again."<<endl;
         }
     }
-    else if (this->spellBook == NULL) return this->selectWeapon();
+    else if (spellBook.size() == 0) return this->selectWeapon();
     else return this->selectSpell();
 }
 Action* Hero::selectWeapon() {
-    ActionList* tmp = this->weapons;
-    int maxChoices = 0;
-    while(tmp!=NULL){
-        maxChoices++;
-        cout<<maxChoices<<". "<<tmp->action->getName()<<endl;
-        tmp=tmp->next;
+    for(int i=1; i<=weapons.size(); i++){
+        cout<<i<<". "<<weapons[i-1]->getName()<<endl;
     }
     while(1){
         int choice;
         cin>>choice;
-        if(choice<1 || choice>maxChoices) cout<<"Invalid input, try again."<<endl;
-        else{
-            tmp = this->weapons;
-            for(int i=1;i<choice;i++) tmp=tmp->next;
-            return tmp->action;
-        }
+        if(choice<1 || choice>weapons.size()) cout<<"Invalid input, try again."<<endl;
+        else return weapons[choice-1];
     }
 }
 Action* Hero::selectSpell() {
-    ActionList* tmp = this->spellBook;
-    int maxChoices = 0;
-    while(tmp!=NULL){
-        maxChoices++;
-        cout<<maxChoices<<". "<<tmp->action->getName()<<endl;
-        tmp=tmp->next;
+    for(int i=1; i<=spellBook.size(); i++){
+        cout<<i<<". "<<spellBook[i-1]->getName()<<endl;
     }
     while(1){
         int choice;
         cin>>choice;
-        if(choice<1 || choice>maxChoices) cout<<"Invalid input, try again."<<endl;
-        else{
-            tmp = this->spellBook;
-            for(int i=1;i<choice;i++) tmp=tmp->next;
-            return tmp->action;
-        }
+        if(choice<1 || choice>spellBook.size()) cout<<"Invalid input, try again."<<endl;
+        else return spellBook[choice-1];
     }
 }
 Creature* Hero::chooseTarget(struct cList* actors){
@@ -268,23 +239,23 @@ Creature* Hero::chooseTarget(struct cList* actors){
     }
 }
 void Hero::listWeapons() {
-    ActionList* tmp = this->weapons;
-    if(tmp==NULL) cout<<"You don't have any weapons equipped.";
+    if(weapons.size() == 0) cout<<"You don't have any weapons equipped.";
     else{
-        while(tmp!=NULL){
-            cout<<tmp->action->getName()<<endl;
-            tmp=tmp->next;
+        cout<<"Weapons:"<<endl;
+        for(int i=1; i<=weapons.size(); i++){
+            cout<<i<<". "<<weapons[i-1]->getName()<<endl;
         }
+        cout<<endl;
     }
 }
 void Hero::listSpellBook() {
-    ActionList* tmp = this->spellBook;
-    if(tmp==NULL) cout<<"You don't know any spells.";
+    if(spellBook.size() == 0) cout<<"You don't know any spells.";
     else{
-        while(tmp!=NULL){
-            cout<<tmp->action->getName()<<endl;
-            tmp=tmp->next;
+        cout<<"Spells:"<<endl;
+        for(int i=1; i<=spellBook.size(); i++){
+            cout<<i<<". "<<spellBook[i-1]->getName()<<endl;
         }
+        cout<<endl;
     }
 }
 
