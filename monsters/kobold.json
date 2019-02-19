@@ -10,5 +10,6 @@
   "wis" : -2,
   "cha" : -1,
   "actionList" : ["dagger","sling"],
-  "actionWeight" : [100]
+  "actionWeight" : [100],
+  "inventory" : []
 }

@@ -1,6 +1,7 @@
 {
   "name" : "plate_armor",
   "desc" : "placeholder",
+  "itemType" : "a",
   "ac" : 18,
   "type" : "h"
 }

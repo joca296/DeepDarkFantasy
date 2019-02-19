@@ -10,5 +10,6 @@
   "wis" : -1,
   "cha" : -1,
   "actionList" : ["schimitar","shortbow"],
-  "actionWeight" : [60, 40]
+  "actionWeight" : [60, 40],
+  "inventory" : []
 }

@@ -194,18 +194,20 @@ room* room::enterRoom(Creature *p)
                 special_interactions(p);
                 break;
             case 3:
-                cout<<"Open Inventory WIP "<<endl;
-                p->listWeapons();
+                p->listInventory();
                 break;
             case 4:
+                p->listWeapons();
+                break;
+            case 5:
                 //cout<<"Open Spellbook WIP"<<endl;
                 p->listSpellBook();
                 break;
-            case 5:
+            case 6:
                 //cout<<"Open Stats WIP "<<endl;
                 cout<<p->toString()<<endl;
                 break;
-            case 6:
+            case 7:
                 //cout<<"EXIT WIP"<<endl;
                 eChoice=exit_room(p);
                 if(p->getCurHP()<1)
@@ -246,9 +248,10 @@ void room::basic_choise_text(Creature *p)
     cout<<"1. Basic Checks "<<endl;
     cout<<"2. Special Interactions "<<endl;
     cout<<"3. Open Inventory "<<endl;
-    cout<<"4. Open Spellbook"<<endl;
-    cout<<"5. Open Stats "<<endl;
-    cout<<"6. Exit Room "<<endl;
+    cout<<"4. Open Equipped weapons "<<endl;
+    cout<<"5. Open Spellbook"<<endl;
+    cout<<"6. Open Stats "<<endl;
+    cout<<"7. Exit Room "<<endl;
 }
 
 int room::basic_checks(Creature *p)

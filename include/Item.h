@@ -21,7 +21,10 @@ using namespace rapidjson;
 class Item {
 private:
     string name, desc;
+    char itemType;
 public:
+    char getItemType() const;
+    void setItemType(char itemType);
     const string &getName() const;
     void setName(const string &name);
     const string &getDesc() const;

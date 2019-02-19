@@ -70,6 +70,7 @@ public:
     string toString();
     virtual void listSpellBook();
     virtual void listWeapons();
+    void listInventory();
     virtual ~Creature() {};    //virtual destructor
 
 };

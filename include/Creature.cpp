@@ -111,6 +111,13 @@ Monster::Monster(string name){
         for (SizeType i = 0; i < b.Size(); i++){
             actionWeight.push_back(b[i].GetInt());
         }
+
+        //setting inventory;
+        const Value& c = document["inventory"];
+        for (SizeType i = 0; i < c.Size(); i++){
+            Item* item = new Item(c[i].GetString());
+            inventory.push_back(item);
+        }
     }
     else cout<<"monster file not open"<<endl;
     f.close();
@@ -177,6 +184,13 @@ Hero::Hero(string name){
         //setting armor
         armor = NULL;
         if(document["armor"].GetString() != "") armor = new Armor(document["armor"].GetString());
+
+        //setting inventory;
+        const Value& c = document["inventory"];
+        for (SizeType i = 0; i < c.Size(); i++){
+            Item* item = new Item(c[i].GetString());
+            inventory.push_back(item);
+        }
     }
     else cout<<"hero file not open"<<endl;
     f.close();
@@ -258,6 +272,16 @@ void Hero::listSpellBook() {
         cout<<"Spells:"<<endl;
         for(int i=1; i<=spellBook.size(); i++){
             cout<<i<<". "<<spellBook[i-1]->getName()<<endl;
+        }
+        cout<<endl;
+    }
+}
+void Creature::listInventory(){
+    if(inventory.size() == 0) cout<<"Inventory empty."<<endl;
+    else{
+        cout<<"Inventory:"<<endl;
+        for(int i=1; i<=inventory.size(); i++){
+            cout<<i<<". "<<inventory[i-1]->getName()<<endl;
         }
         cout<<endl;
     }

@@ -26,8 +26,17 @@ Item::Item(string name) {
         Document document = parseFromFile(&f);
         name=document["name"].GetString();
         desc=document["desc"].GetString();
+        itemType=document["itemType"].GetString()[0];
     }
     f.close();
+}
+
+char Item::getItemType() const {
+    return itemType;
+}
+
+void Item::setItemType(char itemType) {
+    Item::itemType = itemType;
 }
 
 int Armor::getAc() const {
