@@ -173,6 +173,10 @@ Hero::Hero(string name){
             Action* action = callConstuctor(b[i].GetString());
             spellBook.push_back(action);
         }
+
+        //setting armor
+        armor = NULL;
+        if(document["armor"].GetString() != "") armor = new Armor(document["armor"].GetString());
     }
     else cout<<"hero file not open"<<endl;
     f.close();
@@ -257,6 +261,15 @@ void Hero::listSpellBook() {
         }
         cout<<endl;
     }
+}
+int Hero::getAc() const{
+    if(armor != NULL){
+        int result =0;
+        result += armor->getAc();
+        result += ( armor->getType()== 'h'? 0 : (armor->getType()== 'm'? (this->getDEX()>2 ? 2 : this->getDEX() ) : this->getDEX() ) );
+        return result;
+    }
+    else return this->getAc()+this->getDEX();
 }
 
 //Creature class method definitions

@@ -93,7 +93,7 @@ public:
 class Hero : public Creature{
 public:
     vector<Action*> weapons, spellBook;
-    Armor armor;
+    Armor* armor;
 
     //constructors
     Hero(){};
@@ -107,6 +107,7 @@ public:
     Creature* chooseTarget(struct cList* actors) override;
     void listWeapons() override;
     void listSpellBook() override;
+    int getAc() const;
 };
 
 #endif //DEEPDARKFANTASY_CREATURE_H

@@ -10,5 +10,5 @@
   "cha" : -1,
   "weapons" : ["greataxe","javelin"],
   "spellBook" : ["firebolt","cure_wounds","magic_missle"],
-  "armor" : ["plate_armor"]
+  "armor" : "plate_armor"
 }

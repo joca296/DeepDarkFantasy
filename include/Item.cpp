@@ -24,7 +24,6 @@ Item::Item(string name) {
     f.open(path);
     if(f.is_open()){
         Document document = parseFromFile(&f);
-
         name=document["name"].GetString();
         desc=document["desc"].GetString();
     }
@@ -55,7 +54,6 @@ Armor::Armor(string name) : Item(name) {
     f.open(path);
     if(f.is_open()){
         Document document = parseFromFile(&f);
-
         ac=document["ac"].GetInt();
         type=document["type"].GetString()[0];
     }
