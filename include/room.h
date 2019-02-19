@@ -35,7 +35,7 @@ private:
     int DC_Perception, DC_Investigation, DC_Survival, DC_Arcana;
 
     int maxRollsAllowed;
-    int numberOfConnections,numberOfMonsters,numberOfEvents;
+    int numberOfConnections,numberOfMonsters,numberOfTraps;
     string Perception_SUCC_text, Investigation_SUCC_text, Survival_SUCC_text, Arcana_SUCC_text, Perception_FAIL_text, Investigation_FAIL_text, Survival_FAIL_text, Arcana_FAIL_text;
     string room_name,room_desc,combat_desc;
     string room_next[MAX_CONNECTED_ROOMS];
@@ -87,6 +87,7 @@ public:
     room* enterRoom(Creature *p);
     void basic_choise_text(Creature *p);
     int basic_checks(Creature *p);
+    int special_interactions(Creature *p);
     void basic_checks_text();
     void activateTrap(event* e,Creature *p);
     string exit_room(Creature *p);

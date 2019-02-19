@@ -4,7 +4,7 @@
   "DC_Investigation" : -1,
   "DC_Survival" : -1,
   "DC_Arcana" : -1,
-  "Perc_SUCC" : "You spot a small trail of food crumbs -- bread, cheese, salted pork -- leading deeper into the cavern",
+  "Perc_SUCC" : " ",
   "Invest_SUCC" : "Invest SUCC placeholder",
   "Surv_SUCC" : "Surv SUCC placeholder",
   "Arc_SUCC" : "Arcana SUCC placeholder",
@@ -14,7 +14,7 @@
   "Arc_FAIL" : "Arcana FAIL placeholder",
   "maxRolls" : 3,
   "combatDesc" : "An ambush! Send these vermin a message: the rightful owner has returned, and their kind is no longer welcome.",
-  "monsters" : ["goblin"],
+  "monsters" : [],
   "events" : ["AxeTrap"],
   "connectedRooms" : ["caveHallwayA"]
 }
