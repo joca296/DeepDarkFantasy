@@ -100,45 +100,33 @@ void Weapon::setFinesse(bool finesse) {
 }
 
 Action::Action() {}
-Action::Action(const char* action) {
-    Document document;
-    document.Parse(action);
-
-    name = document["name"].GetString();
-    roll = document["roll"].GetInt();
-    diceNumber = document["diceNumber"].GetInt();
-    type = document["type"].GetString()[0];
+Action::Action(Document& action) {
+    name = action["name"].GetString();
+    roll = action["roll"].GetInt();
+    diceNumber = action["diceNumber"].GetInt();
+    type = action["type"].GetString()[0];
 }
 
 Spell::Spell() {}
-Spell::Spell(const char* action) : Action(action){
-    Document document;
-    document.Parse(action);
-
-    spellCastMod = document["spellCastMod"].GetString();
-    spellCastModAddedToRoll = document["spellCastModAddedToRoll"].GetBool();
-    heal = document["heal"].GetBool();
-    savingThrowFlag = document["savingThrowFlag"].GetBool();
+Spell::Spell(Document& action) : Action(action){
+    spellCastMod = action["spellCastMod"].GetString();
+    spellCastModAddedToRoll = action["spellCastModAddedToRoll"].GetBool();
+    heal = action["heal"].GetBool();
+    savingThrowFlag = action["savingThrowFlag"].GetBool();
     if(savingThrowFlag){
-        savingThrowType = document["savingThrowType"].GetString();
-        savingThrowDC = document["savingThrowDC"].GetInt();
+        savingThrowType = action["savingThrowType"].GetString();
+        savingThrowDC = action["savingThrowDC"].GetInt();
     }
 }
 
 SpellAoE::SpellAoE() {}
-SpellAoE::SpellAoE(const char* action) : Spell(action) {
-    Document document;
-    document.Parse(action);
-
-    numberOfTargets = document["numberOfTargets"].GetInt();
+SpellAoE::SpellAoE(Document& action) : Spell(action) {
+    numberOfTargets = action["numberOfTargets"].GetInt();
 }
 
 Weapon::Weapon() {}
-Weapon::Weapon(const char* action) : Action(action){
-    Document document;
-    document.Parse(action);
-
-    finesse = document["finesse"].GetBool();
+Weapon::Weapon(Document& action) : Action(action){
+    finesse = action["finesse"].GetBool();
 }
 
 Action* callConstuctor(string name){
@@ -148,22 +136,16 @@ Action* callConstuctor(string name){
     else path = "./items_and_spells/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        //converting file to a char* to parse file
-        stringstream stream;
-        stream<<f.rdbuf();
-        string str = stream.str();
-        const char* json = str.c_str();
-        Document document;
-        document.Parse(json);
+        Document document = parseFromFile(&f);
 
         Action* result;
 
         //determining type of attack
         string type = document["type"].GetString();
         switch (type[0]){
-            case 'w' :  result = new Weapon(json); break;
-            case 's' :  result = new Spell(json); break;
-            case 'a' :  result = new SpellAoE(json); break;
+            case 'w' :  result = new Weapon(document); break;
+            case 's' :  result = new Spell(document); break;
+            case 'a' :  result = new SpellAoE(document); break;
         }
         return result;
     }

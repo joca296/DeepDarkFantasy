@@ -34,7 +34,7 @@ public:
     const string &getName() const;
     void setName(const string &name);
 
-    Action(const char* action);
+    Action(Document& action);
     Action();
 };
 
@@ -57,7 +57,7 @@ public:
     int getSavingThrowDC() const;
     void setSavingThrowDC(int savingThrowDC);
 
-    Spell(const char* action);
+    Spell(Document& action);
     Spell();
 };
 
@@ -68,7 +68,7 @@ public:
     int getNumberOfTargets() const;
     void setNumberOfTargets(int numberOfTargets);
 
-    SpellAoE(const char* action);
+    SpellAoE(Document& action);
     SpellAoE();
 };
 
@@ -79,7 +79,7 @@ public:
     bool isFinesse() const;
     void setFinesse(bool finesse);
 
-    Weapon(const char* action);
+    Weapon(Document& action);
     Weapon();
 };
 
