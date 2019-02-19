@@ -208,6 +208,11 @@ room* room::enterRoom(Creature *p)
             case 6:
                 cout<<"EXIT WIP"<<endl;
                 eChoice=exit_room(p);
+                if(p->getCurHP()<1)
+                {
+                    cout<<"you ded "<<endl;
+                    return nRoom;
+                }
                 if(!eChoice.empty())
                 {
                     if(findRoom(rHead,eChoice)==NULL)
@@ -468,6 +473,12 @@ string room::exit_room(Creature *p)
     for(int i=0; i<numberOfTraps; i++)
     {
         if(this->numberOfTraps>0 && room_traps[i]->isDisarmed==false) activateTrap(room_traps[i],p);
+        if(p->getCurHP()<1)
+        {
+
+            return s;
+
+        }
     }
     while(true){
     int cContainer=0;

@@ -27,7 +27,7 @@ public:
     const string &getDesc() const;
     void setDesc(const string &desc);
 
-    Item();
+    Item(){};
     Item(string name);
 };
 
@@ -41,7 +41,7 @@ public:
     char getType() const;
     void setType(char type);
 
-    Armor();
+    Armor(){};
     Armor(string name);
 };
 
