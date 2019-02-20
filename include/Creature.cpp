@@ -223,12 +223,13 @@ int Hero::isHero() {
 Action* Hero::actionChoose() {
     cout<<"Choose an action:"<<endl;
     if(weapons.size()>0 && spellBook.size()>0){
-        cout<<"1. Weapon"<<endl<<"2. Spell"<<endl;
+        cout<<"1. Weapon"<<endl<<"2. Spell"<<endl<<"3. Back"<<endl;
         while(1){
             int choice;
             cin>>choice;
             if(choice==1) return this->selectWeapon();
             else if (choice==2) return this->selectSpell();
+            else if (choice==3) return NULL;
             else cout<<"Invalid input, try again."<<endl;
         }
     }
