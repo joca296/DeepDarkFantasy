@@ -129,7 +129,7 @@
     else path = "./events/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        Document document = parseFromFile(&f);
+        const Document& document = parseFromFile(&f);
 
        this->setInteract_text(document["Interact"].GetString());
        this->setDMG(document["DMG"].GetInt());

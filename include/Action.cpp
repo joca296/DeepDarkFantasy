@@ -109,7 +109,7 @@ void Weapon::setFinesse(bool finesse) {
 }
 
 Action::Action() {}
-Action::Action(Document& action) {
+Action::Action(const Document& action) {
     name = action["name"].GetString();
     roll = action["roll"].GetInt();
     diceNumber = action["diceNumber"].GetInt();
@@ -117,7 +117,7 @@ Action::Action(Document& action) {
 }
 
 Spell::Spell() {}
-Spell::Spell(Document& action) : Action(action){
+Spell::Spell(const Document& action) : Action(action){
     spellCastMod = action["spellCastMod"].GetString();
     spellCastModAddedToRoll = action["spellCastModAddedToRoll"].GetBool();
     heal = action["heal"].GetBool();
@@ -129,12 +129,12 @@ Spell::Spell(Document& action) : Action(action){
 }
 
 SpellAoE::SpellAoE() {}
-SpellAoE::SpellAoE(Document& action) : Spell(action) {
+SpellAoE::SpellAoE(const Document& action) : Spell(action) {
     numberOfTargets = action["numberOfTargets"].GetInt();
 }
 
 Weapon::Weapon() {}
-Weapon::Weapon(Document& action) : Action(action){
+Weapon::Weapon(const Document& action) : Action(action){
     finesse = action["finesse"].GetBool();
 }
 
@@ -145,7 +145,7 @@ Action* callConstuctor(string name){
     else path = "./items_and_spells/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        Document document = parseFromFile(&f);
+        const Document& document = parseFromFile(&f);
 
         Action* result;
 

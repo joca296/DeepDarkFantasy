@@ -411,7 +411,7 @@ room::room(string name)
     else path = "./rooms/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        Document document = parseFromFile(&f);
+        const Document& document = parseFromFile(&f);
 
         this->set_room_name(document["name"].GetString());
         this->setDC_Perception(document["DC_Perception"].GetInt());

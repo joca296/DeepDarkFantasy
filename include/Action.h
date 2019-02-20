@@ -34,7 +34,7 @@ public:
     const string &getName() const;
     void setName(const string &name);
 
-    Action(Document& action);
+    Action(const Document& action);
     Action();
 };
 
@@ -60,7 +60,7 @@ public:
     void setManaCost(int);
 
 
-    Spell(Document& action);
+    Spell(const Document& action);
     Spell();
 };
 
@@ -71,7 +71,7 @@ public:
     int getNumberOfTargets() const;
     void setNumberOfTargets(int numberOfTargets);
 
-    SpellAoE(Document& action);
+    SpellAoE(const Document& action);
     SpellAoE();
 };
 
@@ -82,7 +82,7 @@ public:
     bool isFinesse() const;
     void setFinesse(bool finesse);
 
-    Weapon(Document& action);
+    Weapon(const Document& action);
     Weapon();
 };
 

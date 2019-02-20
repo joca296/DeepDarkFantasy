@@ -101,7 +101,7 @@ Monster::Monster(string name){
     else path = "./monsters/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        Document document = parseFromFile(&f);
+        const Document& document = parseFromFile(&f);
 
         //setting base monster values
         this->setName(document["name"].GetString()+to_string(rand()%100));
@@ -167,7 +167,7 @@ Hero::Hero(string name){
     else path = "./heroClasses/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        Document document = parseFromFile(&f);
+        const Document& document = parseFromFile(&f);
 
         //setting hero name
         string name;

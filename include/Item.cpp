@@ -23,7 +23,7 @@ Item::Item(string name) {
     else path = "./items_and_spells/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        Document document = parseFromFile(&f);
+        const Document& document = parseFromFile(&f);
         this->name=document["name"].GetString();
         desc=document["desc"].GetString();
         itemType=document["itemType"].GetString()[0];
@@ -62,7 +62,7 @@ Armor::Armor(string name) : Item(name) {
     else path = "./items_and_spells/"+name+".json";
     f.open(path);
     if(f.is_open()){
-        Document document = parseFromFile(&f);
+        const Document& document = parseFromFile(&f);
         ac=document["ac"].GetInt();
         type=document["type"].GetString()[0];
     }
