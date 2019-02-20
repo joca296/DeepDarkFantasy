@@ -74,6 +74,23 @@ void Creature::setInit(int init) {
     Creature::init = init;
 }
 
+void Creature::setMaxMana(int n)
+{
+    maxMana=n;
+}
+int Creature::getMaxMana()
+{
+    return maxMana;
+}
+void Creature::setCurMana(int n)
+{
+    curMana=n;
+}
+int Creature::getCurMana()
+{
+    return curMana;
+}
+
 
 //Monster::~Monster(){cout<<"This nigga dead "<<endl;}
 //Monster constructor
@@ -90,6 +107,8 @@ Monster::Monster(string name){
         this->setName(document["name"].GetString()+to_string(rand()%100));
         this->setMaxHP(document["hp"].GetInt());
         this->setCurHP(document["hp"].GetInt());
+        this->setMaxMana(document["mana"].GetInt());
+        this->setCurMana(document["mana"].GetInt());
         this->setAc(document["ac"].GetInt());
         this->setProf(document["prof"].GetInt());
         this->setSTR(document["str"].GetInt());
@@ -159,6 +178,8 @@ Hero::Hero(string name){
         this->setName(name);
         this->setMaxHP(document["hp"].GetInt());
         this->setCurHP(document["hp"].GetInt());
+        this->setMaxMana(document["mana"].GetInt());
+        this->setCurMana(document["mana"].GetInt());
         this->setAc(document["ac"].GetInt());
         this->setProf(document["prof"].GetInt());
         this->setSTR(document["str"].GetInt());
@@ -215,13 +236,17 @@ Action* Hero::actionChoose() {
     else return this->selectSpell();
 }
 Action* Hero::selectWeapon() {
+
     for(int i=1; i<=weapons.size(); i++){
         cout<<i<<". "<<weapons[i-1]->getName()<<endl;
+
     }
+    cout<<weapons.size()+1<<". Back"<<endl;
     while(1){
         int choice;
         cin>>choice;
-        if(choice<1 || choice>weapons.size()) cout<<"Invalid input, try again."<<endl;
+        if(choice<1 || choice>weapons.size()+1) cout<<"Invalid input, try again."<<endl;
+        else if(weapons.size()+1==choice) return NULL;
         else return weapons[choice-1];
     }
 }
@@ -229,10 +254,12 @@ Action* Hero::selectSpell() {
     for(int i=1; i<=spellBook.size(); i++){
         cout<<i<<". "<<spellBook[i-1]->getName()<<endl;
     }
+    cout<<spellBook.size()+1<<". Back"<<endl;
     while(1){
         int choice;
         cin>>choice;
-        if(choice<1 || choice>spellBook.size()) cout<<"Invalid input, try again."<<endl;
+        if(choice<1 || choice>spellBook.size()+1) cout<<"Invalid input, try again."<<endl;
+        else if(spellBook.size()+1==choice) return NULL;
         else return spellBook[choice-1];
     }
 }

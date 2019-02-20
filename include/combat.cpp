@@ -27,15 +27,18 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
     head=insert_node(cp[n],head);
 
     sortList(head);
-    displayList(head);
-
+    //displayList(head);
+    Creature* target;
+     Action* action;
     while(true/*fightOverFlag==false*/)
     {
         ptr=head;
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
-            Creature* target = ptr->CPL->chooseTarget(head);
-            Action* action = ptr->CPL->actionChoose();
+        do{
+                target = ptr->CPL->chooseTarget(head);
+                action = ptr->CPL->actionChoose();
+        }while(action==NULL);
             int deathsThisTurn = 0;
             deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
             if(deathsThisTurn>0){

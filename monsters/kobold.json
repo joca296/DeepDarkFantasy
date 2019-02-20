@@ -1,6 +1,7 @@
 {
   "name" : "Kobold",
   "hp" : 5,
+  "mana" : 0,
   "ac" : 12,
   "prof" : 2,
   "str" : -2,

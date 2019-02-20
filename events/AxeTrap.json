@@ -9,8 +9,8 @@
 	"Save" : "DEX",
 	"SaveSUCC" : "As you step on a pressure plate and a huge axe swings across the room, you manage to avoid a direct hit",
 	"SaveFAIL" : "As you step on a pressure plate and a huge axe swings across the room, you fail to react in time and take a massive hit",
-	"DisarmDC" : 0,
+	"DisarmDC" : 2,
 	"SaveMulti" : 0.5,
 	"DisSucc" : "Trap disarmed succesfully",
-	"DisFail" : "ERROR should never get here"
+	"DisFail" : "Disarm failed"
 }

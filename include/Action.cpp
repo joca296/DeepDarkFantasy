@@ -83,6 +83,15 @@ void Spell::setSavingThrowDC(int savingThrowDC) {
     Spell::savingThrowDC = savingThrowDC;
 }
 
+int Spell::getManaCost()
+{
+    return manaCost;
+}
+void Spell::setManaCost(int n)
+{
+    manaCost=n;
+}
+
 int SpellAoE::getNumberOfTargets() const {
     return numberOfTargets;
 }

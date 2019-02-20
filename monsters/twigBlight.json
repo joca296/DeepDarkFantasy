@@ -1,6 +1,7 @@
 {
   "name" : "twigBlight",
   "hp" : 4,
+  "mana" : 0,
   "ac" : 13,
   "prof" : 2,
   "str" : -2,

@@ -506,7 +506,7 @@ string room::exit_room(Creature *p)
 
 int room::special_interactions(Creature *p)
 {
-    int choice_container;
+    int choice_container,roll_container;
     int counter=1;
     int item_counter=0;
     do{             //prints choices and takes input
@@ -525,8 +525,9 @@ int room::special_interactions(Creature *p)
     }while(choice_container>counter || choice_container<1);
     if(choice_container==counter) return 0;
     else if(choice_container<counter-item_counter)
-    {                                                                                   //trap disarm
-        if(dRoll()>=room_traps[choice_container-1]->getDisarmDC())
+    {
+        roll_container=dRoll();                                                                                  //trap disarm
+        if(roll_container>=room_traps[choice_container-1]->getDisarmDC() && roll_container!=1)
         {
             cout<<room_traps[choice_container-1]->getDisarm_succ_text()<<endl;
             room_traps[choice_container-1]->isDisarmed=true;
@@ -535,6 +536,7 @@ int room::special_interactions(Creature *p)
         else
         {
             room_traps[choice_container-1]->getDisarm_fail_text();
+            activateTrap(room_traps[choice_container-1],p);
             return -1;
         }
 

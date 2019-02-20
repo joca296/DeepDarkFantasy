@@ -24,7 +24,7 @@ using namespace std;
 
 class Creature {
 private:
-    int maxHP, curHP, ac, prof, STR, DEX, CON, INT, WIS, CHA, init;
+    int maxHP, curHP,maxMana,curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init;
     string name;
 public:
     //getters and setters
@@ -36,6 +36,10 @@ public:
     void setMaxHP(int maxHP);
     int getCurHP() const;
     void setCurHP(int curHP);
+    void setMaxMana(int);
+    int getMaxMana();
+    void setCurMana(int);
+    int getCurMana();
     int getAc() const;
     void setAc(int ac);
     int getSTR() const;
@@ -51,6 +55,7 @@ public:
     void setWIS(int WIS);
     int getCHA() const;
     void setCHA(int CHA);
+
 
     int getInit() const;
     void setInit(int init);

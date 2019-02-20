@@ -1,6 +1,7 @@
 {
   "name" : "goblin",
   "hp" : 7,
+  "mana" : 0,
   "ac" : 15,
   "prof" : 2,
   "str" : -1,

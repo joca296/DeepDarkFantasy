@@ -42,7 +42,7 @@ class Spell: public Action {
 private:
     string spellCastMod, savingThrowType;
     bool spellCastModAddedToRoll, savingThrowFlag, heal;
-    int savingThrowDC;
+    int savingThrowDC,manaCost;
 public:
     const string &getSpellCastMod() const;
     void setSpellCastMod(const string &spellCastMod);
@@ -56,6 +56,9 @@ public:
     void setSavingThrowType(const string &savingThrowType);
     int getSavingThrowDC() const;
     void setSavingThrowDC(int savingThrowDC);
+    int getManaCost();
+    void setManaCost(int);
+
 
     Spell(Document& action);
     Spell();
