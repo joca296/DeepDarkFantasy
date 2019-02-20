@@ -24,7 +24,7 @@ Item::Item(string name) {
     f.open(path);
     if(f.is_open()){
         Document document = parseFromFile(&f);
-        name=document["name"].GetString();
+        this->name=document["name"].GetString();
         desc=document["desc"].GetString();
         itemType=document["itemType"].GetString()[0];
     }

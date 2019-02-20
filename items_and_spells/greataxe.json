@@ -3,5 +3,7 @@
   "name" : "greataxe",
   "finesse" : false,
   "roll" : 12,
-  "diceNumber" : 1
+  "diceNumber" : 1,
+  "desc" : "placeholder",
+  "itemType" : "w"
 }

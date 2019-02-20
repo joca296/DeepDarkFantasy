@@ -3,5 +3,7 @@
   "name" : "dagger",
   "finesse" : true,
   "roll" : 4,
-  "diceNumber" : 1
+  "diceNumber" : 1,
+  "desc" : "placeholder",
+  "itemType" : "w"
 }

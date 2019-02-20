@@ -308,10 +308,21 @@ void Creature::listInventory(){
     if(inventory.size() == 0) cout<<"Inventory empty."<<endl;
     else{
         cout<<"Inventory:"<<endl;
-        for(int i=1; i<=inventory.size(); i++){
+        int i=1;
+        for(i=1; i<=inventory.size(); i++){
             cout<<i<<". "<<inventory[i-1]->getName()<<endl;
         }
-        cout<<endl;
+        cout<<i<<". Back"<<endl;
+        while(1){
+            int choice;
+            cin>>choice;
+            if(choice<1 || choice>inventory.size()+1) cout<<"Invalid input, try again."<<endl;
+            else if (choice == inventory.size()+1) return;
+            else {
+                cout<<"WIP"<<endl;
+                return;
+            }
+        }
     }
 }
 int Hero::getAc() const{

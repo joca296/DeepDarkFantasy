@@ -3,5 +3,7 @@
   "name" : "javelin",
   "finesse" : false,
   "roll" : 6,
-  "diceNumber" : 1
+  "diceNumber" : 1,
+  "desc" : "placeholder",
+  "itemType" : "w"
 }
