@@ -75,7 +75,7 @@ public:
     string toString();
     virtual void listSpellBook();
     virtual void listWeapons();
-    void listInventory();
+    virtual void listInventory();
     virtual ~Creature() {};    //virtual destructor
 
 };
@@ -113,6 +113,7 @@ public:
     Creature* chooseTarget(struct cList* actors) override;
     void listWeapons() override;
     void listSpellBook() override;
+    void listInventory() override;
     int getAc() const;
 };
 

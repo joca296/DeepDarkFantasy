@@ -7,6 +7,7 @@
 #include <ctime>
 #include <vector>
 #include "rapidjson/document.h"
+#include "Action.h"
 
 using namespace std;
 using namespace rapidjson;

@@ -287,11 +287,24 @@ Creature* Hero::chooseTarget(struct cList* actors){
 void Hero::listWeapons() {
     if(weapons.size() == 0) cout<<"You don't have any weapons equipped.";
     else{
-        cout<<"Weapons:"<<endl;
-        for(int i=1; i<=weapons.size(); i++){
+        cout<<"Weapons (select to unequip):"<<endl;
+        int i=1;
+        for(i=1; i<=weapons.size(); i++){
             cout<<i<<". "<<weapons[i-1]->getName()<<endl;
         }
-        cout<<endl;
+        cout<<i<<". Back"<<endl;
+        while(1){
+            int choice;
+            cin>>choice;
+            if(choice<1 || choice>weapons.size()+1) cout<<"Invalid input, try again."<<endl;
+            else if (choice == weapons.size()+1) return;
+            else {
+                this->inventory.push_back(new Item(weapons[choice-1]->getName()));
+                delete weapons[choice-1];
+                this->weapons.erase(this->weapons.begin() + choice-1);
+                return;
+            }
+        }
     }
 }
 void Hero::listSpellBook() {
@@ -304,7 +317,7 @@ void Hero::listSpellBook() {
         cout<<endl;
     }
 }
-void Creature::listInventory(){
+void Hero::listInventory(){
     if(inventory.size() == 0) cout<<"Inventory empty."<<endl;
     else{
         cout<<"Inventory:"<<endl;
@@ -319,8 +332,34 @@ void Creature::listInventory(){
             if(choice<1 || choice>inventory.size()+1) cout<<"Invalid input, try again."<<endl;
             else if (choice == inventory.size()+1) return;
             else {
-                cout<<"WIP"<<endl;
-                return;
+                bool weaponFlag = false;
+                if(inventory[choice-1]->getItemType() == 'w') { cout<<"0. Equip weapon"<<endl; weaponFlag=true; }
+                cout<<"1. Show item description"<<endl;
+                cout<<"2. Drop item"<<endl;
+                cout<<"3. Back"<<endl;
+                while(1){
+                    int itemManagementChoice;
+                    cin>>itemManagementChoice;
+                    if(choice<(weaponFlag? 0:1) || choice>3) cout<<"Invalid input, try again."<<endl;
+                    else {
+                        switch (itemManagementChoice) {
+                            case 0:
+                                this->weapons.push_back(callConstuctor(inventory[choice-1]->getName()));
+                                delete inventory[choice-1];
+                                this->inventory.erase(this->inventory.begin() + choice-1);
+                                return;
+                            case 1:
+                                cout<<inventory[choice-1]->getDesc()<<endl;
+                                return;
+                            case 2:
+                                delete inventory[choice-1];
+                                this->inventory.erase(this->inventory.begin() + choice-1);
+                                return;
+                            case 3:
+                                return;
+                        }
+                    }
+                }
             }
         }
     }
@@ -481,3 +520,4 @@ string Creature::toString(){
 }
 void Creature::listSpellBook(){};
 void Creature::listWeapons(){};
+void Creature::listInventory(){};
