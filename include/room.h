@@ -8,6 +8,7 @@
 #include "Creature.h"
 #include "combat.h"
 #include "event.h"
+#include "Item.h"
 
 
 #define MAX_ROOM_MONSTERS 10
@@ -93,8 +94,7 @@ public:
     string exit_room(Creature *p);
 
     room(string name);
-
-
+    vector<Item*> groundItems;
 };
 
 struct rList

@@ -12,7 +12,14 @@
 
 using namespace std;
 
+/*vector<Item*> Ivec2;
+Item* makeitemObject();*/
+
 int main(){
+    /*Item* iptr;
+    iptr=makeitemObject();
+    cout<<iptr->getName()<<endl;
+    Ivec2.push_back(iptr);*/
     srand(time(NULL));
     Hero x("barbarian");
     room* r;
@@ -31,3 +38,8 @@ int main(){
     cout<<y.toString();*/
 }
 
+/*Item* makeitemObject()
+{    Item* myItem;
+     myItem= new Item("dagger");
+     return myItem;
+}*/

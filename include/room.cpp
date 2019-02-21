@@ -156,7 +156,7 @@ void room::set_room_desc(string s)
 
 room* room::enterRoom(Creature *p)
 {
-
+    Item* Itmp;
     room *nRoom=NULL;
     string eChoice;
 
@@ -194,7 +194,9 @@ room* room::enterRoom(Creature *p)
                 special_interactions(p);
                 break;
             case 3:
-                p->listInventory();
+               Itmp=p->listInventory();
+               cout<<Itmp->getName()<<endl;
+               this->groundItems.emplace_back(Itmp);
                 break;
             case 4:
                 p->listWeapons();

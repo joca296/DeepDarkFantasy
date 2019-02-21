@@ -317,7 +317,8 @@ void Hero::listSpellBook() {
         cout<<endl;
     }
 }
-void Hero::listInventory(){
+Item* Hero::listInventory(){
+    Item* ajtem=NULL;
     if(inventory.size() == 0) cout<<"Inventory empty."<<endl;
     else{
         cout<<"Inventory:"<<endl;
@@ -330,7 +331,7 @@ void Hero::listInventory(){
             int choice;
             cin>>choice;
             if(choice<1 || choice>inventory.size()+1) cout<<"Invalid input, try again."<<endl;
-            else if (choice == inventory.size()+1) return;
+            else if (choice == inventory.size()+1) return NULL;
             else {
                 bool weaponFlag = false;
                 if(inventory[choice-1]->getItemType() == 'w') { cout<<"0. Equip weapon"<<endl; weaponFlag=true; }
@@ -347,16 +348,17 @@ void Hero::listInventory(){
                                 this->weapons.push_back(callConstuctor(inventory[choice-1]->getName()));
                                 delete inventory[choice-1];
                                 this->inventory.erase(this->inventory.begin() + choice-1);
-                                return;
+                                return NULL;
                             case 1:
                                 cout<<inventory[choice-1]->getDesc()<<endl;
-                                return;
+                                return NULL;
                             case 2:
-                                delete inventory[choice-1];
+
+                                ajtem=inventory[choice-1];
                                 this->inventory.erase(this->inventory.begin() + choice-1);
-                                return;
+                                return ajtem;
                             case 3:
-                                return;
+                                return NULL;
                         }
                     }
                 }
@@ -520,4 +522,4 @@ string Creature::toString(){
 }
 void Creature::listSpellBook(){};
 void Creature::listWeapons(){};
-void Creature::listInventory(){};
+Item* Creature::listInventory(){};
