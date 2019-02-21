@@ -156,7 +156,6 @@ void room::set_room_desc(string s)
 
 room* room::enterRoom(Creature *p)
 {
-    Item* Itmp;
     room *nRoom=NULL;
     string eChoice;
 
@@ -193,11 +192,12 @@ room* room::enterRoom(Creature *p)
                 cout<<"Special Interactions WIP "<<endl;
                 special_interactions(p);
                 break;
-            case 3:
-               Itmp=p->listInventory();
-               cout<<Itmp->getName()<<endl;
-               this->groundItems.emplace_back(Itmp);
+            case 3:{
+                Item* Itmp = p->listInventory();
+                cout<<Itmp->getName()<<endl;
+                this->groundItems.push_back(Itmp);
                 break;
+            }
             case 4:
                 p->listWeapons();
                 break;
@@ -464,9 +464,6 @@ room::room(string name)
                 this->numberOfTraps++;
             }
         }
-
-
-
 }
 else cout<<"room file not open"<<endl;
         f.close();

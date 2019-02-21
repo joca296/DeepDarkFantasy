@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include <math.h>
 #include "Creature.h"
 #include "combat.h"
@@ -13,7 +14,7 @@
 
 #define MAX_ROOM_MONSTERS 10
 #define MAX_CONNECTED_ROOMS 5
-#define MAX_ROOM_TRAPS
+#define MAX_ROOM_TRAPS 5
 
 //cross-platform support
 #ifdef __linux__
@@ -43,8 +44,7 @@ private:
     string room_monsters[MAX_ROOM_MONSTERS];
     bool roomEnteredFlag=false;
 public:
-
-
+    vector<Item*> groundItems;
     event* room_traps[MAX_ROOM_TRAPS];
 
 
@@ -94,7 +94,6 @@ public:
     string exit_room(Creature *p);
 
     room(string name);
-    vector<Item*> groundItems;
 };
 
 struct rList
