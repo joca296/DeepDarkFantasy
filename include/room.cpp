@@ -549,6 +549,7 @@ int room::special_interactions(Creature *p)
     else
     {
         cout<<"item selected, pickup WIP"<<endl; //need pickup function here
+        groundItems.erase(groundItems.begin()+choice_container-numberOfTraps-1);
     }
     return -2;
 }
