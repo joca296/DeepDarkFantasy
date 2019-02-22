@@ -9,6 +9,7 @@
 #include "Action.h"
 #include "functions.h"
 #include "event.h"
+#include "statusEffect.h"
 
 using namespace std;
 

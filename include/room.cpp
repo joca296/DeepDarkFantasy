@@ -194,8 +194,9 @@ room* room::enterRoom(Creature *p)
                 break;
             case 3:{
                 Item* Itmp = p->listInventory();
-                cout<<Itmp->getName()<<endl;
-                this->groundItems.push_back(Itmp);
+                //cout<<Itmp->getName()<<endl;
+
+               if(Itmp!=NULL) this->groundItems.push_back(Itmp);
                 break;
             }
             case 4:
@@ -507,7 +508,7 @@ int room::special_interactions(Creature *p)
 {
     int choice_container,roll_container;
     int counter=1;
-    int item_counter=0;
+    int item_counter=groundItems.size();
     do{             //prints choices and takes input
         counter=1;
         for(int i=0; i<numberOfTraps; i++)
@@ -517,6 +518,11 @@ int room::special_interactions(Creature *p)
                 cout<<counter<<". "<<room_traps[i]->getInteract_text()<<endl;
                 counter++;
             }
+        }
+        for(int i=0; i<groundItems.size(); i++)
+        {
+            cout<<counter<<". Pick up "<<groundItems[i]->getName()<<endl;
+            counter++;
         }
         cout<<counter<<". "<<"Back"<<endl;
         cin>>choice_container;
@@ -539,6 +545,10 @@ int room::special_interactions(Creature *p)
             return -1;
         }
 
+    }
+    else
+    {
+        cout<<"item selected, pickup WIP"<<endl; //need pickup function here
     }
     return -2;
 }
