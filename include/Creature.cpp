@@ -648,22 +648,73 @@ void Creature::listSpellBook(){};
 void Creature::listWeapons(){};
 Item* Creature::listInventory(){return NULL;}
 
+int Creature::rollSave(string atr,int sideNum, int adv, int dNum)
+{
+    if(atr=="STR") return dRoll(sideNum,adv,dNum)+getSTR();
+    else if(atr=="DEX") return dRoll(sideNum,adv,dNum)+getDEX();
+    else if(atr=="CON") return dRoll(sideNum,adv,dNum)+getCON();
+    else if(atr=="INT") return dRoll(sideNum,adv,dNum)+getINT();
+    else if(atr=="WIS") return dRoll(sideNum,adv,dNum)+getWIS();
+    else if(atr=="CHA") return dRoll(sideNum,adv,dNum)+getCHA();
+    else
+    {
+        cout<<"ERROR in rollSave"<<endl;
+        return 0;
+    }
+}
+
 int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effects(buffing/debuffing)
 {
     for(int i =0; i<aptr->actionStatusEffect.size(); i++)
     {
-        cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on " << target->getName() << endl;
-        for(int j=0; j<aptr->actionStatusEffect[i]->affects.size(); j++)
+        if(aptr->actionStatusEffect[i]->saveDC<1 || aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill))
         {
+            cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on " << target->getName()<< endl;
+            target->activeSE.push_back(aptr->actionStatusEffect[i]);
+            target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration);
+            for (int j = 0; j < aptr->actionStatusEffect[i]->affects.size(); j++) {
 
 
-            if (aptr->actionStatusEffect[i]->affects[j]=="MaxHP")
-            {
-                target->setMaxHP(target->getMaxHP()+aptr->actionStatusEffect[i]->val);
-            }
-            if (aptr->actionStatusEffect[i]->affects[j]=="AC")
-            {
-                target->setAc(target->getAc()+aptr->actionStatusEffect[i]->val);
+                if (aptr->actionStatusEffect[i]->affects[j] == "MaxHP") {
+                    target->setMaxHP(target->getMaxHP() + aptr->actionStatusEffect[i]->val);
+                    if(target->getMaxHP()<target->getCurHP()) target->setCurHP(target->getMaxHP());
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "CurHP") {
+                    target->setCurHP(target->getCurHP() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "MaxMana") {
+                    target->setMaxMana(target->getMaxMana() + aptr->actionStatusEffect[i]->val);
+                    if(target->getMaxMana()<target->getCurMana()) target->setCurMana(target->getMaxMana());
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "CurMana") {
+                    target->setCurMana(target->getCurMana() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "AC") {
+                    target->setAc(target->getAc() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "Prof") {
+                    target->setProf(target->getProf() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "STR") {
+                    target->setSTR(target->getSTR() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "DEX") {
+                    target->setDEX(target->getDEX() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "CON") {
+                    target->setCON(target->getCON() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "INT") {
+                    target->setINT(target->getINT() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "WIS") {
+                    target->setWIS(target->getWIS() + aptr->actionStatusEffect[i]->val);
+                }
+                if (aptr->actionStatusEffect[i]->affects[j] == "CHA") {
+                    target->setCHA(target->getCHA() + aptr->actionStatusEffect[i]->val);
+                }
+
+
             }
         }
     }

@@ -37,6 +37,7 @@ public:
 
     //Status effects
     vector<shared_ptr<statusEffect>> activeSE;
+    vector<int> SEcounter;
 
     //getters and setters
     string getName() const;
@@ -90,6 +91,7 @@ public:
     virtual Item* listInventory();
     virtual ~Creature() {};    //virtual destructor
     int SE_Inflict(Action* aptr,Creature* target);
+    int rollSave(string atr="STR",int sideNum=20, int adv=0, int dNum=1);
 
 };
 
