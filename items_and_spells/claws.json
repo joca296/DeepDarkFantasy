@@ -1,5 +1,6 @@
 {
   "type" : "w",
+  "statusEffectList":[],
   "name" : "claws",
   "finesse" : true,
   "roll" : 4,

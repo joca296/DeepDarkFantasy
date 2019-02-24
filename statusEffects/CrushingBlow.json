@@ -1,0 +1,9 @@
+{
+	"Name" : "Crushing Blow",
+	"Value" : -2,
+	"SavingThrowSkill" : "STR",
+	"SaveDC" : 10,
+	"Duration" : 1,
+	"Target" : "Enemy",
+	"Affects" : ["AC","MaxHP"]
+}

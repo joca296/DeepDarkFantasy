@@ -4,6 +4,7 @@
   "finesse" : false,
   "roll" : 12,
   "diceNumber" : 1,
+  "statusEffectList":["CrushingBlow"],
   "desc" : "placeholder",
   "itemType" : "w"
 }

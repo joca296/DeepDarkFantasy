@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "Item.h"
 #include "Action.h"
 #include "functions.h"
@@ -63,6 +64,7 @@ public:
 
     //Inventory
     vector<Item*> inventory;
+    vector<shared_ptr<statusEffect>> activeSE;
 
     //methods
     virtual Action* actionChoose()=0;
@@ -78,6 +80,7 @@ public:
     virtual void listWeapons();
     virtual Item* listInventory();
     virtual ~Creature() {};    //virtual destructor
+    int SE_Inflict(Action* aptr,Creature* target);
 
 };
 

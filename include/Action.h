@@ -4,6 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <memory>
+#include <vector>
+#include "statusEffect.h"
 #include "rapidjson/document.h"
 #include "rapidjson/rapidjson.h"
 
@@ -25,6 +28,7 @@ private:
     string name;
     //Additional effect TBD
 public:
+    vector <shared_ptr<statusEffect>> actionStatusEffect;
     char getType() const;
     void setType(char type);
     int getRoll() const;

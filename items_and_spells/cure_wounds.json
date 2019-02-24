@@ -5,6 +5,7 @@
   "heal" : true,
   "spellCastModAddedToRoll" : true,
   "savingThrowFlag" : false,
+  "statusEffectList":[],
   "roll" : 8,
   "diceNumber" : 1
 }

@@ -4,6 +4,7 @@
   "finesse" : false,
   "roll" : 6,
   "diceNumber" : 1,
+  "statusEffectList":[],
   "desc" : "placeholder",
   "itemType" : "w"
 }
