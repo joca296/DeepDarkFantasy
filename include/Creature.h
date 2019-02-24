@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "Item.h"
 #include "Action.h"
 #include "functions.h"
@@ -33,6 +34,9 @@ public:
 
     //Immunities, resists and weaknesses
     vector<string> immunity, resist, weakness;
+
+    //Status effects
+    vector<shared_ptr<statusEffect>> activeSE;
 
     //getters and setters
     string getName() const;
@@ -85,6 +89,7 @@ public:
     virtual void listWeapons();
     virtual Item* listInventory();
     virtual ~Creature() {};    //virtual destructor
+    int SE_Inflict(Action* aptr,Creature* target);
 
 };
 

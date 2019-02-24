@@ -1,4 +1,3 @@
-#include <vector>
 #include "functions.h"
 
 int dRoll(int sideNum, int adv, int dNum)

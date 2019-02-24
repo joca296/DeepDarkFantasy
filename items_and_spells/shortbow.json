@@ -6,5 +6,6 @@
   "diceNumber" : 1,
   "desc" : "placeholder",
   "itemType" : "w",
-  "rollType" : "pierce"
+  "rollType" : "pierce",
+  "statusEffectList":[]
 }

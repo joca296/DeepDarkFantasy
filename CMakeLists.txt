@@ -54,4 +54,5 @@ add_executable(DeepDarkFantasy
         include/combat.cpp
         include/room.cpp
         include/event.cpp
+        include/statusEffect.cpp
         main.cpp)

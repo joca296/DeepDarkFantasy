@@ -413,12 +413,15 @@ Item* Hero::listInventory(){
                                 return ajtem;
                             case 3:
                                 return NULL;
+                            default:
+                                break;
                         }
                     }
                 }
             }
         }
     }
+    return NULL;
 }
 int Hero::getAc() const{
     if(armor != NULL){
@@ -446,6 +449,11 @@ int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
         case 'a':{
             SpellAoE* spellAoE = (SpellAoE*) action;
             return this->execAoE(actors,spellAoE,tar);
+        }
+        default:{
+            cout<<"invalid action type in "<<action->getName()<<endl;
+            return 0;
+
         }
     }
 }
@@ -502,7 +510,12 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
             cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
-        else return 0; //something didn't die
+        else
+        {
+              if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                           //(de)buff handling here
+
+            return 0; //something didn't die
+        }
     }
 
     //attack failed
@@ -567,7 +580,11 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
             cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
-        else return 0; //something didn't die
+        else {
+
+            if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                     //(de)buff handling here
+            return 0; //something didn't die
+        }
     }
 
     //attack failed
@@ -590,6 +607,7 @@ int Creature::execHeal(Spell *action, Creature* tar) {
 
     //print
     cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<action->getName()<<"."<<endl;
+    if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);
     return 0;
 }
 int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
@@ -626,6 +644,30 @@ string Creature::toString(){
     else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
     return s;
 }
-void Creature::listSpellBook(){}
-void Creature::listWeapons(){}
-Item* Creature::listInventory(){}
+void Creature::listSpellBook(){};
+void Creature::listWeapons(){};
+Item* Creature::listInventory(){return NULL;}
+
+int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effects(buffing/debuffing)
+{
+    for(int i =0; i<aptr->actionStatusEffect.size(); i++)
+    {
+        cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on " << target->getName() << endl;
+        for(int j=0; j<aptr->actionStatusEffect[i]->affects.size(); j++)
+        {
+
+
+            if (aptr->actionStatusEffect[i]->affects[j]=="MaxHP")
+            {
+                target->setMaxHP(target->getMaxHP()+aptr->actionStatusEffect[i]->val);
+            }
+            if (aptr->actionStatusEffect[i]->affects[j]=="AC")
+            {
+                target->setAc(target->getAc()+aptr->actionStatusEffect[i]->val);
+            }
+        }
+    }
+
+    return 0;
+
+}

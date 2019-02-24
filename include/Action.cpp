@@ -1,4 +1,4 @@
-#include <utility>
+
 #include "Action.h"
 #include "functions.h"
 
@@ -115,6 +115,14 @@ Action::Action(const Document& action) {
     diceNumber = action["diceNumber"].GetInt();
     type = action["type"].GetString()[0];
     rollType = action["rollType"].GetString();
+
+    const Value& a = action["statusEffectList"];
+    shared_ptr<statusEffect> ptr;
+    for(SizeType i = 0; i<a.Size(); i++)
+    {
+        ptr=make_shared<statusEffect>(a[i].GetString());
+        actionStatusEffect.push_back(ptr);
+    }
 }
 
 const string &Action::getRollType() const {
