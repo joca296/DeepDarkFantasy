@@ -21,6 +21,11 @@
 using namespace std;
 using namespace rapidjson;
 
+struct addtlEffect {
+    int roll, diceNumber;
+    string rollType;
+};
+
 class Action {
 private:
     int roll, diceNumber;
@@ -29,6 +34,7 @@ private:
     //Additional effect TBD
 public:
     vector <shared_ptr<statusEffect>> actionStatusEffect;
+    vector <shared_ptr<addtlEffect>> addtlEffects;
     char getType() const;
     void setType(char type);
     int getRoll() const;

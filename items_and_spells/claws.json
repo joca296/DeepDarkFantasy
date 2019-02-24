@@ -5,5 +5,6 @@
   "finesse" : true,
   "roll" : 4,
   "diceNumber" : 1,
-  "rollType" : "slash"
+  "rollType" : "slash",
+  "addtlEffects" : []
 }

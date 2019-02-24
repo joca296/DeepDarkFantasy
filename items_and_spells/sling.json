@@ -7,5 +7,6 @@
   "statusEffectList":[],
   "desc" : "placeholder",
   "itemType" : "w",
-  "rollType" : "bludgeon"
+  "rollType" : "bludgeon",
+  "addtlEffects" : []
 }

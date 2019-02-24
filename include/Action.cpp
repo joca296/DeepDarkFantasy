@@ -123,6 +123,15 @@ Action::Action(const Document& action) {
         ptr=make_shared<statusEffect>(a[i].GetString());
         actionStatusEffect.push_back(ptr);
     }
+
+    const Value& b = action["addtlEffects"];
+    for(SizeType i=0; i<b.Size(); i++){
+        shared_ptr<addtlEffect> ptr = make_shared<addtlEffect>();
+        ptr->roll = b[i]["roll"].GetInt();
+        ptr->diceNumber = b[i]["diceNumber"].GetInt();
+        ptr->rollType = b[i]["rollType"].GetString();
+        addtlEffects.push_back(ptr);
+    }
 }
 
 const string &Action::getRollType() const {

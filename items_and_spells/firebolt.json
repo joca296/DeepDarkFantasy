@@ -8,5 +8,6 @@
 	"statusEffectList":[],
     "roll" : 10,
     "diceNumber" : 1,
-    "rollType" : "fire"
+    "rollType" : "fire",
+  "addtlEffects" : []
 }

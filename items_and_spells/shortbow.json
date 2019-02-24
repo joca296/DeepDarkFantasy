@@ -7,5 +7,6 @@
   "desc" : "placeholder",
   "itemType" : "w",
   "rollType" : "pierce",
-  "statusEffectList":[]
+  "statusEffectList":[],
+  "addtlEffects" : []
 }

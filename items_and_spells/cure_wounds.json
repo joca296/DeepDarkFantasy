@@ -8,5 +8,6 @@
   "statusEffectList":[],
   "roll" : 8,
   "diceNumber" : 1,
-  "rollType" : ""
+  "rollType" : "",
+  "addtlEffects" : []
 }

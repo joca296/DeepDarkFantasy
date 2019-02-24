@@ -9,5 +9,6 @@
   "diceNumber" : 1,
   "numberOfTargets" : 3,
   "rollType" : "force",
-  "statusEffectList":[]
+  "statusEffectList":[],
+  "addtlEffects" : []
 }
