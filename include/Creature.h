@@ -26,8 +26,14 @@ using namespace std;
 class Creature {
 private:
     int maxHP, curHP,maxMana,curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init;
-    string name;
+    string name, tag;
 public:
+    //Inventory
+    vector<Item*> inventory;
+
+    //Immunities, resists and weaknesses
+    vector<string> immunity, resist, weakness;
+
     //getters and setters
     string getName() const;
     void setName(string name);
@@ -57,14 +63,15 @@ public:
     int getCHA() const;
     void setCHA(int CHA);
 
+    const string &getTag() const;
+    void setTag(const string &tag);
+
 
     int getInit() const;
     void setInit(int init);
 
-    //Inventory
-    vector<Item*> inventory;
-
     //methods
+    char checkDamage(const string& type);
     virtual Action* actionChoose()=0;
     virtual Creature* chooseTarget(struct cList* actors)=0;
     virtual int isHero()=0;
@@ -87,7 +94,6 @@ public:
     vector<int> actionWeight;
 
     //constructors
-    //~Monster();
     Monster(){};
     Monster(string name);
 

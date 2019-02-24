@@ -22,7 +22,7 @@ class Action {
 private:
     int roll, diceNumber;
     char type;
-    string name;
+    string name, rollType;
     //Additional effect TBD
 public:
     char getType() const;
@@ -33,6 +33,8 @@ public:
     void setDiceNumber(int diceNumber);
     const string &getName() const;
     void setName(const string &name);
+    const string &getRollType() const;
+    void setRollType(const string &rollType);
 
     Action(const Document& action);
     Action();

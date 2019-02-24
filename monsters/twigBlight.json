@@ -12,5 +12,8 @@
   "cha" : -4,
   "actionList" : ["claws"],
   "actionWeight" : [100],
-  "inventory" : []
+  "inventory" : [],
+  "immunity" : [],
+  "resist" : [],
+  "weakness" : []
 }

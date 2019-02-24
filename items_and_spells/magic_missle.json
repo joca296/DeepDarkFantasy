@@ -7,5 +7,6 @@
   "savingThrowFlag" : false,
   "roll" : 6,
   "diceNumber" : 1,
-  "numberOfTargets" : 3
+  "numberOfTargets" : 3,
+  "rollType" : "force"
 }

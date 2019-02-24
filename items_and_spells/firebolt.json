@@ -6,5 +6,6 @@
     "spellCastModAddedToRoll" : false,
     "savingThrowFlag" : false,
     "roll" : 10,
-    "diceNumber" : 1
+    "diceNumber" : 1,
+    "rollType" : "fire"
 }

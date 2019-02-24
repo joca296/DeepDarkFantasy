@@ -3,5 +3,6 @@
   "name" : "claws",
   "finesse" : true,
   "roll" : 4,
-  "diceNumber" : 1
+  "diceNumber" : 1,
+  "rollType" : "slash"
 }

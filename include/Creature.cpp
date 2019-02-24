@@ -73,7 +73,6 @@ int Creature::getInit() const {
 void Creature::setInit(int init) {
     Creature::init = init;
 }
-
 void Creature::setMaxMana(int n)
 {
     maxMana=n;
@@ -90,7 +89,25 @@ int Creature::getCurMana()
 {
     return curMana;
 }
+const string &Creature::getTag() const {
+    return tag;
+}
+void Creature::setTag(const string &tag) {
+    Creature::tag = tag;
+};
 
+char Creature::checkDamage(const string& type) {
+    for (int i=0; i<this->immunity.size(); i++)
+        if (this->immunity[i] == type) return 'i';
+
+    for (int i=0; i<this->resist.size(); i++)
+        if (this->resist[i] == type) return 'r';
+
+    for (int i=0; i<this->weakness.size(); i++)
+        if (this->weakness[i] == type) return 'w';
+
+    return 'n';
+}
 
 //Monster::~Monster(){cout<<"This nigga dead "<<endl;}
 //Monster constructor
@@ -137,6 +154,25 @@ Monster::Monster(string name){
             Item* item = new Item(c[i].GetString());
             inventory.push_back(item);
         }
+
+        //setting immunities
+        const Value& d = document["immunity"];
+        for (SizeType i = 0; i < d.Size(); i++){
+            immunity.push_back(d[i].GetString());
+        }
+
+        //setting resists
+        const Value& e = document["resist"];
+        for (SizeType i = 0; i < e.Size(); i++){
+            resist.push_back(e[i].GetString());
+        }
+
+        //setting weaknesses
+        const Value& f = document["weakness"];
+        for (SizeType i = 0; i < f.Size(); i++){
+            weakness.push_back(f[i].GetString());
+        }
+
     }
     else cout<<"monster file not open"<<endl;
     f.close();
@@ -211,6 +247,24 @@ Hero::Hero(string name){
         for (SizeType i = 0; i < c.Size(); i++){
             Item* item = new Item(c[i].GetString());
             inventory.push_back(item);
+        }
+
+        //setting immunities
+        const Value& d = document["immunity"];
+        for (SizeType i = 0; i < d.Size(); i++){
+            immunity.push_back(d[i].GetString());
+        }
+
+        //setting resists
+        const Value& e = document["resist"];
+        for (SizeType i = 0; i < e.Size(); i++){
+            resist.push_back(e[i].GetString());
+        }
+
+        //setting weaknesses
+        const Value& f = document["weakness"];
+        for (SizeType i = 0; i < f.Size(); i++){
+            weakness.push_back(f[i].GetString());
         }
     }
     else cout<<"hero file not open"<<endl;
@@ -398,15 +452,31 @@ int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
 int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     int atcRoll, bonus;
 
-    //determining attack roll
+    //determining bonus
     if(action->isFinesse()) bonus=this->getDEX();
     else bonus=this->getSTR();
+
+    //attack roll
     atcRoll = dRoll()+bonus+this->getProf();
+
+    //check for ressit/immunity/weakness
+    char check = tar->checkDamage(action->getRollType());
 
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
         int dmgRoll = dRoll(action->getRoll(),0) + bonus;
         if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
+        switch(check){
+            case 'i' :
+                dmgRoll=0;
+                break;
+            case 'r' :
+                dmgRoll/=2;
+                break;
+            case 'w' :
+                dmgRoll*=2;
+                break;
+        }
         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
         //print
@@ -415,6 +485,17 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
         else cout<<"a ";
         cout<<action->getName()<<".";
         if(atcRoll-bonus == 20) cout<<" (crit)";
+        switch(check){
+            case 'i' :
+                cout<<"(immune)";
+                break;
+            case 'r' :
+                cout<<"(ressistant)";
+                break;
+            case 'w' :
+                cout<<"(weak)";
+                break;
+        }
         cout<<endl;
 
         if(tar->getCurHP() <= 0){
@@ -443,10 +524,24 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
     //attack roll
     atcRoll=dRoll()+bonus+this->getProf();
 
+    //check for ressit/immunity/weakness
+    char check = tar->checkDamage(action->getRollType());
+
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
         int dmgRoll = dRoll(action->getRoll(),0) + ( action->isSpellCastModAddedToRoll()? bonus:0 );
         if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
+        switch(check){
+            case 'i' :
+                dmgRoll=0;
+                break;
+            case 'r' :
+                dmgRoll/=2;
+                break;
+            case 'w' :
+                dmgRoll*=2;
+                break;
+        }
         tar->setCurHP(tar->getCurHP()-dmgRoll);
 
         //print
@@ -455,6 +550,17 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
         else cout<<"a ";
         cout<<action->getName()<<".";
         if(atcRoll-bonus == 20) cout<<" (crit)";
+        switch(check){
+            case 'i' :
+                cout<<" (immune)";
+                break;
+            case 'r' :
+                cout<<" (resistant)";
+                break;
+            case 'w' :
+                cout<<" (weak)";
+                break;
+        }
         cout<<endl;
 
         if(tar->getCurHP() <= 0){
@@ -520,6 +626,6 @@ string Creature::toString(){
     else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
     return s;
 }
-void Creature::listSpellBook(){};
-void Creature::listWeapons(){};
-Item* Creature::listInventory(){};
+void Creature::listSpellBook(){}
+void Creature::listWeapons(){}
+Item* Creature::listInventory(){}

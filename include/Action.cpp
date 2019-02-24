@@ -114,6 +114,15 @@ Action::Action(const Document& action) {
     roll = action["roll"].GetInt();
     diceNumber = action["diceNumber"].GetInt();
     type = action["type"].GetString()[0];
+    rollType = action["rollType"].GetString();
+}
+
+const string &Action::getRollType() const {
+    return rollType;
+}
+
+void Action::setRollType(const string &rollType) {
+    Action::rollType = rollType;
 }
 
 Spell::Spell() {}
