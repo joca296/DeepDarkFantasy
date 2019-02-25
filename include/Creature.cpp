@@ -466,29 +466,21 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     else bonus=this->getSTR();
 
     //attack roll
-    atcRoll = dRoll()+bonus+this->getProf();
+    bool critFlag = false;
+    atcRoll = dRoll();
+    if(atcRoll == 20) critFlag = true;
+    else atcRoll += bonus+this->getProf();
 
     //attack success
-    if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
+    if(critFlag || atcRoll >= tar->getAc()){
         vector<string> dmgBreakdown;
 
         int dmgTotal = tar->calcDamage(bonus,action,dmgBreakdown);
-        if(atcRoll-bonus-this->getProf() == 20) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
+        if(critFlag) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
         tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print
-        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgTotal<<" damage with ";
-        if(action->getName()[0]=='a') cout<<"an ";
-        else cout<<"a ";
-        cout<<action->getName()<<".";
-        if(atcRoll-bonus-this->getProf() == 20) cout<<" (crit)";
-
-        //damage breakdown
-        cout<<" Breakdown: ";
-        for(int i=0; i<dmgBreakdown.size(); i++)
-            cout<<dmgBreakdown[i]<<" ";
-
-        cout<<endl;
+        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
 
         if(tar->getCurHP() <= 0){
             cout<<tar->getName()<<" died."<<endl;
@@ -518,29 +510,22 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
     else bonus=this->getCHA();
 
     //attack roll
-    atcRoll=dRoll()+bonus+this->getProf();
+    bool critFlag = false;
+    atcRoll = dRoll();
+    if(atcRoll == 20) critFlag = true;
+    else atcRoll += bonus+this->getProf();
 
     //attack success
-    if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
+    if(critFlag || atcRoll >= tar->getAc()){
         vector<string> dmgBreakdown;
 
         int dmgTotal = tar->calcDamage(( action->isSpellCastModAddedToRoll()? bonus:0 ),action,dmgBreakdown);
-        if(atcRoll-bonus-this->getProf() == 20) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
+        if(critFlag) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
         tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print
-        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgTotal<<" damage with ";
-        if(action->getName()[0]=='a') cout<<"an ";
-        else cout<<"a ";
-        cout<<action->getName()<<".";
-        if(atcRoll-bonus-this->getProf() == 20) cout<<" (crit)";
+        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
 
-        //damage breakdown
-        cout<<" Breakdown: ";
-        for(int i=0; i<dmgBreakdown.size(); i++)
-            cout<<dmgBreakdown[i]<<" ";
-
-        cout<<endl;
 
         if(tar->getCurHP() <= 0){
             cout<<tar->getName()<<" died."<<endl;

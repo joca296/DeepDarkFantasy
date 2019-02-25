@@ -74,3 +74,21 @@ Document parseFromFile(ifstream *f){
     document.Parse(json);
     return document;
 }
+
+void printDamage(const string& actorName,const string& targetName,const string& actionName, int& dmgTotal,const vector<string>& dmgBreakdown, bool critFlag){
+    cout<<actorName<<" hit "<<targetName<<" for "<<dmgTotal<<" damage with ";
+    if(actionName[0]=='a') cout<<"an ";
+    else cout<<"a ";
+    cout<<actionName<<".";
+    if(critFlag) cout<<" (crit)";
+
+    //damage breakdown
+    cout<<" Breakdown: ";
+    for(int i=0; i<dmgBreakdown.size(); i++){
+        cout<<dmgBreakdown[i];
+        if(i==dmgBreakdown.size()-1)
+            cout<<endl;
+        else
+            cout<<", ";
+    }
+}
