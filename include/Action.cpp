@@ -1,6 +1,4 @@
-
 #include "Action.h"
-#include "functions.h"
 
 char Action::getType() const {
     return type;

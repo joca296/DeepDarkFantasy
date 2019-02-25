@@ -1,6 +1,5 @@
-#ifndef EVENT_H_INCLUDED
-#define EVENT_H_INCLUDED
-#include "functions.h"
+#pragma once
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -75,5 +74,3 @@ class trap:public event
     public:
     trap(string);
 };
-
-#endif // EVENT_H_INCLUDED

@@ -1,5 +1,4 @@
-#ifndef ROOM_H
-#define ROOM_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -7,7 +6,6 @@
 #include <vector>
 #include <math.h>
 #include "Creature.h"
-#include "combat.h"
 #include "event.h"
 #include "Item.h"
 
@@ -107,6 +105,3 @@ struct rList *append_node(room* r,struct rList *rHead);
 void delete_rList(struct rList *rHead);
 struct rList *findRoom(struct rList *rHead,string s);
 extern struct rList* rHead;
-
-
-#endif // ROOM_H_INCLUDED

@@ -1,4 +1,6 @@
 #include "combat.h"
+#include "cList.h"
+#include "functions.h"
 
 int combat(Creature *h,string MonsterList[],int n,string combatText)
 {
@@ -36,20 +38,20 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
             ptr->CPL->CTurnTick();
-        do{
+            do{
                 target = ptr->CPL->chooseTarget(head);
                 action = ptr->CPL->actionChoose();
-        }while(action==NULL);
+            }while(action==NULL);
             int deathsThisTurn = 0;
             deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
             if(deathsThisTurn>0){
                 dcount+=deathsThisTurn;
-                if(target->getCurHP()<1 && target->isHero()) return -1;
+                if(target->getCurHP()<1 && target->isHero())
+                    return -1;
                 head=prune_cList(head);
                 if(dcount==n){
                     cout<<"Battle won!"<<endl;
                     delete_cList(head);
-
                     return 1;
                 }
             }

@@ -1,14 +1,12 @@
-#ifndef DEEPDARKFANTASY_ACTION_H
-#define DEEPDARKFANTASY_ACTION_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <memory>
 #include <vector>
+#include "functions.h"
 #include "statusEffect.h"
-#include "rapidjson/document.h"
-#include "rapidjson/rapidjson.h"
 
 //cross-platform support
 #ifdef __linux__
@@ -19,7 +17,6 @@
 #endif
 
 using namespace std;
-using namespace rapidjson;
 
 struct addtlEffect {
     int roll, diceNumber;
@@ -99,4 +96,3 @@ public:
 };
 
 Action* callConstuctor(string name);
-#endif //DEEPDARKFANTASY_ACTION_H

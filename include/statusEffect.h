@@ -1,14 +1,11 @@
-#ifndef STATUSEFFECT_H
-#define STATUSEFFECT_H
+#pragma once
+
 #include <vector>
 #include <iterator>
 #include <sstream>
 #include <string>
 #include <cstdio>
 #include <fstream>
-#include "functions.h"
-
-#include "rapidjson/document.h"
 
 #ifdef __linux__
 #define PLATFORM_NAME "linux"
@@ -18,7 +15,7 @@
 #endif
 
 using namespace std;
-using namespace rapidjson;
+
 class statusEffect
 {
 private:
@@ -34,5 +31,3 @@ private:
 
 
 };
-
-#endif // STATUSEFFECT_H

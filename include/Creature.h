@@ -1,5 +1,4 @@
-#ifndef CREATURE_H
-#define CREATURE_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -8,8 +7,6 @@
 #include <memory>
 #include "Item.h"
 #include "Action.h"
-#include "functions.h"
-#include "event.h"
 #include "statusEffect.h"
 
 using namespace std;
@@ -93,7 +90,7 @@ public:
     int SE_Inflict(Action* aptr,Creature* target);
     int rollSave(string atr="STR",int sideNum=20, int adv=0, int dNum=1);
     void CTurnTick(int ticks=1);
-
+    int calcDamage(int bonus, Action* action, vector<string> &dmgBreakdown);
 };
 
 class Monster: public Creature{
@@ -131,5 +128,3 @@ public:
     Item* listInventory() override;
     int getAc() const;
 };
-
-#endif //DEEPDARKFANTASY_CREATURE_H

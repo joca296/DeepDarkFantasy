@@ -1,4 +1,5 @@
 #include "Item.h"
+#include "functions.h"
 
 const string &Item::getName() const {
     return name;

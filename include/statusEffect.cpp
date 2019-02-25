@@ -1,4 +1,5 @@
 #include "statusEffect.h"
+#include "functions.h"
 
 statusEffect::statusEffect(string n)
 {

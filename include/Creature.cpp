@@ -1,5 +1,6 @@
 #include "Creature.h"
 #include "cList.h"
+#include "functions.h"
 
 string Creature::getName() const {
     return name;
@@ -467,43 +468,26 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     //attack roll
     atcRoll = dRoll()+bonus+this->getProf();
 
-    //check for ressit/immunity/weakness
-    char check = tar->checkDamage(action->getRollType());
-
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
-        int dmgRoll = dRoll(action->getRoll(),0) + bonus;
-        if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
-        switch(check){
-            case 'i' :
-                dmgRoll=0;
-                break;
-            case 'r' :
-                dmgRoll/=2;
-                break;
-            case 'w' :
-                dmgRoll*=2;
-                break;
-        }
-        tar->setCurHP(tar->getCurHP()-dmgRoll);
+        vector<string> dmgBreakdown;
+
+        int dmgTotal = tar->calcDamage(bonus,action,dmgBreakdown);
+        if(atcRoll-bonus-this->getProf() == 20) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
+        tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print
-        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
+        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgTotal<<" damage with ";
         if(action->getName()[0]=='a') cout<<"an ";
         else cout<<"a ";
         cout<<action->getName()<<".";
-        if(atcRoll-bonus == 20) cout<<" (crit)";
-        switch(check){
-            case 'i' :
-                cout<<"(immune)";
-                break;
-            case 'r' :
-                cout<<"(ressistant)";
-                break;
-            case 'w' :
-                cout<<"(weak)";
-                break;
-        }
+        if(atcRoll-bonus-this->getProf() == 20) cout<<" (crit)";
+
+        //damage breakdown
+        cout<<" Breakdown: ";
+        for(int i=0; i<dmgBreakdown.size(); i++)
+            cout<<dmgBreakdown[i]<<" ";
+
         cout<<endl;
 
         if(tar->getCurHP() <= 0){
@@ -512,8 +496,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
         }
         else
         {
-              if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                           //(de)buff handling here
-
+            if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                           //(de)buff handling here
             return 0; //something didn't die
         }
     }
@@ -537,52 +520,35 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
     //attack roll
     atcRoll=dRoll()+bonus+this->getProf();
 
-    //check for ressit/immunity/weakness
-    char check = tar->checkDamage(action->getRollType());
-
     //attack success
     if(atcRoll >= tar->getAc() || atcRoll-bonus-this->getProf() == 20){
-        int dmgRoll = dRoll(action->getRoll(),0) + ( action->isSpellCastModAddedToRoll()? bonus:0 );
-        if(atcRoll-bonus == 20) dmgRoll+=dRoll(action->getRoll(),0,action->getDiceNumber());
-        switch(check){
-            case 'i' :
-                dmgRoll=0;
-                break;
-            case 'r' :
-                dmgRoll/=2;
-                break;
-            case 'w' :
-                dmgRoll*=2;
-                break;
-        }
-        tar->setCurHP(tar->getCurHP()-dmgRoll);
+        vector<string> dmgBreakdown;
+
+        int dmgTotal = tar->calcDamage(( action->isSpellCastModAddedToRoll()? bonus:0 ),action,dmgBreakdown);
+        if(atcRoll-bonus-this->getProf() == 20) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
+        tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print
-        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgRoll<<" damage with ";
+        cout<<this->getName()<<" hit "<<tar->getName()<<" for "<<dmgTotal<<" damage with ";
         if(action->getName()[0]=='a') cout<<"an ";
         else cout<<"a ";
         cout<<action->getName()<<".";
-        if(atcRoll-bonus == 20) cout<<" (crit)";
-        switch(check){
-            case 'i' :
-                cout<<" (immune)";
-                break;
-            case 'r' :
-                cout<<" (resistant)";
-                break;
-            case 'w' :
-                cout<<" (weak)";
-                break;
-        }
+        if(atcRoll-bonus-this->getProf() == 20) cout<<" (crit)";
+
+        //damage breakdown
+        cout<<" Breakdown: ";
+        for(int i=0; i<dmgBreakdown.size(); i++)
+            cout<<dmgBreakdown[i]<<" ";
+
         cout<<endl;
 
         if(tar->getCurHP() <= 0){
             cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
-        else {
-
-            if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                     //(de)buff handling here
+        else
+        {
+            if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                           //(de)buff handling here
             return 0; //something didn't die
         }
     }
@@ -788,4 +754,52 @@ void Creature::CTurnTick(int ticks) {
         ticks--;
 
     }
+}
+
+int Creature::calcDamage(int bonus, Action *action, vector<string> &dmgBreakdown) {
+    //regular damage calculation
+    int dmgTotal = dRoll(action->getRoll(),0,action->getDiceNumber()) + bonus;
+    char check = this->checkDamage(action->getRollType());
+    switch(check){
+        case 'i' :
+            dmgTotal=0;
+            dmgBreakdown.push_back(to_string(dmgTotal)+" "+action->getRollType()+" (immune)");
+            break;
+        case 'r' :
+            dmgTotal/=2;
+            dmgBreakdown.push_back(to_string(dmgTotal)+" "+action->getRollType()+" (resistant)");
+            break;
+        case 'w' :
+            dmgTotal*=2;
+            dmgBreakdown.push_back(to_string(dmgTotal)+" "+action->getRollType()+" (weak)");
+            break;
+        default:
+            dmgBreakdown.push_back(to_string(dmgTotal)+" "+action->getRollType());
+    }
+
+    //additional damage calculation
+    for (int i=0; i<action->addtlEffects.size(); i++){
+        int tmp = 0;
+        tmp+= dRoll(action->addtlEffects[i]->roll,0,action->addtlEffects[i]->diceNumber);
+        char tmpCheck = this->checkDamage(action->addtlEffects[i]->rollType);
+        switch(tmpCheck){
+            case 'i' :
+                tmp=0;
+                dmgBreakdown.push_back(to_string(tmp)+" "+action->addtlEffects[i]->rollType+" (immune)");
+                break;
+            case 'r' :
+                tmp/=2;
+                dmgBreakdown.push_back(to_string(tmp)+" "+action->addtlEffects[i]->rollType+" (resistant)");
+                break;
+            case 'w' :
+                tmp*=2;
+                dmgBreakdown.push_back(to_string(tmp)+" "+action->addtlEffects[i]->rollType+" (weak)");
+                break;
+            default:
+                dmgBreakdown.push_back(to_string(tmp)+" "+action->addtlEffects[i]->rollType);
+        }
+        dmgTotal+=tmp;
+    }
+
+    return dmgTotal;
 }

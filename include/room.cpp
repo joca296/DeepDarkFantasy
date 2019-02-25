@@ -1,4 +1,5 @@
 #include "room.h"
+#include "combat.h"
 
 void room::set_room_desc(string s)
     {

@@ -1,5 +1,5 @@
-#ifndef CLIST_H
-#define CLIST_H
+#pragma once
+
 #include "Creature.h"
 
 using namespace std;
@@ -20,5 +20,3 @@ void sortList(struct cList *head);
 void swapNode(struct cList *a, struct cList *b);
 int displayList(struct cList* head);
 struct cList* prune_cList(struct cList* head);
-
-#endif // CLIST_H_INCLUDED

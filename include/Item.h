@@ -1,11 +1,6 @@
-#ifndef DEEPDARKFANTASY_ITEM_H
-#define DEEPDARKFANTASY_ITEM_H
+#pragma once
 
 #include <string>
-#include <fstream>
-#include "rapidjson/document.h"
-#include "rapidjson/rapidjson.h"
-#include "functions.h"
 
 //cross-platform support
 #ifdef __linux__
@@ -16,7 +11,6 @@
 #endif
 
 using namespace std;
-using namespace rapidjson;
 
 class Item {
 private:
@@ -47,6 +41,3 @@ public:
     Armor(){};
     Armor(string name);
 };
-
-
-#endif //DEEPDARKFANTASY_ITEM_H
