@@ -170,6 +170,7 @@ struct cList *prune_cList(struct cList* head)
         ptr2=ptr->next;
         if(ptr->CPL->getCurHP()<1)
         {
+            cout<<ptr->CPL->getName()<<" died"<<endl;
             head=delete_node(head,ptr);
         }
         ptr=ptr2;

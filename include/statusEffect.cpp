@@ -19,6 +19,8 @@ statusEffect::statusEffect(string n)
         saveDC=document["SaveDC"].GetInt();
         duration=document["Duration"].GetInt();
         target=document["Target"].GetString();
+        DOTflag=document["DOT"].GetBool();
+        description=document["Description"].GetString();
         if(target!="Self" && target!="Enemy") cout<<"POSSIBLE ERROR IN "<<jname<<" TARGET NEITHER 'Self' nor 'Enemy'"<<endl;
 
         const Value& a = document["Affects"];

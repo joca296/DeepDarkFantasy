@@ -1,0 +1,11 @@
+{
+	"Name" : "God Healing",
+	"Value" : 10,
+	"DOT" : true,
+	"SavingThrowSkill" : "STR",
+	"SaveDC" : 0,
+	"Duration" : 3,
+	"Target" : "Self",
+	"Affects" : [],
+	"Description" : "Divine Power "
+}

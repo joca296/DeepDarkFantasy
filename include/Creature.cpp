@@ -183,7 +183,7 @@ Monster::Monster(string name){
 int Monster::isHero() {
     return 0;
 }
-Action* Monster::actionChoose() {
+Action* Monster::actionChoose(Creature*) {
     int choice = randomWeight(actionWeight);
     return actionList[choice];
 }
@@ -275,16 +275,19 @@ Hero::Hero(string name){
 int Hero::isHero() {
     return 1;
 }
-Action* Hero::actionChoose() {
+Action* Hero::actionChoose(Creature* c) {
     cout<<"Choose an action:"<<endl;
     if(weapons.size()>0 && spellBook.size()>0){
-        cout<<"1. Weapon"<<endl<<"2. Spell"<<endl<<"3. Back"<<endl;
+
         while(1){
+            cout<<"1. Weapon"<<endl<<"2. Spell"<<endl<<"3.Check Status Effects"<<endl<<"4.Check Stats"<<endl<<"5. Back"<<endl;
             int choice;
             cin>>choice;
             if(choice==1) return this->selectWeapon();
             else if (choice==2) return this->selectSpell();
-            else if (choice==3) return NULL;
+            else if (choice==3) StatusEffectMenu(c);
+            else if (choice==4) StatsMenu(c);
+            else if (choice==5) return NULL;
             else cout<<"Invalid input, try again."<<endl;
         }
     }
@@ -483,7 +486,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
         printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
 
         if(tar->getCurHP() <= 0){
-            cout<<tar->getName()<<" died."<<endl;
+            //cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
         else
@@ -592,7 +595,7 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
 string Creature::toString(){
     string s;
     if(curHP<=0) s = name+" is dead.\n";
-    else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nAC: "+to_string(ac)+"\nProf: "+to_string(prof)+"\n";
+    else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nMax Mana: "+to_string(maxMana)+"\nCurrent Mana: "+to_string(curMana)+"\nAC: "+to_string(ac)+"\nProficiency: "+to_string(prof)+"\nStrength: "+to_string(STR)+"\nDexterity: "+to_string(DEX)+"\nConstitution: "+to_string(CON)+"\nIntelligence: "+to_string(INT)+"\nWisdom: "+to_string(WIS)+"\nCharisma: "+to_string(CHA)+"\n";
     return s;
 }
 void Creature::listSpellBook(){};
@@ -614,15 +617,25 @@ int Creature::rollSave(string atr,int sideNum, int adv, int dNum)
     }
 }
 
-int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effects(buffing/debuffing)
+int Creature::SE_Inflict(Action* aptr,Creature* trg) //Inflicting status effects(buffing/debuffing)
 {
+    Creature* target = trg;
     for(int i =0; i<aptr->actionStatusEffect.size(); i++)
     {
-        if(aptr->actionStatusEffect[i]->saveDC<1 || aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill))
+         aptr->actionStatusEffect[i]->target=="Self"? target=this : target=trg;
+        if(aptr->actionStatusEffect[i]->saveDC<1 ||  aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill))
         {
-            cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on " << target->getName()<< endl;
-            target->activeSE.push_back(aptr->actionStatusEffect[i]);
-            target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration);
+            if(aptr->actionStatusEffect[i]->target=="Self")
+            {
+                cout << this->getName() << " gets inflicted by" << aptr->actionStatusEffect[i]->name << endl;
+                this->activeSE.push_back(aptr->actionStatusEffect[i]);
+                this->SEcounter.push_back(aptr->actionStatusEffect[i]->duration);
+            }
+            else if(aptr->actionStatusEffect[i]->target!="Self") {
+                cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on "<< target->getName() << endl;
+                target->activeSE.push_back(aptr->actionStatusEffect[i]);
+                target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration);
+            }
             for (int j = 0; j < aptr->actionStatusEffect[i]->affects.size(); j++) {
 
 
@@ -633,6 +646,7 @@ int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effe
                 }
                 else if (aptr->actionStatusEffect[i]->affects[j] == "CurHP") {
                     target->setCurHP(target->getCurHP() + aptr->actionStatusEffect[i]->val);
+                    if(target->getCurHP()>target->getMaxHP())target->setCurHP(target->getCurHP());
                 }
                 else if (aptr->actionStatusEffect[i]->affects[j] == "MaxMana") {
                     target->setMaxMana(target->getMaxMana() + aptr->actionStatusEffect[i]->val);
@@ -665,7 +679,7 @@ int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effe
                 else if (aptr->actionStatusEffect[i]->affects[j] == "CHA") {
                     target->setCHA(target->getCHA() + aptr->actionStatusEffect[i]->val);
                 }
-                else cout<<"ERROR in a status effect 'affect' json probably"<<endl;
+                //else cout<<"ERROR in a status effect 'affect' json probably"<<endl;
 
 
             }
@@ -677,7 +691,8 @@ int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effe
 }
 
 void Creature::CTurnTick(int ticks) {
-    while(ticks>1 && activeSE.size()!=0 && SEcounter.size()!=0)
+    //cout<<"CTurnTick called"<<endl;
+    while(ticks>=1 && activeSE.size()!=0 && SEcounter.size()!=0)
     {
         if (activeSE.size() != SEcounter.size())
             cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
@@ -690,9 +705,13 @@ void Creature::CTurnTick(int ticks) {
             if (activeSE.size() != SEcounter.size())
                 cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
 
-            if (activeSE[i]->DOTflag == true)
-                setCurHP(
-                        getCurHP() + activeSE[i]->val);                   //auto assumes dots only applies to current hp
+            if (activeSE[i]->DOTflag == true) {
+
+                setCurHP(getCurHP() + activeSE[i]->val);
+                if(activeSE[i]->val>0) cout<<this->getName()<<" heals for "<<activeSE[i]->val<<" from "<<activeSE[i]->name<<endl;                                                                         //auto assumes dots only applies to current hp
+                else cout<<this->getName()<<" takes "<<(-1)*(activeSE[i]->val)<<" damage"<<" from "<<activeSE[i]->name<<endl;
+                if(getCurHP()>getMaxHP()) setCurHP(getMaxHP());
+            }
             if (SEcounter[i] < 1) {                                       //if counter to the corrseponding status effect is less than 1 end the (de)buff
                 for (int j = 0; j < activeSE[i]->affects.size(); j++) {
 
@@ -727,7 +746,7 @@ void Creature::CTurnTick(int ticks) {
                         this->setWIS(this->getWIS() - activeSE[i]->val);
                     } else if (activeSE[i]->affects[j] == "CHA") {
                         this->setCHA(this->getCHA() - activeSE[i]->val);
-                    } else cout << "ERROR in a status effect 'affect' field json probably" << endl;
+                    }// else cout << "ERROR in a status effect 'affect' field json probably" << endl;
 
 
                 }
@@ -787,4 +806,43 @@ int Creature::calcDamage(int bonus, Action *action, vector<string> &dmgBreakdown
     }
 
     return dmgTotal;
+}
+
+int Creature::StatusEffectMenu(Creature* c)
+{
+    int choice_max=0;
+    int choice_container;
+    while(true)
+    {
+    for(int i=0;i<c->activeSE.size(); i++)
+    {
+        cout<<i+1<<". "<<c->activeSE[i]->name<<" ( "<<c->SEcounter[i]<<" turns remaining )"<<endl;
+        choice_max=i+1;
+    }
+        choice_max++;
+        cout << choice_max << ". Back" << endl;
+        cin >> choice_container;
+        if (choice_container == choice_max) return 0;
+        else if(choice_container>choice_max || choice_container<1) cout<<"Invalid input, try again"<<endl;
+        else
+        {
+            cout<<"                   "<<c->activeSE[choice_container-1]->name<<endl;
+            cout<<c->activeSE[choice_container-1]->description<<endl;
+            cout<<c->SEcounter[choice_container-1]<<" turns remaining"<<endl;
+        }
+
+    }
+}
+
+void Creature::StatsMenu(Creature *c)
+{
+    int choice;
+    cout<<c->toString()<<endl;
+    cout<<"1. Back"<<endl;
+    do{
+
+        cin>>choice;
+
+    }while(choice!=1);
+
 }

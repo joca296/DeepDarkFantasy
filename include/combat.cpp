@@ -38,9 +38,10 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
             ptr->CPL->CTurnTick();
+            head=prune_cList(head);
             do{
                 target = ptr->CPL->chooseTarget(head);
-                action = ptr->CPL->actionChoose();
+                action = ptr->CPL->actionChoose(target);
             }while(action==NULL);
             int deathsThisTurn = 0;
             deathsThisTurn+=ptr->CPL->actionExec(head,target,action);

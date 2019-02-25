@@ -1,0 +1,11 @@
+{
+	"Name" : "Bleed",
+	"Value" : -6,
+	"DOT" : true,
+	"SavingThrowSkill" : "STR",
+	"SaveDC" : 30,
+	"Duration" : 8,
+	"Target" : "Enemy",
+	"Affects" : [],
+	"Description" : "Strong bleed that causes you to lose 6hp for 8 turns "
+}

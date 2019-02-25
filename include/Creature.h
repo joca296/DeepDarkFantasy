@@ -74,7 +74,7 @@ public:
 
     //methods
     char checkDamage(const string& type);
-    virtual Action* actionChoose()=0;
+    virtual Action* actionChoose(Creature*)=0;
     virtual Creature* chooseTarget(struct cList* actors)=0;
     virtual int isHero()=0;
     int actionExec(struct cList* actors, Creature* tar, Action *action);
@@ -87,10 +87,12 @@ public:
     virtual void listWeapons();
     virtual Item* listInventory();
     virtual ~Creature() {};    //virtual destructor
-    int SE_Inflict(Action* aptr,Creature* target);
+    int SE_Inflict(Action* aptr,Creature* trg);
     int rollSave(string atr="STR",int sideNum=20, int adv=0, int dNum=1);
     void CTurnTick(int ticks=1);
     int calcDamage(int bonus, Action* action, vector<string> &dmgBreakdown);
+    int StatusEffectMenu(Creature* c);
+    void StatsMenu(Creature *c);
 };
 
 class Monster: public Creature{
@@ -104,7 +106,7 @@ public:
 
     //overrides
     int isHero() override;
-    Action* actionChoose() override;
+    Action* actionChoose(Creature*) override;
     Creature* chooseTarget(struct cList* actors) override;
 };
 
@@ -119,7 +121,7 @@ public:
 
     //overrides and methods
     int isHero() override;
-    Action* actionChoose() override;
+    Action* actionChoose(Creature*) override;
     Action* selectSpell();
     Action* selectWeapon();
     Creature* chooseTarget(struct cList* actors) override;

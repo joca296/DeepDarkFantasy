@@ -22,10 +22,11 @@ private:
 
     public:
         statusEffect(string);
-        bool DOTflag=false;
+        bool DOTflag;
         int val,saveDC,duration;
         string jname,name;
         string target;
+        string description;
         string saving_throw_skill;
         vector <string> affects;
 

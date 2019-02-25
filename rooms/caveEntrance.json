@@ -13,8 +13,8 @@
   "Surv_FAIL" : "Surv FAIL placeholder",
   "Arc_FAIL" : "Arcana FAIL placeholder",
   "maxRolls" : 3,
-  "combatDesc" : "An ambush! Send these vermin a message: the rightful owner has returned, and their kind is no longer welcome.",
-  "monsters" : [],
+  "combatDesc" : "Boz pomoz",
+  "monsters" : ["IsusHrist"],
   "events" : ["AxeTrap"],
   "connectedRooms" : ["caveHallwayA"]
 }
