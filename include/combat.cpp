@@ -35,6 +35,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
         ptr=head;
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
+            ptr->CPL->CTurnTick();
         do{
                 target = ptr->CPL->chooseTarget(head);
                 action = ptr->CPL->actionChoose();
@@ -48,7 +49,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                 if(dcount==n){
                     cout<<"Battle won!"<<endl;
                     delete_cList(head);
-                    head=NULL;
+
                     return 1;
                 }
             }

@@ -25,7 +25,7 @@ private:
 
     public:
         statusEffect(string);
-
+        bool DOTflag=false;
         int val,saveDC,duration;
         string jname,name;
         string target;

@@ -144,7 +144,8 @@
        this->setSaveMulti(document["SaveMulti"].GetFloat());
        this->setDisarmDC(document["DisarmDC"].GetInt());
        this->setDisarm_succ_text(document["DisSucc"].GetString());
-       //cout<<"PASS"<<endl;
+       this->setDisarm_fail_text(document["DisFail"].GetString());
+
 
 
 

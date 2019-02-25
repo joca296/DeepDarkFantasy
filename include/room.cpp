@@ -227,6 +227,7 @@ room* room::enterRoom(Creature *p)
                         //cout<<"Making new Room "<<nRoom->get_room_name()<<endl;
                         if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
                         setRoomEnteredFlag(true);
+                        p->CTurnTick(10);
                         return nRoom;
                     }
                     else
@@ -235,6 +236,7 @@ room* room::enterRoom(Creature *p)
                         if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
                        // cout<<"going into old room "<<endl;
                         setRoomEnteredFlag(true);
+                        p->CTurnTick(10);
                         return findRoom(rHead,eChoice)->RPL;
                     }
 

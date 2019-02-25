@@ -92,6 +92,7 @@ public:
     virtual ~Creature() {};    //virtual destructor
     int SE_Inflict(Action* aptr,Creature* target);
     int rollSave(string atr="STR",int sideNum=20, int adv=0, int dNum=1);
+    void CTurnTick(int ticks=1);
 
 };
 

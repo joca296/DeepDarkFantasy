@@ -678,41 +678,43 @@ int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effe
                 if (aptr->actionStatusEffect[i]->affects[j] == "MaxHP") {
                     target->setMaxHP(target->getMaxHP() + aptr->actionStatusEffect[i]->val);
                     if(target->getMaxHP()<target->getCurHP()) target->setCurHP(target->getMaxHP());
+
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "CurHP") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "CurHP") {
                     target->setCurHP(target->getCurHP() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "MaxMana") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "MaxMana") {
                     target->setMaxMana(target->getMaxMana() + aptr->actionStatusEffect[i]->val);
                     if(target->getMaxMana()<target->getCurMana()) target->setCurMana(target->getMaxMana());
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "CurMana") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "CurMana") {
                     target->setCurMana(target->getCurMana() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "AC") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "AC") {
                     target->setAc(target->getAc() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "Prof") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "Prof") {
                     target->setProf(target->getProf() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "STR") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "STR") {
                     target->setSTR(target->getSTR() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "DEX") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "DEX") {
                     target->setDEX(target->getDEX() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "CON") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "CON") {
                     target->setCON(target->getCON() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "INT") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "INT") {
                     target->setINT(target->getINT() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "WIS") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "WIS") {
                     target->setWIS(target->getWIS() + aptr->actionStatusEffect[i]->val);
                 }
-                if (aptr->actionStatusEffect[i]->affects[j] == "CHA") {
+                else if (aptr->actionStatusEffect[i]->affects[j] == "CHA") {
                     target->setCHA(target->getCHA() + aptr->actionStatusEffect[i]->val);
                 }
+                else cout<<"ERROR in a status effect 'affect' json probably"<<endl;
 
 
             }
@@ -721,4 +723,69 @@ int Creature::SE_Inflict(Action* aptr,Creature* target) //Inflicting status effe
 
     return 0;
 
+}
+
+void Creature::CTurnTick(int ticks) {
+    while(ticks>1 && activeSE.size()!=0 && SEcounter.size()!=0)
+    {
+        if (activeSE.size() != SEcounter.size())
+            cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
+
+        for (int i = 0; i < SEcounter.size(); i++) {
+            SEcounter[i]--;                                         //Decrementing duration counters for (de)buffs at the begining of the creatures turn
+        }
+
+        for (int i = 0; i < SEcounter.size(); i++) {
+            if (activeSE.size() != SEcounter.size())
+                cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
+
+            if (activeSE[i]->DOTflag == true)
+                setCurHP(
+                        getCurHP() + activeSE[i]->val);                   //auto assumes dots only applies to current hp
+            if (SEcounter[i] < 1) {                                       //if counter to the corrseponding status effect is less than 1 end the (de)buff
+                for (int j = 0; j < activeSE[i]->affects.size(); j++) {
+
+
+                    if (activeSE[i]->affects[j] == "MaxHP") {
+                        this->setMaxHP(this->getMaxHP() - activeSE[i]->val);
+                        if (this->getMaxHP() < this->getCurHP()) this->setCurHP(this->getMaxHP());
+
+                    }
+                        //else if (activeSE[i]->affects[j] == "CurHP")
+
+                    else if (activeSE[i]->affects[j] == "MaxMana") {
+                        this->setMaxMana(this->getMaxMana() + activeSE[i]->val);
+                        if (this->getMaxMana() < this->getCurMana()) this->setCurMana(this->getMaxMana());
+                    }
+                        /*else if (activeSE[i]->affects[j] == "CurMana") {
+                            this->setCurMana(this->getCurMana() + activeSE[i]->val);
+                        }*/
+                    else if (activeSE[i]->affects[j] == "AC") {
+                        this->setAc(this->getAc() - activeSE[i]->val);
+                    } else if (activeSE[i]->affects[j] == "Prof") {
+                        this->setProf(this->getProf() - activeSE[i]->val);
+                    } else if (activeSE[i]->affects[j] == "STR") {
+                        this->setSTR(this->getSTR() - activeSE[i]->val);
+                    } else if (activeSE[i]->affects[j] == "DEX") {
+                        this->setDEX(this->getDEX() - activeSE[i]->val);
+                    } else if (activeSE[i]->affects[j] == "CON") {
+                        this->setCON(this->getCON() - activeSE[i]->val);
+                    } else if (activeSE[i]->affects[j] == "INT") {
+                        this->setINT(this->getINT() - activeSE[i]->val);
+                    } else if (activeSE[i]->affects[j] == "WIS") {
+                        this->setWIS(this->getWIS() - activeSE[i]->val);
+                    } else if (activeSE[i]->affects[j] == "CHA") {
+                        this->setCHA(this->getCHA() - activeSE[i]->val);
+                    } else cout << "ERROR in a status effect 'affect' field json probably" << endl;
+
+
+                }
+
+                activeSE.erase(activeSE.begin() + i);
+                SEcounter.erase(SEcounter.begin() + i);
+            }
+        }
+        ticks--;
+
+    }
 }
