@@ -38,12 +38,12 @@ private:
     int numberOfConnections,numberOfMonsters,numberOfTraps;
     string Perception_SUCC_text, Investigation_SUCC_text, Survival_SUCC_text, Arcana_SUCC_text, Perception_FAIL_text, Investigation_FAIL_text, Survival_FAIL_text, Arcana_FAIL_text;
     string room_name,room_desc,combat_desc;
-    string room_next[MAX_CONNECTED_ROOMS];
     string room_monsters[MAX_ROOM_MONSTERS];
     bool roomEnteredFlag=false;
 public:
     vector<Item*> groundItems;
     event* room_traps[MAX_ROOM_TRAPS];
+    string room_next[MAX_CONNECTED_ROOMS];
 
 
     void set_room_desc(string s);
@@ -82,6 +82,8 @@ public:
     string getArcana_FAIL_text();
     void setRoomEnteredFlag(bool f);
     bool getRoomEnteredFlag();
+    int getNumberOfConnections() const;
+    void setNumberOfConnections(int numberOfConnections);
 
     room* enterRoom(Creature *p);
     void basic_choise_text(Creature *p);
@@ -98,10 +100,11 @@ struct rList
 {
     struct rList *next;
     room *RPL;
-
 };
 
 struct rList *append_node(room* r,struct rList *rHead);
 void delete_rList(struct rList *rHead);
-struct rList *findRoom(struct rList *rHead,string s);
+struct rList *findRoom(struct rList *rHead,string& s);
 extern struct rList* rHead;
+
+void printMap(struct rList *rHead, int level=1);

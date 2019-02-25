@@ -280,7 +280,11 @@ Action* Hero::actionChoose(Creature* c) {
     if(weapons.size()>0 && spellBook.size()>0){
 
         while(1){
-            cout<<"1. Weapon"<<endl<<"2. Spell"<<endl<<"3.Check Status Effects"<<endl<<"4.Check Stats"<<endl<<"5. Back"<<endl;
+            cout<<"1. Weapon"<<endl;
+            cout<<"2. Spell"<<endl;
+            cout<<"3. Check Status Effects"<<endl;
+            cout<<"4. Check Stats"<<endl;
+            cout<<"5. Back"<<endl;
             int choice;
             cin>>choice;
             if(choice==1) return this->selectWeapon();

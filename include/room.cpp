@@ -162,7 +162,7 @@ room* room::enterRoom(Creature *p)
 
     if(getRoomEnteredFlag()==false)
     {
-
+        rHead=append_node(this,rHead);
 
         if(numberOfMonsters>0)
         {
@@ -212,6 +212,10 @@ room* room::enterRoom(Creature *p)
                 cout<<p->toString()<<endl;
                 break;
             case 7:
+                printMap(rHead);
+                cout<<endl;
+                break;
+            case 8:
                 //cout<<"EXIT WIP"<<endl;
                 eChoice=exit_room(p);
                 if(p->getCurHP()<1)
@@ -226,7 +230,7 @@ room* room::enterRoom(Creature *p)
 
                         nRoom=new room(eChoice);
                         //cout<<"Making new Room "<<nRoom->get_room_name()<<endl;
-                        if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
+                        //if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
                         setRoomEnteredFlag(true);
                         p->CTurnTick(10);
                         return nRoom;
@@ -234,8 +238,8 @@ room* room::enterRoom(Creature *p)
                     else
                     {
 
-                        if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
-                       // cout<<"going into old room "<<endl;
+                        //if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
+                        // cout<<"going into old room "<<endl;
                         setRoomEnteredFlag(true);
                         p->CTurnTick(10);
                         return findRoom(rHead,eChoice)->RPL;
@@ -257,7 +261,8 @@ void room::basic_choise_text(Creature *p)
     cout<<"4. Open Equipped weapons "<<endl;
     cout<<"5. Open Spellbook"<<endl;
     cout<<"6. Open Stats "<<endl;
-    cout<<"7. Exit Room "<<endl;
+    cout<<"7. Show Map "<<endl;
+    cout<<"8. Exit Room "<<endl;
 }
 
 int room::basic_checks(Creature *p)
@@ -613,7 +618,7 @@ void delete_rList(struct rList *rHead)
 
 }
 
-struct rList *findRoom(struct rList *rHead,string s)
+struct rList *findRoom(struct rList *rHead,string& s)
 {
     struct rList* ptr;
     ptr=rHead;
@@ -671,5 +676,27 @@ void room::activateTrap(event* e, Creature *p)
     e->isDisarmed=true;
 }
 
+int room::getNumberOfConnections() const {
+    return numberOfConnections;
+}
+
+void room::setNumberOfConnections(int numberOfConnections) {
+    room::numberOfConnections = numberOfConnections;
+}
+
+void printMap(struct rList *rHead, int level){
+    if(rHead!=NULL){
+        for (int i = 1; i < level; i++)
+            cout<<"\t";
+        cout<<rHead->RPL->get_room_name();
+        cout<<endl;
+        for (int i=0; i<rHead->RPL->getNumberOfConnections();i++) {
+            rList* tmp = findRoom(rHead,rHead->RPL->room_next[i]);
+            if(tmp != NULL)
+                printMap(tmp,level+1);
+        }
+    }
+}
 
 struct rList *rHead=NULL;
+
