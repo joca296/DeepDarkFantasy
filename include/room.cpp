@@ -201,7 +201,7 @@ room* room::enterRoom(Creature *p)
                 break;
             }
             case 4:
-                p->listWeapons();
+                p->listEquipped();
                 break;
             case 5:
                 //cout<<"Open Spellbook WIP"<<endl;
@@ -258,7 +258,7 @@ void room::basic_choise_text(Creature *p)
     cout<<"1. Basic Checks "<<endl;
     cout<<"2. Special Interactions "<<endl;
     cout<<"3. Open Inventory "<<endl;
-    cout<<"4. Open Equipped weapons "<<endl;
+    cout<<"4. Show Equipped items "<<endl;
     cout<<"5. Open Spellbook"<<endl;
     cout<<"6. Open Stats "<<endl;
     cout<<"7. Show Map "<<endl;

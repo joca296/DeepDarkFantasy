@@ -1,6 +1,5 @@
 #include "Creature.h"
 #include "cList.h"
-#include "functions.h"
 
 string Creature::getName() const {
     return name;
@@ -27,7 +26,13 @@ void Creature::setCurHP(int curHP) {
     Creature::curHP = curHP;
 }
 int Creature::getAc() const {
-    return ac;
+    if(armor != NULL){
+        int result =0;
+        result += armor->getAc();
+        result += ( armor->getType()== 'h'? 0 : (armor->getType()== 'm'? (this->getDEX()>2 ? 2 : this->getDEX() ) : this->getDEX() ) );
+        return result;
+    }
+    else return ac;
 }
 void Creature::setAc(int ac) {
     Creature::ac = ac;
@@ -135,6 +140,8 @@ Monster::Monster(string name){
         this->setINT(document["int"].GetInt());
         this->setWIS(document["wis"].GetInt());
         this->setCHA(document["cha"].GetInt());
+
+        armor==NULL;
 
         //setting actions
         const Value& a = document["actionList"];
@@ -346,21 +353,31 @@ Creature* Hero::chooseTarget(struct cList* actors){
         }
     }
 }
-void Hero::listWeapons() {
+void Hero::listEquipped() {
     if(weapons.size() == 0) cout<<"You don't have any weapons equipped.";
     else{
-        cout<<"Weapons (select to unequip):"<<endl;
-        int i=1;
-        for(i=1; i<=weapons.size(); i++){
-            cout<<i<<". "<<weapons[i-1]->getName()<<endl;
+        cout<<"Equipped items (select to unequip):"<<endl;
+        int choiceMax;
+        for(choiceMax=1; choiceMax<=weapons.size(); choiceMax++){
+            cout<<choiceMax<<". "<<weapons[choiceMax-1]->getName()<<endl;
         }
-        cout<<i<<". Back"<<endl;
+        if(armor!=NULL){
+            cout<<choiceMax<<". "<<armor->getName()<<endl;
+            choiceMax++;
+        }
+        cout<<choiceMax<<". Back"<<endl;
         while(1){
             int choice;
             cin>>choice;
-            if(choice<1 || choice>weapons.size()+1) cout<<"Invalid input, try again."<<endl;
-            else if (choice == weapons.size()+1) return;
+            if(choice<1 || choice>choiceMax) cout<<"Invalid input, try again."<<endl;
+            else if (choice == choiceMax) return;
             else {
+                if(choice == choiceMax-1 && armor!=NULL){
+                    this->inventory.push_back(new Item(armor->getName()));
+                    delete armor;
+                    armor=NULL;
+                    return;
+                }
                 this->inventory.push_back(new Item(weapons[choice-1]->getName()));
                 delete weapons[choice-1];
                 this->weapons.erase(this->weapons.begin() + choice-1);
@@ -395,19 +412,25 @@ Item* Hero::listInventory(){
             if(choice<1 || choice>inventory.size()+1) cout<<"Invalid input, try again."<<endl;
             else if (choice == inventory.size()+1) return NULL;
             else {
-                bool weaponFlag = false;
-                if(inventory[choice-1]->getItemType() == 'w') { cout<<"0. Equip weapon"<<endl; weaponFlag=true; }
+                bool equipFlag = false;
+                char itemType = inventory[choice-1]->getItemType();
+                if(itemType == 'w' || itemType == 'a'){
+                    cout<<"0. Equip"<<endl;
+                    equipFlag=true;
+                }
                 cout<<"1. Show item description"<<endl;
                 cout<<"2. Drop item"<<endl;
                 cout<<"3. Back"<<endl;
                 while(1){
                     int itemManagementChoice;
                     cin>>itemManagementChoice;
-                    if(choice<(weaponFlag? 0:1) || choice>3) cout<<"Invalid input, try again."<<endl;
+                    int tmp = (equipFlag? 0:1);
+                    if(itemManagementChoice<tmp || itemManagementChoice>3) cout<<"Invalid input, try again."<<endl;
                     else {
                         switch (itemManagementChoice) {
                             case 0:
-                                this->weapons.push_back(callConstuctor(inventory[choice-1]->getName()));
+                                if (itemType == 'w') this->weapons.push_back(callConstuctor(inventory[choice-1]->getName()));
+                                else armor=new Armor(inventory[choice-1]->getName());
                                 delete inventory[choice-1];
                                 this->inventory.erase(this->inventory.begin() + choice-1);
                                 return NULL;
@@ -431,16 +454,6 @@ Item* Hero::listInventory(){
     }
     return NULL;
 }
-int Hero::getAc() const{
-    if(armor != NULL){
-        int result =0;
-        result += armor->getAc();
-        result += ( armor->getType()== 'h'? 0 : (armor->getType()== 'm'? (this->getDEX()>2 ? 2 : this->getDEX() ) : this->getDEX() ) );
-        return result;
-    }
-    else return this->getAc()+this->getDEX();
-}
-
 //Creature class method definitions
 int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
     char type = action->getType();
@@ -599,11 +612,23 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
 string Creature::toString(){
     string s;
     if(curHP<=0) s = name+" is dead.\n";
-    else s = "Name: "+name+"\nMax HP: "+to_string(maxHP)+"\nCurrent HP: "+to_string(curHP)+"\nMax Mana: "+to_string(maxMana)+"\nCurrent Mana: "+to_string(curMana)+"\nAC: "+to_string(ac)+"\nProficiency: "+to_string(prof)+"\nStrength: "+to_string(STR)+"\nDexterity: "+to_string(DEX)+"\nConstitution: "+to_string(CON)+"\nIntelligence: "+to_string(INT)+"\nWisdom: "+to_string(WIS)+"\nCharisma: "+to_string(CHA)+"\n";
+    else s = "Name: "+name;
+    s += "\nMax HP: "+to_string(maxHP);
+    s += "\nCurrent HP: "+to_string(curHP);
+    s += "\nMax Mana: "+to_string(maxMana);
+    s += "\nCurrent Mana: "+to_string(curMana);
+    s += "\nAC: "+to_string(this->getAc());
+    s += "\nProficiency: "+to_string(prof);
+    s += "\nStrength: "+to_string(STR);
+    s += "\nDexterity: "+to_string(DEX);
+    s += "\nConstitution: "+to_string(CON);
+    s += "\nIntelligence: "+to_string(INT);
+    s += "\nWisdom: "+to_string(WIS);
+    s += "\nCharisma: "+to_string(CHA)+"\n";
     return s;
 }
 void Creature::listSpellBook(){};
-void Creature::listWeapons(){};
+void Creature::listEquipped(){};
 Item* Creature::listInventory(){return NULL;}
 
 int Creature::rollSave(string atr,int sideNum, int adv, int dNum)

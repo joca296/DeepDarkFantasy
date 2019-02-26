@@ -28,6 +28,7 @@ private:
 public:
     //Inventory
     vector<Item*> inventory;
+    Armor* armor;
 
     //Immunities, resists and weaknesses
     vector<string> immunity, resist, weakness;
@@ -84,7 +85,7 @@ public:
     int execAoE(struct cList* actors, SpellAoE *action, Creature* tar);
     string toString();
     virtual void listSpellBook();
-    virtual void listWeapons();
+    virtual void listEquipped();
     virtual Item* listInventory();
     virtual ~Creature() {};    //virtual destructor
     int SE_Inflict(Action* aptr,Creature* trg);
@@ -113,7 +114,6 @@ public:
 class Hero : public Creature{
 public:
     vector<Action*> weapons, spellBook;
-    Armor* armor;
 
     //constructors
     Hero(){};
@@ -125,8 +125,7 @@ public:
     Action* selectSpell();
     Action* selectWeapon();
     Creature* chooseTarget(struct cList* actors) override;
-    void listWeapons() override;
+    void listEquipped() override;
     void listSpellBook() override;
     Item* listInventory() override;
-    int getAc() const;
 };

@@ -1,6 +1,5 @@
 #include "combat.h"
 #include "cList.h"
-#include "functions.h"
 
 int combat(Creature *h,string MonsterList[],int n,string combatText)
 {
