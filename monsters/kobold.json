@@ -10,6 +10,7 @@
   "int" : -1,
   "wis" : -2,
   "cha" : -1,
+  "actionsPerRound" : 1,
   "actionList" : ["dagger","sling"],
   "actionWeight" : [100],
   "inventory" : [],

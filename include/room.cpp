@@ -183,10 +183,10 @@ room* room::enterRoom(Creature *p)
         switch(choice_container)
         {
             case 1:
-                    if(current_tries_remain>0 && this->getRoomEnteredFlag()==false)
-                    {
-                        if(basic_checks(p)!=5) current_tries_remain--;
-                    }
+                if(current_tries_remain>0 && this->getRoomEnteredFlag()==false)
+                {
+                    if(basic_checks(p)!=5) current_tries_remain--;
+                }
                 else cout<<"You have no further interest in this place "<<endl;
                 break;
             case 2:

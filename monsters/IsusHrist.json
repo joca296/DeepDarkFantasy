@@ -10,6 +10,7 @@
   "int" : 4,
   "wis" : 4,
   "cha" : 6,
+  "actionsPerRound" : 1,
   "actionList" : ["bozijaBatina"],
   "actionWeight" : [100],
   "inventory" : [],

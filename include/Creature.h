@@ -23,7 +23,8 @@ using namespace std;
 
 class Creature {
 private:
-    int maxHP, curHP,maxMana,curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init;
+    int maxHP, curHP,maxMana,curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound;
+private:
     string name, tag;
 public:
     //Inventory
@@ -38,6 +39,8 @@ public:
     vector<int> SEcounter;
 
     //getters and setters
+    int getActionsPerRound() const;
+    void setActionsPerRound(int actionsPerRound);
     string getName() const;
     void setName(string name);
     int getProf() const;

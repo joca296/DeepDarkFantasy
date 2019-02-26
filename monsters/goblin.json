@@ -10,6 +10,7 @@
   "int" : 0,
   "wis" : -1,
   "cha" : -1,
+  "actionsPerRound" : 1,
   "actionList" : ["schimitar","shortbow"],
   "actionWeight" : [60, 40],
   "inventory" : [],

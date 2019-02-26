@@ -140,8 +140,9 @@ Monster::Monster(string name){
         this->setINT(document["int"].GetInt());
         this->setWIS(document["wis"].GetInt());
         this->setCHA(document["cha"].GetInt());
+        this->setActionsPerRound(document["actionsPerRound"].GetInt());
 
-        armor==NULL;
+        armor=NULL;
 
         //setting actions
         const Value& a = document["actionList"];
@@ -232,6 +233,7 @@ Hero::Hero(string name){
         this->setINT(document["int"].GetInt());
         this->setWIS(document["wis"].GetInt());
         this->setCHA(document["cha"].GetInt());
+        this->setActionsPerRound(document["actionsPerRound"].GetInt());
 
         //setting actions
         const Value& a = document["weapons"];
@@ -656,7 +658,7 @@ int Creature::SE_Inflict(Action* aptr,Creature* trg) //Inflicting status effects
         {
             if(aptr->actionStatusEffect[i]->target=="Self")
             {
-                cout << this->getName() << " gets inflicted by" << aptr->actionStatusEffect[i]->name << endl;
+                cout << this->getName() << " gets inflicted by " << aptr->actionStatusEffect[i]->name << endl;
                 this->activeSE.push_back(aptr->actionStatusEffect[i]);
                 this->SEcounter.push_back(aptr->actionStatusEffect[i]->duration);
             }
@@ -874,4 +876,12 @@ void Creature::StatsMenu(Creature *c)
 
     }while(choice!=1);
 
+}
+
+int Creature::getActionsPerRound() const {
+    return actionsPerRound;
+}
+
+void Creature::setActionsPerRound(int actionsPerRound) {
+    Creature::actionsPerRound = actionsPerRound;
 }

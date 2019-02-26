@@ -10,6 +10,7 @@
   "int" : -3,
   "wis" : -1,
   "cha" : -4,
+  "actionsPerRound" : 1,
   "actionList" : ["claws"],
   "actionWeight" : [100],
   "inventory" : [],

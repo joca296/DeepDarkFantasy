@@ -30,29 +30,31 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
     sortList(head);
     //displayList(head);
     Creature* target;
-     Action* action;
+    Action* action;
     while(true/*fightOverFlag==false*/)
     {
         ptr=head;
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
-            ptr->CPL->CTurnTick();
-            head=prune_cList(head);
-            do{
-                target = ptr->CPL->chooseTarget(head);
-                action = ptr->CPL->actionChoose(target);
-            }while(action==NULL);
-            int deathsThisTurn = 0;
-            deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
-            if(deathsThisTurn>0){
-                dcount+=deathsThisTurn;
-                if(target->getCurHP()<1 && target->isHero())
-                    return -1;
+            for(int i=0; i<ptr->CPL->getActionsPerRound(); i++){
+                ptr->CPL->CTurnTick();
                 head=prune_cList(head);
-                if(dcount==n){
-                    cout<<"Battle won!"<<endl;
-                    delete_cList(head);
-                    return 1;
+                do{
+                    target = ptr->CPL->chooseTarget(head);
+                    action = ptr->CPL->actionChoose(target);
+                }while(action==NULL);
+                int deathsThisTurn = 0;
+                deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
+                if(deathsThisTurn>0){
+                    dcount+=deathsThisTurn;
+                    if(target->getCurHP()<1 && target->isHero())
+                        return -1;
+                    head=prune_cList(head);
+                    if(dcount==n){
+                        cout<<"Battle won!"<<endl;
+                        delete_cList(head);
+                        return 1;
+                    }
                 }
             }
             ptr=ptr->next;
