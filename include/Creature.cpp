@@ -848,7 +848,7 @@ int Creature::getAdvantage(string type){
     if(type == "globalAdv") return this->advantages->global;
     else
     {
-        cout<<"Possible error passing string: '"<<type<<" to Creature::getAdvantage(string) (check json files)" <<endl;
+        cout<<"Possible error passing string: '"<<type<<" to Creature::getAdvantage(string) in: "<<this->name<<endl;
         return 0;
     }
 }
