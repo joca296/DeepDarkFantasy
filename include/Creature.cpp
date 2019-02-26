@@ -690,7 +690,7 @@ int Creature::SE_Inflict(Action* aptr,Creature* trg) //Inflicting status effects
                     target->setCurMana(target->getCurMana() + aptr->actionStatusEffect[i]->val);
                 }
                 else if (aptr->actionStatusEffect[i]->affects[j] == "AC") {
-                    target->setAc(target->getAc() + aptr->actionStatusEffect[i]->val);
+                    target->setTempAcGain(target->getTempAcGain() + aptr->actionStatusEffect[i]->val);
                 }
                 else if (aptr->actionStatusEffect[i]->affects[j] == "Prof") {
                     target->setProf(target->getProf() + aptr->actionStatusEffect[i]->val);
@@ -765,7 +765,7 @@ void Creature::CTurnTick(int ticks) {
                             this->setCurMana(this->getCurMana() + activeSE[i]->val);
                         }*/
                     else if (activeSE[i]->affects[j] == "AC") {
-                        this->setAc(this->getAc() - activeSE[i]->val);
+                        this->setTempAcGain(this->getTempAcGain() - activeSE[i]->val);
                     } else if (activeSE[i]->affects[j] == "Prof") {
                         this->setProf(this->getProf() - activeSE[i]->val);
                     } else if (activeSE[i]->affects[j] == "STR") {
