@@ -116,91 +116,6 @@ char Creature::checkDamage(const string& type) {
     return 'n';
 }
 
-//Monster::~Monster(){cout<<"This nigga dead "<<endl;}
-//Monster constructor
-Monster::Monster(string name){
-    ifstream f;
-    string path;
-    if(PLATFORM_NAME == "windows") path = "monsters\\"+name+".json";
-    else path = "./monsters/"+name+".json";
-    f.open(path);
-    if(f.is_open()){
-        const Document& document = parseFromFile(&f);
-
-        //setting base advantages
-        advantages = make_shared<Advantages>();
-        advantages->STR = 0;
-        advantages->DEX = 0;
-        advantages->CON = 0;
-        advantages->INT = 0;
-        advantages->WIS = 0;
-        advantages->CHA = 0;
-        advantages->attack = 0;
-        advantages->global = 0;
-
-        //setting base monster values
-        this->setName(document["name"].GetString()+to_string(rand()%100));
-        this->setMaxHP(document["hp"].GetInt());
-        this->setCurHP(document["hp"].GetInt());
-        this->setMaxMana(document["mana"].GetInt());
-        this->setCurMana(document["mana"].GetInt());
-        this->setAc(document["ac"].GetInt());
-        this->setProf(document["prof"].GetInt());
-        this->setSTR(document["str"].GetInt());
-        this->setDEX(document["dex"].GetInt());
-        this->setCON(document["con"].GetInt());
-        this->setINT(document["int"].GetInt());
-        this->setWIS(document["wis"].GetInt());
-        this->setCHA(document["cha"].GetInt());
-        this->setActionsPerRound(document["actionsPerRound"].GetInt());
-        this->setTempAcGain(0);
-
-        //setting armor
-        armor=NULL;
-
-        //setting actions
-        const Value& a = document["actionList"];
-        for (SizeType i = 0; i < a.Size(); i++){
-            Action* action = callConstuctor(a[i].GetString());
-            actionList.push_back(action);
-        }
-
-        //adding weights
-        const Value& b = document["actionWeight"];
-        for (SizeType i = 0; i < b.Size(); i++){
-            actionWeight.push_back(b[i].GetInt());
-        }
-
-        //setting inventory;
-        const Value& c = document["inventory"];
-        for (SizeType i = 0; i < c.Size(); i++){
-            Item* item = new Item(c[i].GetString());
-            inventory.push_back(item);
-        }
-
-        //setting immunities
-        const Value& d = document["immunity"];
-        for (SizeType i = 0; i < d.Size(); i++){
-            immunity.push_back(d[i].GetString());
-        }
-
-        //setting resists
-        const Value& e = document["resist"];
-        for (SizeType i = 0; i < e.Size(); i++){
-            resist.push_back(e[i].GetString());
-        }
-
-        //setting weaknesses
-        const Value& f = document["weakness"];
-        for (SizeType i = 0; i < f.Size(); i++){
-            weakness.push_back(f[i].GetString());
-        }
-
-    }
-    else cout<<"monster file not open"<<endl;
-    f.close();
-}
-
 //Monster overrides
 int Monster::isHero() {
     return 0;
@@ -218,94 +133,6 @@ Creature* Monster::chooseTarget(struct cList* actors){
     return NULL;
 }
 
-//Hero constructor
-Hero::Hero(string name){
-    ifstream f;
-    string path;
-    if(PLATFORM_NAME == "windows") path = "heroClasses\\"+name+".json";
-    else path = "./heroClasses/"+name+".json";
-    f.open(path);
-    if(f.is_open()){
-        const Document& document = parseFromFile(&f);
-
-        //setting hero name
-        string name;
-        cout<<"Name your character."<<endl;
-        cin>>name;
-
-        //setting base advantages
-        advantages = make_shared<Advantages>();
-        advantages->STR = 0;
-        advantages->DEX = 0;
-        advantages->CON = 0;
-        advantages->INT = 0;
-        advantages->WIS = 0;
-        advantages->CHA = 0;
-        advantages->attack = 0;
-        advantages->global = 0;
-
-        //setting base hero values
-        this->setName(name);
-        this->setMaxHP(document["hp"].GetInt());
-        this->setCurHP(document["hp"].GetInt());
-        this->setMaxMana(document["mana"].GetInt());
-        this->setCurMana(document["mana"].GetInt());
-        this->setAc(document["ac"].GetInt());
-        this->setProf(document["prof"].GetInt());
-        this->setSTR(document["str"].GetInt());
-        this->setDEX(document["dex"].GetInt());
-        this->setCON(document["con"].GetInt());
-        this->setINT(document["int"].GetInt());
-        this->setWIS(document["wis"].GetInt());
-        this->setCHA(document["cha"].GetInt());
-        this->setActionsPerRound(document["actionsPerRound"].GetInt());
-        this->setTempAcGain(0);
-
-        //setting actions
-        const Value& a = document["weapons"];
-        for (SizeType i = 0; i < a.Size(); i++){
-            Action* action = callConstuctor(a[i].GetString());
-            weapons.push_back(action);
-        }
-
-        const Value& b = document["spellBook"];
-        for (SizeType i = 0; i < b.Size(); i++){
-            Action* action = callConstuctor(b[i].GetString());
-            spellBook.push_back(action);
-        }
-
-        //setting armor
-        armor = NULL;
-        if(document["armor"].GetString() != "") armor = new Armor(document["armor"].GetString());
-
-        //setting inventory;
-        const Value& c = document["inventory"];
-        for (SizeType i = 0; i < c.Size(); i++){
-            Item* item = new Item(c[i].GetString());
-            inventory.push_back(item);
-        }
-
-        //setting immunities
-        const Value& d = document["immunity"];
-        for (SizeType i = 0; i < d.Size(); i++){
-            immunity.push_back(d[i].GetString());
-        }
-
-        //setting resists
-        const Value& e = document["resist"];
-        for (SizeType i = 0; i < e.Size(); i++){
-            resist.push_back(e[i].GetString());
-        }
-
-        //setting weaknesses
-        const Value& f = document["weakness"];
-        for (SizeType i = 0; i < f.Size(); i++){
-            weakness.push_back(f[i].GetString());
-        }
-    }
-    else cout<<"hero file not open"<<endl;
-    f.close();
-}
 //Hero overrides and methods
 int Hero::isHero() {
     return 1;
@@ -923,4 +750,147 @@ int Creature::getAdvantage(string type){
     if(type == "chaAdv") return this->advantages->CHA;
     if(type == "attackAdv") return this->advantages->attack;
     if(type == "globalAdv") return this->advantages->global;
+}
+//Creature constructor
+Creature::Creature(string name) {
+    ifstream f;
+
+    string pathHero;
+    if(PLATFORM_NAME == "windows") pathHero = "heroClasses\\"+name+".json";
+    else pathHero = "./heroClasses/"+name+".json";
+
+    string pathMonster;
+    if(PLATFORM_NAME == "windows") pathMonster = "monsters\\"+name+".json";
+    else pathMonster = "./monsters/"+name+".json";
+
+    f.open(pathHero);
+
+    if(!f.is_open()) f.open(pathMonster);
+    if(f.is_open()){
+        const Document& document = parseFromFile(&f);
+
+        //setting base advantages
+        advantages = make_shared<Advantages>();
+        advantages->STR = 0;
+        advantages->DEX = 0;
+        advantages->CON = 0;
+        advantages->INT = 0;
+        advantages->WIS = 0;
+        advantages->CHA = 0;
+        advantages->attack = 0;
+        advantages->global = 0;
+
+        //setting properties
+        maxHP = document["hp"].GetInt();
+        curHP = document["hp"].GetInt();
+        maxMana = document["mana"].GetInt();
+        curMana = document["mana"].GetInt();
+        ac = document["ac"].GetInt();
+        prof = document["prof"].GetInt();
+        STR = document["str"].GetInt();
+        DEX = document["dex"].GetInt();
+        CON = document["con"].GetInt();
+        INT = document["int"].GetInt();
+        WIS = document["wis"].GetInt();
+        CHA = document["cha"].GetInt();
+        actionsPerRound = document["actionsPerRound"].GetInt();
+
+        //AC modifier for status effects
+        tempAcGain = 0;
+
+        //setting armor
+        armor = NULL;
+
+        //setting inventory;
+        const Value& c = document["inventory"];
+        for (SizeType i = 0; i < c.Size(); i++){
+            Item* item = new Item(c[i].GetString());
+            inventory.push_back(item);
+        }
+
+        //setting immunities
+        const Value& d = document["immunity"];
+        for (SizeType i = 0; i < d.Size(); i++){
+            immunity.push_back(d[i].GetString());
+        }
+
+        //setting resists
+        const Value& e = document["resist"];
+        for (SizeType i = 0; i < e.Size(); i++){
+            resist.push_back(e[i].GetString());
+        }
+
+        //setting weaknesses
+        const Value& f = document["weakness"];
+        for (SizeType i = 0; i < f.Size(); i++){
+            weakness.push_back(f[i].GetString());
+        }
+    }
+    else cout<<"hero or monster file not open"<<endl;
+    f.close();
+}
+//Monster constructor
+Monster::Monster(string name) : Creature(name) {
+    ifstream f;
+    string path;
+    if(PLATFORM_NAME == "windows") path = "monsters\\"+name+".json";
+    else path = "./monsters/"+name+".json";
+    f.open(path);
+    if(f.is_open()){
+        const Document& document = parseFromFile(&f);
+
+        //setting monster name
+        this->setName(document["name"].GetString()+to_string(rand()%100));
+
+        //setting actions
+        const Value& a = document["actionList"];
+        for (SizeType i = 0; i < a.Size(); i++){
+            Action* action = callConstuctor(a[i].GetString());
+            actionList.push_back(action);
+        }
+
+        //adding weights
+        const Value& b = document["actionWeight"];
+        for (SizeType i = 0; i < b.Size(); i++){
+            actionWeight.push_back(b[i].GetInt());
+        }
+
+    }
+    else cout<<"monster file not open"<<endl;
+    f.close();
+}
+//Hero constructor
+Hero::Hero(string name) : Creature(name) {
+    ifstream f;
+    string path;
+    if(PLATFORM_NAME == "windows") path = "heroClasses\\"+name+".json";
+    else path = "./heroClasses/"+name+".json";
+    f.open(path);
+    if(f.is_open()){
+        const Document& document = parseFromFile(&f);
+
+        //setting hero name
+        string name;
+        cout<<"Name your character."<<endl;
+        cin>>name;
+        this->setName(name);
+
+        //setting actions
+        const Value& a = document["weapons"];
+        for (SizeType i = 0; i < a.Size(); i++){
+            Action* action = callConstuctor(a[i].GetString());
+            weapons.push_back(action);
+        }
+
+        const Value& b = document["spellBook"];
+        for (SizeType i = 0; i < b.Size(); i++){
+            Action* action = callConstuctor(b[i].GetString());
+            spellBook.push_back(action);
+        }
+
+        //setting armor
+        if(document["armor"].GetString() != "") armor = new Armor(document["armor"].GetString());
+    }
+    else cout<<"hero file not open"<<endl;
+    f.close();
 }
