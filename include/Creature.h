@@ -19,11 +19,13 @@ using namespace std;
 #else
 #endif
 
-#define maxMonsterActions 100
+struct Advantages{
+    int STR, DEX, CON, INT, WIS, CHA, attack, global;
+};
 
 class Creature {
 private:
-    int maxHP, curHP,maxMana,curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound, tempAcGain;
+    int maxHP, curHP, maxMana, curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound, tempAcGain;
     string name, tag;
 public:
     //Inventory
@@ -36,6 +38,9 @@ public:
     //Status effects
     vector<shared_ptr<statusEffect>> activeSE;
     vector<int> SEcounter;
+
+    //Advantages
+    shared_ptr<Advantages> advantages;
 
     //getters and setters
     int getActionsPerRound() const;
@@ -57,7 +62,6 @@ public:
     int getSTR() const;
     void setSTR(int STR);
     int getDEX() const;
-
     void setDEX(int DEX);
     int getCON() const;
     void setCON(int CON);
@@ -67,10 +71,8 @@ public:
     void setWIS(int WIS);
     int getCHA() const;
     void setCHA(int CHA);
-
     const string &getTag() const;
     void setTag(const string &tag);
-
     int getTempAcGain() const;
     void setTempAcGain(int tempAcGain);
 
@@ -94,11 +96,12 @@ public:
     virtual Item* listInventory();
     virtual ~Creature() {};    //virtual destructor
     int SE_Inflict(Action* aptr,Creature* trg);
-    int rollSave(string atr="STR",int sideNum=20, int adv=0, int dNum=1);
+    int rollSave(string atr);
     void CTurnTick(int ticks=1);
     int calcDamage(int bonus, Action* action, vector<string> &dmgBreakdown);
     int StatusEffectMenu(Creature* c);
     void StatsMenu(Creature *c);
+    int getAdvantage(string type = "globalAdv");
 };
 
 class Monster: public Creature{

@@ -5,7 +5,7 @@
   "heal": false,
   "spellCastModAddedToRoll": false,
   "savingThrowFlag": true,
-  "savingThrowType": "DEX",
+  "savingThrowType": "dexAdv",
   "savingThrowDC": 14,
   "statusEffectList": [],
   "roll": 6,

@@ -127,6 +127,17 @@ Monster::Monster(string name){
     if(f.is_open()){
         const Document& document = parseFromFile(&f);
 
+        //setting base advantages
+        advantages = make_shared<Advantages>();
+        advantages->STR = 0;
+        advantages->DEX = 0;
+        advantages->CON = 0;
+        advantages->INT = 0;
+        advantages->WIS = 0;
+        advantages->CHA = 0;
+        advantages->attack = 0;
+        advantages->global = 0;
+
         //setting base monster values
         this->setName(document["name"].GetString()+to_string(rand()%100));
         this->setMaxHP(document["hp"].GetInt());
@@ -144,6 +155,7 @@ Monster::Monster(string name){
         this->setActionsPerRound(document["actionsPerRound"].GetInt());
         this->setTempAcGain(0);
 
+        //setting armor
         armor=NULL;
 
         //setting actions
@@ -220,6 +232,17 @@ Hero::Hero(string name){
         string name;
         cout<<"Name your character."<<endl;
         cin>>name;
+
+        //setting base advantages
+        advantages = make_shared<Advantages>();
+        advantages->STR = 0;
+        advantages->DEX = 0;
+        advantages->CON = 0;
+        advantages->INT = 0;
+        advantages->WIS = 0;
+        advantages->CHA = 0;
+        advantages->attack = 0;
+        advantages->global = 0;
 
         //setting base hero values
         this->setName(name);
@@ -492,7 +515,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
 
     //attack roll
     bool critFlag = false;
-    atcRoll = dRoll();
+    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage(),0);
     if(atcRoll == 20) critFlag = true;
     else atcRoll += bonus+this->getProf();
 
@@ -545,7 +568,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
         vector<string> dmgBreakdown;
 
         int dmgTotal = tar->calcDamage(( action->isSpellCastModAddedToRoll()? bonus:0 ),action,dmgBreakdown);
-        if(critFlag) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
+        if( action->isSavingThrowFlag() && critFlag ) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
         if( action->isSavingThrowFlag() && tar->rollSave(action->getSavingThrowType()) >= action->getSavingThrowDC() ){
             dmgTotal/=2;
             dmgBreakdown.emplace_back("Succeded save (all damage halved)");
@@ -640,19 +663,9 @@ void Creature::listSpellBook(){};
 void Creature::listEquipped(){};
 Item* Creature::listInventory(){return NULL;}
 
-int Creature::rollSave(string atr,int sideNum, int adv, int dNum)
+int Creature::rollSave(string atr)
 {
-    if(atr=="STR") return dRoll(sideNum,adv,dNum)+getSTR();
-    else if(atr=="DEX") return dRoll(sideNum,adv,dNum)+getDEX();
-    else if(atr=="CON") return dRoll(sideNum,adv,dNum)+getCON();
-    else if(atr=="INT") return dRoll(sideNum,adv,dNum)+getINT();
-    else if(atr=="WIS") return dRoll(sideNum,adv,dNum)+getWIS();
-    else if(atr=="CHA") return dRoll(sideNum,adv,dNum)+getCHA();
-    else
-    {
-        cout<<"ERROR in rollSave"<<endl;
-        return 0;
-    }
+    return dRoll(20,this->getAdvantage(atr)+this->getAdvantage(),0);
 }
 
 int Creature::SE_Inflict(Action* aptr,Creature* trg) //Inflicting status effects(buffing/debuffing)
@@ -899,4 +912,15 @@ int Creature::getTempAcGain() const {
 
 void Creature::setTempAcGain(int tempAcGain) {
     Creature::tempAcGain = tempAcGain;
+}
+
+int Creature::getAdvantage(string type){
+    if(type == "strAdv") return this->advantages->STR;
+    if(type == "dexAdv") return this->advantages->DEX;
+    if(type == "conAdv") return this->advantages->CON;
+    if(type == "intAdv") return this->advantages->INT;
+    if(type == "wisAdv") return this->advantages->WIS;
+    if(type == "chaAdv") return this->advantages->CHA;
+    if(type == "attackAdv") return this->advantages->attack;
+    if(type == "globalAdv") return this->advantages->global;
 }
