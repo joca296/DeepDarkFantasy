@@ -30,9 +30,10 @@ int Creature::getAc() const {
         int result =0;
         result += armor->getAc();
         result += ( armor->getType()== 'h'? 0 : (armor->getType()== 'm'? (this->getDEX()>2 ? 2 : this->getDEX() ) : this->getDEX() ) );
+        result += this->getTempAcGain();
         return result;
     }
-    else return ac;
+    else return ac+this->getTempAcGain();
 }
 void Creature::setAc(int ac) {
     Creature::ac = ac;
@@ -141,6 +142,7 @@ Monster::Monster(string name){
         this->setWIS(document["wis"].GetInt());
         this->setCHA(document["cha"].GetInt());
         this->setActionsPerRound(document["actionsPerRound"].GetInt());
+        this->setTempAcGain(0);
 
         armor=NULL;
 
@@ -234,6 +236,7 @@ Hero::Hero(string name){
         this->setWIS(document["wis"].GetInt());
         this->setCHA(document["cha"].GetInt());
         this->setActionsPerRound(document["actionsPerRound"].GetInt());
+        this->setTempAcGain(0);
 
         //setting actions
         const Value& a = document["weapons"];
@@ -884,4 +887,12 @@ int Creature::getActionsPerRound() const {
 
 void Creature::setActionsPerRound(int actionsPerRound) {
     Creature::actionsPerRound = actionsPerRound;
+}
+
+int Creature::getTempAcGain() const {
+    return tempAcGain;
+}
+
+void Creature::setTempAcGain(int tempAcGain) {
+    Creature::tempAcGain = tempAcGain;
 }

@@ -23,8 +23,7 @@ using namespace std;
 
 class Creature {
 private:
-    int maxHP, curHP,maxMana,curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound;
-private:
+    int maxHP, curHP,maxMana,curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound, tempAcGain;
     string name, tag;
 public:
     //Inventory
@@ -71,6 +70,9 @@ public:
 
     const string &getTag() const;
     void setTag(const string &tag);
+
+    int getTempAcGain() const;
+    void setTempAcGain(int tempAcGain);
 
 
     int getInit() const;
