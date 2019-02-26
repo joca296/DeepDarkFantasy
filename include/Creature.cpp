@@ -486,7 +486,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
 
     //attack roll
     bool critFlag = false;
-    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage(),0);
+    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),action->getDiceNumber());
     if(atcRoll == 20) critFlag = true;
     else atcRoll += bonus+this->getProf();
 
@@ -501,13 +501,14 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
         //print
         printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
 
+        if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar); //(de)buff handling here
         if(tar->getCurHP() <= 0){
             //cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
         else
         {
-            if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                           //(de)buff handling here
+
             return 0; //something didn't die
         }
     }
@@ -530,7 +531,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
 
     //attack roll
     bool critFlag = false;
-    atcRoll = dRoll();
+    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),action->getDiceNumber());
     if(atcRoll == 20) critFlag = true;
     else atcRoll += bonus+this->getProf();
 
@@ -549,14 +550,14 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
         //print
         printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
 
-
+        if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);//(de)buff handling here
         if(tar->getCurHP() <= 0){
             cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
         }
         else
         {
-            if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);                           //(de)buff handling here
+
             return 0; //something didn't die
         }
     }
@@ -636,7 +637,7 @@ Item* Creature::listInventory(){return NULL;}
 
 int Creature::rollSave(string atr)
 {
-    return dRoll(20,this->getAdvantage(atr)+this->getAdvantage(),0);
+    return dRoll(20,this->getAdvantage(atr)+this->getAdvantage("globalAdv"),1);
 }
 
 int Creature::SE_Inflict(Action* aptr,Creature* trg)    //Inflicting status effects(buffing/debuffing)
@@ -645,35 +646,38 @@ int Creature::SE_Inflict(Action* aptr,Creature* trg)    //Inflicting status effe
     for(int i =0; i<aptr->actionStatusEffect.size(); i++)   //Iterates through action effects to inflict all of them
     {
         aptr->actionStatusEffect[i]->target=="Self"? target=this : target=trg;   //If target is "Self" the Creature doing the action inflicts the effect on itself regardless of his targeting
+        if(target->getCurHP()>0){ //Checks if target is alive
 
-        if(aptr->actionStatusEffect[i]->saveDC<1 ||  aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
-        {
-            if(aptr->actionStatusEffect[i]->target=="Self"){ //Slightly different output text if target is self
-                cout << this->getName() << " gets inflicted by " << aptr->actionStatusEffect[i]->name << endl;
-            }
-            else
-                cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on "<< target->getName() << endl;
-
-
-            target->activeSE.push_back(aptr->actionStatusEffect[i]); //Inserts the effect into the targets vector for holding status effects
-            target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration); //Sets a counter parallel(same i) to the effect in another vector that counts down the duration later on to determine when the (de)buff should end
-
-            for (int j = 0; j < aptr->actionStatusEffect[i]->affects.size(); j++) { //Iterates through "affects" of the effect which determine what is changed by the (de)buff
-
-                string s = aptr->actionStatusEffect[i]->affects[j];  //set s equal to the string of the j-th attribute in the i-th status effect that needs to be changed     (this is for readability purposes only)
-
-                target->setFieldsByString(s, target->getFieldsByString(s) + aptr->actionStatusEffect[i]->val); //(de)buff the attribute of the target
+            if(aptr->actionStatusEffect[i]->saveDC<1 ||  aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
+            {
+                if(aptr->actionStatusEffect[i]->target=="Self"){ //Slightly different output text if target is self
+                    cout << this->getName() << " gets inflicted by " << aptr->actionStatusEffect[i]->name << endl;
+                }
+                else
+                    cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on "<< target->getName() << endl;
 
 
+                target->activeSE.push_back(aptr->actionStatusEffect[i]); //Inserts the effect into the targets vector for holding status effects
+                target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration); //Sets a counter parallel(same i) to the effect in another vector that counts down the duration later on to determine when the (de)buff should end
 
+                for (int j = 0; j < aptr->actionStatusEffect[i]->affects.size(); j++) { //Iterates through "affects" of the effect which determine what is changed by the (de)buff
+
+                    string s = aptr->actionStatusEffect[i]->affects[j];  //set s equal to the string of the j-th attribute in the i-th status effect that needs to be changed     (this is for readability purposes only)
+
+                    target->setFieldsByString(s, target->getFieldsByString(s) + aptr->actionStatusEffect[i]->val); //(de)buff the attribute of the target
 
 
 
+
+
+
+                }
             }
         }
     }
     if(target->getMaxHP()<target->getCurHP())       target->setCurHP(target->getMaxHP());                           //Set HP to Max HP if it overflows due to status effects
     if(target->getMaxMana()<target->getCurMana())   target->setCurMana(target->getMaxMana());
+
 
     return 0;
 
@@ -834,17 +838,17 @@ void Creature::setTempAcGain(int tempAcGain) {
 }
 
 int Creature::getAdvantage(string type){
-    if(type == "strAdv") return this->advantages->STR;
-    if(type == "dexAdv") return this->advantages->DEX;
-    if(type == "conAdv") return this->advantages->CON;
-    if(type == "intAdv") return this->advantages->INT;
-    if(type == "wisAdv") return this->advantages->WIS;
-    if(type == "chaAdv") return this->advantages->CHA;
+    if(type == "strAdv" || type == "STR") return this->advantages->STR;
+    if(type == "dexAdv" || type == "DEX") return this->advantages->DEX;
+    if(type == "conAdv" || type == "CON") return this->advantages->CON;
+    if(type == "intAdv" || type == "INT" ) return this->advantages->INT;
+    if(type == "wisAdv" || type == "WIS" ) return this->advantages->WIS;
+    if(type == "chaAdv" || type == "CHA") return this->advantages->CHA;
     if(type == "attackAdv") return this->advantages->attack;
     if(type == "globalAdv") return this->advantages->global;
     else
     {
-        cout<<"Possible error passing string to Creature::getAdvantage(string) (check json files)"<<endl;
+        cout<<"Possible error passing string: '"<<type<<" to Creature::getAdvantage(string) (check json files)" <<endl;
         return 0;
     }
 }
