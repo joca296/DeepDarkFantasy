@@ -5,9 +5,11 @@
     "heal" : false,
     "spellCastModAddedToRoll" : false,
     "savingThrowFlag" : false,
-	"statusEffectList":[],
+    "savingThrowType" : "",
+    "savingThrowDC" : "",
+    "statusEffectList":[],
     "roll" : 10,
     "diceNumber" : 1,
     "rollType" : "fire",
-  "addtlEffects" : []
+    "addtlEffects" : []
 }

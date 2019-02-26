@@ -541,11 +541,15 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
     else atcRoll += bonus+this->getProf();
 
     //attack success
-    if(critFlag || atcRoll >= tar->getAc()){
+    if(action->isSavingThrowFlag()? true : (critFlag || atcRoll >= tar->getAc())){
         vector<string> dmgBreakdown;
 
         int dmgTotal = tar->calcDamage(( action->isSpellCastModAddedToRoll()? bonus:0 ),action,dmgBreakdown);
         if(critFlag) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
+        if( action->isSavingThrowFlag() && tar->rollSave(action->getSavingThrowType()) >= action->getSavingThrowDC() ){
+            dmgTotal/=2;
+            dmgBreakdown.emplace_back("Succeded save (all damage halved)");
+        }
         tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print

@@ -11,7 +11,7 @@
   "cha" : -1,
   "actionsPerRound" : 2,
   "weapons" : ["greataxe","javelin"],
-  "spellBook" : ["firebolt","cure_wounds","magic_missle"],
+  "spellBook" : ["firebolt","cure_wounds","fireball"],
   "armor" : "plate_armor",
   "inventory" : ["dagger","shortbow","crowbar"],
   "immunity" : [],
