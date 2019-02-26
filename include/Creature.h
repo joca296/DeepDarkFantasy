@@ -102,6 +102,8 @@ public:
     int StatusEffectMenu(Creature* c);
     void StatsMenu(Creature *c);
     int getAdvantage(string type = "globalAdv");
+    int getFieldsByString(string );
+    void setFieldsByString(string s,int n);
 };
 
 class Monster: public Creature{

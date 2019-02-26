@@ -14,7 +14,7 @@
   "Arc_FAIL" : "Arcana FAIL placeholder",
   "maxRolls" : 3,
   "combatDesc" : "Boz pomoz",
-  "monsters" : [],
+  "monsters" : ["IsusHrist"],
   "events" : ["AxeTrap"],
   "connectedRooms" : ["caveHallwayA"]
 }

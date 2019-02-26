@@ -668,148 +668,96 @@ int Creature::rollSave(string atr)
     return dRoll(20,this->getAdvantage(atr)+this->getAdvantage(),0);
 }
 
-int Creature::SE_Inflict(Action* aptr,Creature* trg) //Inflicting status effects(buffing/debuffing)
+int Creature::SE_Inflict(Action* aptr,Creature* trg)    //Inflicting status effects(buffing/debuffing)
 {
     Creature* target = trg;
-    for(int i =0; i<aptr->actionStatusEffect.size(); i++)
+    for(int i =0; i<aptr->actionStatusEffect.size(); i++)   //Iterates through action effects to inflict all of them
     {
-         aptr->actionStatusEffect[i]->target=="Self"? target=this : target=trg;
-        if(aptr->actionStatusEffect[i]->saveDC<1 ||  aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill))
+        aptr->actionStatusEffect[i]->target=="Self"? target=this : target=trg;   //If target is "Self" the Creature doing the action inflicts the effect on itself regardless of his targeting
+
+        if(aptr->actionStatusEffect[i]->saveDC<1 ||  aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
         {
-            if(aptr->actionStatusEffect[i]->target=="Self")
-            {
+            if(aptr->actionStatusEffect[i]->target=="Self"){ //Slightly different output text if target is self
                 cout << this->getName() << " gets inflicted by " << aptr->actionStatusEffect[i]->name << endl;
-                this->activeSE.push_back(aptr->actionStatusEffect[i]);
-                this->SEcounter.push_back(aptr->actionStatusEffect[i]->duration);
             }
-            else if(aptr->actionStatusEffect[i]->target!="Self") {
+            else
                 cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on "<< target->getName() << endl;
-                target->activeSE.push_back(aptr->actionStatusEffect[i]);
-                target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration);
-            }
-            for (int j = 0; j < aptr->actionStatusEffect[i]->affects.size(); j++) {
 
 
-                if (aptr->actionStatusEffect[i]->affects[j] == "MaxHP") {
-                    target->setMaxHP(target->getMaxHP() + aptr->actionStatusEffect[i]->val);
-                    if(target->getMaxHP()<target->getCurHP()) target->setCurHP(target->getMaxHP());
+            target->activeSE.push_back(aptr->actionStatusEffect[i]); //Inserts the effect into the targets vector for holding status effects
+            target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration); //Sets a counter parallel(same i) to the effect in another vector that counts down the duration later on to determine when the (de)buff should end
 
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "CurHP") {
-                    target->setCurHP(target->getCurHP() + aptr->actionStatusEffect[i]->val);
-                    if(target->getCurHP()>target->getMaxHP())target->setCurHP(target->getCurHP());
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "MaxMana") {
-                    target->setMaxMana(target->getMaxMana() + aptr->actionStatusEffect[i]->val);
-                    if(target->getMaxMana()<target->getCurMana()) target->setCurMana(target->getMaxMana());
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "CurMana") {
-                    target->setCurMana(target->getCurMana() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "AC") {
-                    target->setTempAcGain(target->getTempAcGain() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "Prof") {
-                    target->setProf(target->getProf() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "STR") {
-                    target->setSTR(target->getSTR() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "DEX") {
-                    target->setDEX(target->getDEX() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "CON") {
-                    target->setCON(target->getCON() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "INT") {
-                    target->setINT(target->getINT() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "WIS") {
-                    target->setWIS(target->getWIS() + aptr->actionStatusEffect[i]->val);
-                }
-                else if (aptr->actionStatusEffect[i]->affects[j] == "CHA") {
-                    target->setCHA(target->getCHA() + aptr->actionStatusEffect[i]->val);
-                }
-                //else cout<<"ERROR in a status effect 'affect' json probably"<<endl;
+            for (int j = 0; j < aptr->actionStatusEffect[i]->affects.size(); j++) { //Iterates through "affects" of the effect which determine what is changed by the (de)buff
+
+                string s = aptr->actionStatusEffect[i]->affects[j];  //set s equal to the string of the j-th attribute in the i-th status effect that needs to be changed     (this is for readability purposes only)
+
+                target->setFieldsByString(s, target->getFieldsByString(s) + aptr->actionStatusEffect[i]->val); //(de)buff the attribute of the target
+
+
+
+
 
 
             }
         }
     }
+    if(target->getMaxHP()<target->getCurHP())       target->setCurHP(target->getMaxHP());                           //Set HP to Max HP if it overflows due to status effects
+    if(target->getMaxMana()<target->getCurMana())   target->setCurMana(target->getMaxMana());
 
     return 0;
 
 }
 
-void Creature::CTurnTick(int ticks) {
-    //cout<<"CTurnTick called"<<endl;
-    while(ticks>=1 && activeSE.size()!=0 && SEcounter.size()!=0)
-    {
+void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle debuffs etc.
+
+    while (ticks >= 1 && activeSE.size() != 0 && SEcounter.size() != 0) {                               //while the creature is debuffed
         if (activeSE.size() != SEcounter.size())
             cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
 
-        for (int i = 0; i < SEcounter.size(); i++) {
-            SEcounter[i]--;                                         //Decrementing duration counters for (de)buffs at the begining of the creatures turn
-        }
+
+        for (int i = 0; i < SEcounter.size(); i++)
+            SEcounter[i]--;                         //Decrementing duration counters for all (de)buffs at beginning of the creatures turn
+
+
 
         for (int i = 0; i < SEcounter.size(); i++) {
+
             if (activeSE.size() != SEcounter.size())
                 cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
 
-            if (activeSE[i]->DOTflag == true) {
+
+            if (activeSE[i]->DOTflag == true) { //if status effect is a dot
 
                 setCurHP(getCurHP() + activeSE[i]->val);
-                if(activeSE[i]->val>0) cout<<this->getName()<<" heals for "<<activeSE[i]->val<<" from "<<activeSE[i]->name<<endl;                                                                         //auto assumes dots only applies to current hp
-                else cout<<this->getName()<<" takes "<<(-1)*(activeSE[i]->val)<<" damage"<<" from "<<activeSE[i]->name<<endl;
-                if(getCurHP()>getMaxHP()) setCurHP(getMaxHP());
+                if (activeSE[i]->val > 0)
+                    cout << this->getName() << " heals for " << activeSE[i]->val << " from " << activeSE[i]->name<< endl;                       //output if heal dot                                                                         //auto assumes dots only applies to current hp
+                else
+                    cout << this->getName() << " takes " << (-1) * (activeSE[i]->val) << " damage" << " from "<< activeSE[i]->name << endl;     //output if damage dot
+
+                if (getCurHP() > getMaxHP()) setCurHP(getMaxHP()); //stops current hp from overflowing
             }
-            if (SEcounter[i] < 1) {                                       //if counter to the corrseponding status effect is less than 1 end the (de)buff
-                for (int j = 0; j < activeSE[i]->affects.size(); j++) {
 
+            if (SEcounter[i]<1) {                                       //if counter to the corresponding status effect is less than 1 reverse the affected attributes and end the (de)buff
+                for (int j = 0;j < activeSE[i]->affects.size(); j++) {  //iterates over all the attributes a single effect changed
 
-                    if (activeSE[i]->affects[j] == "MaxHP") {
-                        this->setMaxHP(this->getMaxHP() - activeSE[i]->val);
-                        if (this->getMaxHP() < this->getCurHP()) this->setCurHP(this->getMaxHP());
-
-                    }
-                        //else if (activeSE[i]->affects[j] == "CurHP")
-
-                    else if (activeSE[i]->affects[j] == "MaxMana") {
-                        this->setMaxMana(this->getMaxMana() + activeSE[i]->val);
-                        if (this->getMaxMana() < this->getCurMana()) this->setCurMana(this->getMaxMana());
-                    }
-                        /*else if (activeSE[i]->affects[j] == "CurMana") {
-                            this->setCurMana(this->getCurMana() + activeSE[i]->val);
-                        }*/
-                    else if (activeSE[i]->affects[j] == "AC") {
-                        this->setTempAcGain(this->getTempAcGain() - activeSE[i]->val);
-                    } else if (activeSE[i]->affects[j] == "Prof") {
-                        this->setProf(this->getProf() - activeSE[i]->val);
-                    } else if (activeSE[i]->affects[j] == "STR") {
-                        this->setSTR(this->getSTR() - activeSE[i]->val);
-                    } else if (activeSE[i]->affects[j] == "DEX") {
-                        this->setDEX(this->getDEX() - activeSE[i]->val);
-                    } else if (activeSE[i]->affects[j] == "CON") {
-                        this->setCON(this->getCON() - activeSE[i]->val);
-                    } else if (activeSE[i]->affects[j] == "INT") {
-                        this->setINT(this->getINT() - activeSE[i]->val);
-                    } else if (activeSE[i]->affects[j] == "WIS") {
-                        this->setWIS(this->getWIS() - activeSE[i]->val);
-                    } else if (activeSE[i]->affects[j] == "CHA") {
-                        this->setCHA(this->getCHA() - activeSE[i]->val);
-                    }// else cout << "ERROR in a status effect 'affect' field json probably" << endl;
-
+                    string s = activeSE[i]->affects[j];                                         // set s equal to the string of the j-th attribute in the i-th status effect that needs to be reversed (readability purposes)
+                    this->setFieldsByString(s, this->getFieldsByString(s) - activeSE[i]->val); //restore attribute
 
                 }
-
                 activeSE.erase(activeSE.begin() + i);
                 SEcounter.erase(SEcounter.begin() + i);
             }
         }
-        ticks--;
 
+        if (this->getMaxMana() < this->getCurMana()) this->setCurMana(this->getMaxMana());   //Stop mana and HP from overflowing
+        if (this->getMaxHP() < this->getCurHP()) this->setCurHP(this->getMaxHP());
+        ticks--; //decrement ticks
     }
+
+
 }
+
+
 
 int Creature::calcDamage(int bonus, Action *action, vector<string> &dmgBreakdown) {
     //regular damage calculation
@@ -923,4 +871,51 @@ int Creature::getAdvantage(string type){
     if(type == "chaAdv") return this->advantages->CHA;
     if(type == "attackAdv") return this->advantages->attack;
     if(type == "globalAdv") return this->advantages->global;
+    else
+    {
+        cout<<"Possible error passing string to Creature::getAdvantage(string) (check json files)"<<endl;
+        return 0;
+    }
 }
+
+int Creature::getFieldsByString(string s)
+{
+    if(s == "STR")      return this->STR;
+    if(s == "DEX")      return this->DEX;
+    if(s == "CON")      return this->CON;
+    if(s == "INT")      return this->INT;
+    if(s == "WIS")      return this->WIS;
+    if(s == "CHA")      return this->CHA;
+    if(s == "AC")       return this->tempAcGain;
+    if(s == "Prof")     return this->prof;
+    if(s == "MaxHP")    return this->maxHP;
+    if(s == "CurHP")    return this->curHP;
+    if(s == "MaxMana")  return this->maxMana;
+    if(s == "CurMana")  return this->curMana;
+    else                return this->getAdvantage(s);
+}
+
+void Creature::setFieldsByString(string s,int n)
+{
+    if(s == "STR")      this->STR=n;
+    if(s == "DEX")      this->DEX=n;
+    if(s == "CON")      this->CON=n;
+    if(s == "INT")      this->INT=n;
+    if(s == "WIS")      this->WIS=n;
+    if(s == "CHA")      this->CHA=n;
+    if(s == "AC")       this->tempAcGain=n;
+    if(s == "Prof")     this->prof=n;
+    if(s == "MaxHP")    this->maxHP=n;
+    if(s == "CurHP")    this->curHP=n;
+    if(s == "MaxMana")  this->maxMana=n;
+    if(s == "CurMana")  this->curMana=n;
+    if(s == "strAdv")   this->advantages->STR=n;
+    if(s == "dexAdv")   this->advantages->DEX=n;
+    if(s == "conAdv")   this->advantages->CON=n;
+    if(s == "intAdv")   this->advantages->INT=n;
+    if(s == "wisAdv")   this->advantages->WIS=n;
+    if(s == "chaAdv")   this->advantages->CHA=n;
+    if(s == "attackAdv")this->advantages->attack=n;
+    if(s == "globalAdv")this->advantages->global=n;
+}
+

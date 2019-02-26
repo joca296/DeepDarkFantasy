@@ -9,7 +9,7 @@
   "int" : -1,
   "wis" : -1,
   "cha" : -1,
-  "actionsPerRound" : 2,
+  "actionsPerRound" : 1,
   "weapons" : ["greataxe","javelin"],
   "spellBook" : ["firebolt","cure_wounds","fireball"],
   "armor" : "plate_armor",
