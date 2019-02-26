@@ -75,10 +75,12 @@ public:
     void setTag(const string &tag);
     int getTempAcGain() const;
     void setTempAcGain(int tempAcGain);
-
-
     int getInit() const;
     void setInit(int init);
+
+    //constructors
+    Creature(){};
+    Creature(string name);
 
     //methods
     char checkDamage(const string& type);
