@@ -84,7 +84,7 @@ public:
 
     //methods
     char checkDamage(const string& type);
-    virtual Action* actionChoose(Creature*)=0;
+    virtual Action* actionChoose(Creature* c)=0;
     virtual Creature* chooseTarget(struct cList* actors)=0;
     virtual int isHero()=0;
     int actionExec(struct cList* actors, Creature* tar, Action *action);
@@ -104,7 +104,7 @@ public:
     int StatusEffectMenu(Creature* c);
     void StatsMenu(Creature *c);
     int getAdvantage(string type = "globalAdv");
-    int getFieldsByString(string );
+    int getFieldsByString(string s);
     void setFieldsByString(string s,int n);
 };
 
@@ -119,7 +119,7 @@ public:
 
     //overrides
     int isHero() override;
-    Action* actionChoose(Creature*) override;
+    Action* actionChoose(Creature* c) override;
     Creature* chooseTarget(struct cList* actors) override;
 };
 
@@ -133,7 +133,7 @@ public:
 
     //overrides and methods
     int isHero() override;
-    Action* actionChoose(Creature*) override;
+    Action* actionChoose(Creature* c) override;
     Action* selectSpell();
     Action* selectWeapon();
     Creature* chooseTarget(struct cList* actors) override;

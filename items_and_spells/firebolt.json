@@ -11,5 +11,6 @@
     "roll" : 10,
     "diceNumber" : 1,
     "rollType" : "fire",
+    "manaCost" : 2,
     "addtlEffects" : []
 }

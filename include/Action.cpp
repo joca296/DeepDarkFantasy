@@ -145,6 +145,7 @@ Spell::Spell(const Document& action) : Action(action){
     spellCastMod = action["spellCastMod"].GetString();
     spellCastModAddedToRoll = action["spellCastModAddedToRoll"].GetBool();
     heal = action["heal"].GetBool();
+    manaCost = action["manaCost"].GetInt();
     savingThrowFlag = action["savingThrowFlag"].GetBool();
     if(savingThrowFlag){
         savingThrowType = action["savingThrowType"].GetString();

@@ -264,9 +264,16 @@ char Creature::checkDamage(const string& type) {
 int Monster::isHero() {
     return 0;
 }
-Action* Monster::actionChoose(Creature*) {
+Action* Monster::actionChoose(Creature* c) {
     int choice = randomWeight(actionWeight);
-    return actionList[choice];
+
+    //check for manacost
+    if(actionList[choice]->getType() == 's' || actionList[choice]->getType() == 'a'){
+        Spell* spell = (Spell*)actionList[choice];
+        if(spell->getManaCost() > this->getCurMana()) return NULL;
+        else return actionList[choice];
+    }
+    else return actionList[choice];
 }
 Creature* Monster::chooseTarget(struct cList* actors){
     struct cList* tmp = actors;
@@ -329,7 +336,14 @@ Action* Hero::selectSpell() {
         cin>>choice;
         if(choice<1 || choice>spellBook.size()+1) cout<<"Invalid input, try again."<<endl;
         else if(spellBook.size()+1==choice) return NULL;
-        else return spellBook[choice-1];
+        else {
+            Spell* spell = (Spell*) spellBook[choice-1];
+            if(spell->getManaCost() > this->getCurMana()){
+                cout<<"You don't have enough mana to cast this."<<endl;
+                return NULL;
+            }
+            else return spellBook[choice-1];
+        }
     }
 }
 Creature* Hero::chooseTarget(struct cList* actors){
@@ -520,9 +534,10 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     }
 }
 int Creature::execSpellAttackST(Spell *action, Creature* tar){
-    //Add saving throws
-
     int atcRoll, bonus;
+
+    //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
+    if(action->getType() == 's') this->setCurMana(this->getCurMana()-action->getManaCost());
 
     //setting bonus
     if (action->getSpellCastMod() == "int") bonus=this->getINT();
@@ -571,6 +586,9 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
 int Creature::execHeal(Spell *action, Creature* tar) {
     int bonus;
 
+    //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
+    if(action->getType() == 's') this->setCurMana(this->getCurMana()-action->getManaCost());
+
     //setting bonus
     if (action->getSpellCastMod() == "int") bonus=this->getINT();
     else if (action->getSpellCastMod() == "wis") bonus=this->getWIS();
@@ -591,6 +609,7 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
     struct cList* targets=NULL;
     targets=append_node(tar,targets);
 
+    //choosing targets
     if(this->isHero()){
         struct cList* tmp=actors;
         int x = action->getNumberOfTargets()-1;
@@ -603,6 +622,10 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
         }
     }
 
+    //removing mana
+    this->setCurMana(this->getCurMana()-action->getManaCost());
+
+    //execution
     struct cList* tmp=targets;
     int deaths=0;
     while(tmp!=NULL){
