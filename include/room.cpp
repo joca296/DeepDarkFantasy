@@ -657,42 +657,27 @@ struct rList *findRoom(struct rList *rHead,string& s)
 
 void room::activateTrap(event* e, Creature *p)
 {
-    int dimaga;
-    if(e->getSave()=="DEX")
-    {
-        if(dRoll()+p->getDEX()>=e->getSaveDC())
+    int dimaga,roll_container;
+    roll_container=p->rollSave(e->getSave());
+
+        if(roll_container>=e->getSaveDC())
         {
             cout<<e->getSave_succ_text()<<endl;
             dimaga=floor(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
             cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
             p->setCurHP(p->getCurHP()-dimaga);
+
+
+
         }
-        else
-        {
-            cout<<e->getSave_fail_text()<<endl;
-            dimaga=dRoll(e->getDMG(),0,e->getDNum());
-            cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
-            p->setCurHP(p->getCurHP()-dimaga);
+        else {
+            cout << e->getSave_fail_text() << endl;
+            dimaga = dRoll(e->getDMG(), 0, e->getDNum());
+            cout << p->getName() << " takes " << dimaga << " damage" << endl;
+            p->setCurHP(p->getCurHP() - dimaga);
+            if(e->eventStatusEffect.size()>0) p->SE_Inflict(e->eventStatusEffect,p);
         }
-    }
-    else if(e->getSave()=="STR")
-    {
-        if(dRoll()+p->getSTR()>=e->getSaveDC())
-        {
-            cout<<e->getSave_succ_text()<<endl;
-            dimaga=floor(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
-            cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
-            p->setCurHP(p->getCurHP()-dimaga);
-        }
-        else
-        {
-            cout<<e->getSave_fail_text()<<endl;
-            dimaga=dRoll(e->getDMG(),0,e->getDNum());
-            cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
-            p->setCurHP(p->getCurHP()-dimaga);
-        }
-    }
-    else cout<<"WTF? (can only roll DEX or STR against traps ATM) "<<endl;
+
 
     e->isDisarmed=true;
 }
