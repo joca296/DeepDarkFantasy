@@ -1030,6 +1030,9 @@ void Creature::lvlUp(int newLevel){
 
         //updating hit dice numer
         this->setHitDiceNumber(this->getLevel());
+
+        if(this->isHero() == 0)
+            this->setExperience(this->getLevel()*this->getExperience()*1.25);
     }
 }
 
