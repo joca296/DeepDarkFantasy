@@ -536,7 +536,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
         //print
         printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
 
-        if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar); //(de)buff handling here
+        if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar); //(de)buff handling here
         if(tar->getCurHP() <= 0){
             //cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
@@ -586,7 +586,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
         //print
         printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
 
-        if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);//(de)buff handling here
+        if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar);//(de)buff handling here
         if(tar->getCurHP() <= 0){
             cout<<tar->getName()<<" died."<<endl;
             return 1; //something died
@@ -642,7 +642,7 @@ int Creature::execHeal(struct cList* actors, Spell *action, Creature* tar) {
 
     //print
     cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<action->getName()<<"."<<endl;
-    if(action->actionStatusEffect.size()>0) SE_Inflict(action,tar);
+    if(action->actionStatusEffect.size()>0) SE_Inflict(action->actionStatusEffect,tar);
     return 0;
 }
 int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
@@ -706,31 +706,31 @@ int Creature::rollSave(string atr)
     return dRoll(20,this->getAdvantage(atr)+this->getAdvantage("globalAdv"),1);
 }
 
-int Creature::SE_Inflict(Action* aptr,Creature* trg)    //Inflicting status effects(buffing/debuffing)
+int Creature::SE_Inflict(vector <shared_ptr<statusEffect>> SEV,Creature* trg)    //Inflicting status effects(buffing/debuffing)
 {
     Creature* target = trg;
-    for(int i =0; i<aptr->actionStatusEffect.size(); i++)   //Iterates through action effects to inflict all of them
+    for(int i =0; i<SEV.size(); i++)   //Iterates through action effects to inflict all of them
     {
-        aptr->actionStatusEffect[i]->target=="Self"? target=this : target=trg;   //If target is "Self" the Creature doing the action inflicts the effect on itself regardless of his targeting
+        SEV[i]->target=="Self"? target=this : target=trg;   //If target is "Self" the Creature doing the action inflicts the effect on itself regardless of his targeting
         if(target->getCurHP()>0){ //Checks if target is alive
 
-            if(aptr->actionStatusEffect[i]->saveDC<1 ||  aptr->actionStatusEffect[i]->saveDC>target->rollSave(aptr->actionStatusEffect[i]->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
+            if(SEV[i]->saveDC<1 ||  SEV[i]->saveDC>target->rollSave(SEV[i]->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
             {
-                if(aptr->actionStatusEffect[i]->target=="Self"){ //Slightly different output text if target is self
-                    cout << this->getName() << " gets inflicted by " << aptr->actionStatusEffect[i]->name << endl;
+                if(SEV[i]->target=="Self"){ //Slightly different output text if target is self
+                    cout << this->getName() << " gets inflicted by " << SEV[i]->name << endl;
                 }
                 else
-                    cout << this->getName() << " inflicted " << aptr->actionStatusEffect[i]->name << " on "<< target->getName() << endl;
+                    cout << this->getName() << " inflicted " << SEV[i]->name << " on "<< target->getName() << endl;
 
 
-                target->activeSE.push_back(aptr->actionStatusEffect[i]); //Inserts the effect into the targets vector for holding status effects
-                target->SEcounter.push_back(aptr->actionStatusEffect[i]->duration); //Sets a counter parallel(same i) to the effect in another vector that counts down the duration later on to determine when the (de)buff should end
+                target->activeSE.push_back(SEV[i]); //Inserts the effect into the targets vector for holding status effects
+                target->SEcounter.push_back(SEV[i]->duration); //Sets a counter parallel(same i) to the effect in another vector that counts down the duration later on to determine when the (de)buff should end
 
-                for (int j = 0; j < aptr->actionStatusEffect[i]->affects.size(); j++) { //Iterates through "affects" of the effect which determine what is changed by the (de)buff
+                for (int j = 0; j < SEV[i]->affects.size(); j++) { //Iterates through "affects" of the effect which determine what is changed by the (de)buff
 
-                    string s = aptr->actionStatusEffect[i]->affects[j];  //set s equal to the string of the j-th attribute in the i-th status effect that needs to be changed     (this is for readability purposes only)
+                    string s = SEV[i]->affects[j];  //set s equal to the string of the j-th attribute in the i-th status effect that needs to be changed     (this is for readability purposes only)
 
-                    target->setFieldsByString(s, target->getFieldsByString(s) + aptr->actionStatusEffect[i]->val); //(de)buff the attribute of the target
+                    target->setFieldsByString(s, target->getFieldsByString(s) + SEV[i]->val); //(de)buff the attribute of the target
 
 
 

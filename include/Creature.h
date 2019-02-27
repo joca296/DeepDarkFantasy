@@ -110,7 +110,7 @@ public:
     virtual void listEquipped();
     virtual Item* listInventory();
     virtual ~Creature() {};    //virtual destructor
-    int SE_Inflict(Action* aptr,Creature* trg);
+    int SE_Inflict(vector <shared_ptr<statusEffect>> SEV,Creature* trg);
     int rollSave(string atr);
     void CTurnTick(int ticks=1);
     int calcDamage(int bonus, Action* action, vector<string> &dmgBreakdown);
