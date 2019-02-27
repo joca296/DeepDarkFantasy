@@ -908,8 +908,8 @@ int Creature::getAdvantage(string type){
     if(type == "strAdv" || type == "STR") return this->advantages->STR;
     if(type == "dexAdv" || type == "DEX") return this->advantages->DEX;
     if(type == "conAdv" || type == "CON") return this->advantages->CON;
-    if(type == "intAdv" || type == "INT" ) return this->advantages->INT;
-    if(type == "wisAdv" || type == "WIS" ) return this->advantages->WIS;
+    if(type == "intAdv" || type == "INT" || type == "Investigation" || type == "Arcana" ) return this->advantages->INT;
+    if(type == "wisAdv" || type == "WIS" || type== "Perception" || type=="Survival" ) return this->advantages->WIS;
     if(type == "chaAdv" || type == "CHA") return this->advantages->CHA;
     if(type == "attackAdv") return this->advantages->attack;
     if(type == "globalAdv") return this->advantages->global;
@@ -942,8 +942,8 @@ void Creature::setFieldsByString(string s,int n)
     if(s == "STR")      this->STR=n;
     if(s == "DEX")      this->DEX=n;
     if(s == "CON")      this->CON=n;
-    if(s == "INT")      this->INT=n;
-    if(s == "WIS")      this->WIS=n;
+    if(s == "INT" || s == "Investigation" || s == "Arcana")          this->INT=n;
+    if(s == "WIS" || s == "Perception" || s=="Survival")             this->WIS=n;
     if(s == "CHA")      this->CHA=n;
     if(s == "AC")       this->tempAcGain=n;
     if(s == "Prof")     this->prof=n;

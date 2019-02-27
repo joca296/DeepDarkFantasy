@@ -85,10 +85,16 @@ public:
     int getNumberOfConnections() const;
     void setNumberOfConnections(int numberOfConnections);
 
+    string getSUCCbyString(string s);
+    string getFAILbyString(string s);
+    int getDCbyString(string s);
+
+
     room* enterRoom(Creature *p);
     void basic_choise_text(Creature *p);
     int basic_checks(Creature *p);
     int special_interactions(Creature *p);
+    Creature* InspectHero(Creature* p);
     void basic_checks_text();
     void activateTrap(event* e,Creature *p);
     string exit_room(Creature *p);

@@ -193,29 +193,16 @@ room* room::enterRoom(Creature *p)
                 cout<<"Special Interactions WIP "<<endl;
                 special_interactions(p);
                 break;
-            case 3:{
-                Item* Itmp = p->listInventory();
-                //cout<<Itmp->getName()<<endl;
-
-                if(Itmp!=NULL) this->groundItems.push_back(Itmp);
+            case 3:
+                p=this->InspectHero(p);
                 break;
-            }
             case 4:
-                p->listEquipped();
-                break;
-            case 5:
-                //cout<<"Open Spellbook WIP"<<endl;
-                p->listSpellBook();
-                break;
-            case 6:
-                //cout<<"Open Stats WIP "<<endl;
-                cout<<p->toString()<<endl;
-                break;
-            case 7:
                 printMap(rHead);
                 cout<<endl;
                 break;
-            case 8:
+            case 5: cout<<"shor rest WIP"<<endl;
+                    break;
+            case 6:
                 //cout<<"EXIT WIP"<<endl;
                 eChoice=exit_room(p);
                 if(p->getCurHP()<1)
@@ -257,152 +244,129 @@ void room::basic_choise_text(Creature *p)
 {
     cout<<"1. Basic Checks "<<endl;
     cout<<"2. Special Interactions "<<endl;
-    cout<<"3. Open Inventory "<<endl;
-    cout<<"4. Show Equipped items "<<endl;
-    cout<<"5. Open Spellbook"<<endl;
-    cout<<"6. Open Stats "<<endl;
-    cout<<"7. Show Map "<<endl;
-    cout<<"8. Exit Room "<<endl;
+    cout<<"3. Inspect Hero"<<endl;
+    cout<<"4. Show Map "<<endl;
+    cout<<"5. Short Rest"<<endl;
+    cout<<"6. Exit Room "<<endl;
+}
+
+Creature* room::InspectHero(Creature* p) {
+
+    int choice_container;
+    do {
+        cout << "1. Open Inventory " << endl;
+        cout << "2. Show Equipped items " << endl;
+        cout << "3. Open Spellbook" << endl;
+        cout << "4. Open Stats " << endl;
+        cout << "5. Swap Hero " << endl;
+        cout << "6. Back" << endl;
+        cin >> choice_container;
+        switch (choice_container) {
+            case 1: {
+                Item *Itmp = p->listInventory();
+                //cout<<Itmp->getName()<<endl;
+
+                if (Itmp != NULL) this->groundItems.push_back(Itmp);
+                break;
+            }
+            case 2:
+                p->listEquipped();
+                break;
+            case 3:
+                p->listSpellBook();
+                break;
+            case 4:
+                cout << p->toString() << endl;
+                break;
+            case 5:
+                cout<<"Swap Hero WIP"<<endl;
+                break;
+            case 6: return p;
+        }
+    }while(choice_container!=6);
+    return p;
+}
+//meta getters
+string room::getSUCCbyString(string s)
+{
+
+    if(s=="Perception") return getPerception_SUCC_text();
+    if(s=="Investigation") return getInvestigation_SUCC_text();
+    if(s=="Survival") return getSurvival_SUCC_text();
+    if(s=="Arcana") return getArcana_SUCC_text();
+    return s;
+}
+string room::getFAILbyString(string s)
+{
+    if(s=="Perception") return getPerception_FAIL_text();
+    if(s=="Investigation") return getInvestigation_FAIL_text();
+    if(s=="Survival") return getSurvival_FAIL_text();
+    if(s=="Arcana") return getArcana_FAIL_text();
+    return s;
+
+}
+int room::getDCbyString(string s)
+{
+    if(s=="Perception") return this->DC_Perception;
+    if(s=="Investigation") return this->DC_Investigation;
+    if(s=="Survival") return this->DC_Survival;
+    if(s=="Arcana") return this->DC_Arcana;
+    return 0;
 }
 
 int room::basic_checks(Creature *p)
 {
     int choice_container,roll_container;
-    while(true)
+    string s;
+    bool isSomethingFound = false;
+    do
     {
         basic_checks_text();
         cin>>choice_container;
-        switch(choice_container)
+        switch(choice_container)                    //Converting choice int to needed string
         {
         case 1:
-            roll_container=dRoll()+p->getWIS();
-             for(int i=0; i<numberOfTraps;i++) //traps
-             {
-                 if(room_traps[i]->getSkill()=="Perception" && roll_container>=room_traps[i]->getCheckDC())
-                 {
-                     room_traps[i]->eDisc=true;
-                     cout<<room_traps[i]->getCheck_succ_text()<<endl;
-                     return 10;
-                 }
-             }
-             if(roll_container >= this->getDC_Perception() && getDC_Perception()>=0)
-            {
-                cout<<this->getPerception_SUCC_text()<<endl;
-
-                return 11;
-            }
-            else
-            {
-                if(false)         //WIP
-                {
-                     cout<<this->getPerception_FAIL_text()<<endl;
-
-                }
-                else
-                {
-                    cout<<global_default_Perception_FAIL_text<<endl;
-
-                }
-                return 12;
-            }
+            s="Perception";
+            break;
         case 2:
-            roll_container=dRoll()+p->getINT();
-            for(int i=0; i<numberOfTraps;i++)  //traps
-             {
-                 if(room_traps[i]->getSkill()=="Investigation" && roll_container>=room_traps[i]->getCheckDC())
-                 {
-                     room_traps[i]->eDisc=true;
-                     cout<<room_traps[i]->getCheck_succ_text()<<endl;
-                     return 20;
-                 }
-             }
-            if(roll_container >= this->getDC_Investigation() && getDC_Investigation()>=0)
-            {
-                cout<<this->getInvestigation_SUCC_text()<<endl;
-                                                            //check reward here
-                return 21;
-            }
-            else
-            {
-                if(false)         //WIP
-                {
-                     cout<<this->getInvestigation_FAIL_text()<<endl;
-                }
-                else
-                {
-                    cout<<global_default_Investigation_FAIL_text<<endl;
-                }
-                return 22;
-            }
+            s="Investigation";
+            break;
         case 3:
-            roll_container=dRoll()+p->getWIS();
-             for(int i=0; i<numberOfTraps;i++) //traps
-             {
-                 if(room_traps[i]->getSkill()=="Survival" && roll_container>=room_traps[i]->getCheckDC())
-                 {
-                     room_traps[i]->eDisc=true;
-                     cout<<room_traps[i]->getCheck_succ_text()<<endl;
-                     return 30;
-                 }
-             }
-              if(roll_container >= this->getDC_Survival() && getDC_Survival()>=0)
-            {
-                cout<<this->getSurvival_SUCC_text()<<endl;
-                                                            //check reward here
-                 return 31;
-            }
-            else
-            {
-                if(false)         //WIP
-                {
-                     cout<<this->getSurvival_FAIL_text()<<endl;
-                }
-                else
-                {
-                    cout<<global_default_Survival_FAIL_text<<endl;
-                }
-                return 32;
-            }
+            s="Survival";
+            break;
         case 4:
-             roll_container=dRoll()+p->getINT();
-            for(int i=0; i<numberOfTraps;i++)  //traps
-             {
-                 if(room_traps[i]->getSkill()=="Arcana" && roll_container>=room_traps[i]->getCheckDC())
-                 {
-                     room_traps[i]->eDisc=true;
-                     cout<<room_traps[i]->getCheck_succ_text()<<endl;
-                     return 40;
-                 }
-             }
-            if(roll_container >= this->getDC_Arcana() && getDC_Arcana()>=0)
-            {
-                cout<<this->getArcana_SUCC_text()<<endl;
-                                                            //check reward here
-                return 41;
-            }
-
-            else
-            {
-                if(false)         //WIP
-                {
-                     cout<<this->getArcana_FAIL_text()<<endl;
-                }
-                else
-                {
-                    cout<<global_default_Arcana_FAIL_text<<endl;
-                }
-                return 42;
-            }
+            s="Arcana";
+            break;
         case 5:
             return 5;
-            break;
         default:
             cout<<"Invalid input, try again "<<endl;
+        }
+    }while(choice_container<1 || choice_container>5); //while input invalid
+
+    roll_container = p->rollSave(s);
+    for(int i=0; i<numberOfTraps;i++) //trap discovery handling
+    {
+        if(room_traps[i]->getSkill()==s && roll_container>=room_traps[i]->getCheckDC())  //if trap skill needed to find it corresponds to chosen skill and if passed the DC
+        {
+            room_traps[i]->eDisc=true;                                                   //Trap discovered flag set to true
+            cout<<room_traps[i]->getCheck_succ_text()<<endl;                             //Output that the trap is found to the user
+            isSomethingFound = true;                                                    //Set that something has been discovered for this scopes purposes
 
         }
-
-
     }
+    if(getSUCCbyString(s)!="" && roll_container>=this->getDCbyString(s))
+    {
+        cout<<getSUCCbyString(s)<<endl;
+        return 1;                                                                       //Additional room information if successful DC check
+    }
+    else if(isSomethingFound == false)                                                  //if nothing found and DC failed or failed by default cause the success string is empty print the fail text
+    {
+        cout<<getFAILbyString(s)<<endl;
+        return -1;
+    }
+    return 0;
+
 }
 
 void room::basic_checks_text()
