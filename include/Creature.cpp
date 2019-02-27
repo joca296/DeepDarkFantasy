@@ -478,7 +478,7 @@ int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
         case 's':{
             Spell* spell = (Spell*) action;
             if(!spell->isHeal()) return this->execSpellAttackST(spell,tar);
-            else return this->execHeal(spell,tar);
+            else return this->execHeal(actors,spell,tar);
         }
         case 'a':{
             SpellAoE* spellAoE = (SpellAoE*) action;
@@ -583,7 +583,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
         return 0;
     }
 }
-int Creature::execHeal(Spell *action, Creature* tar) {
+int Creature::execHeal(struct cList* actors, Spell *action, Creature* tar) {
     int bonus;
 
     //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
@@ -593,6 +593,25 @@ int Creature::execHeal(Spell *action, Creature* tar) {
     if (action->getSpellCastMod() == "int") bonus=this->getINT();
     else if (action->getSpellCastMod() == "wis") bonus=this->getWIS();
     else bonus=this->getCHA();
+
+    //if its a monster .. to change the target to the lowest HP monster in combat
+    if(this->isHero() == 0){
+        struct cList* tmp = actors;
+        while(tmp->CPL->isHero() == 1)
+            tmp = tmp->next;
+        Creature* mostInjuredDude = tmp->CPL;
+
+        tmp = actors;
+        while(tmp!=NULL){
+            int missingHealthTmp = tmp->CPL->getMaxHP() - tmp->CPL->getCurHP();
+            int missingHealthLargest = mostInjuredDude->getMaxHP() - mostInjuredDude->getCurHP();
+            if(missingHealthTmp > missingHealthLargest)
+                mostInjuredDude = tmp->CPL;
+            tmp=tmp->next;
+        }
+
+        tar=mostInjuredDude;
+    }
 
     //healing
     int healRoll= dRoll(action->getRoll(),0,action->getDiceNumber()) + (action->isSpellCastModAddedToRoll()? bonus:0);
@@ -629,7 +648,7 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
     struct cList* tmp=targets;
     int deaths=0;
     while(tmp!=NULL){
-        if(action->isHeal()) deaths+=this->execHeal((Spell*)action,tmp->CPL);
+        if(action->isHeal()) deaths+=this->execHeal(actors,(Spell*)action,tmp->CPL);
         else deaths+=this->execSpellAttackST((Spell*)action,tmp->CPL);
         tmp=tmp->next;
     }

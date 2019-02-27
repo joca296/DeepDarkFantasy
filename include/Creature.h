@@ -90,7 +90,7 @@ public:
     int actionExec(struct cList* actors, Creature* tar, Action *action);
     int execWeaponAttack(Weapon *action, Creature* tar);
     int execSpellAttackST(Spell *action, Creature* tar);
-    int execHeal(Spell *action, Creature* tar);
+    int execHeal(struct cList* actors, Spell *action, Creature* tar);
     int execAoE(struct cList* actors, SpellAoE *action, Creature* tar);
     string toString();
     virtual void listSpellBook();
