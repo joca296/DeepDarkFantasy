@@ -154,6 +154,88 @@ void room::set_room_desc(string s)
         return roomEnteredFlag;
     }
 
+room::room(string name) //constructor
+{
+    ifstream f;
+    string path;
+    if(PLATFORM_NAME == "windows") path = "rooms\\"+name+".json";
+    else path = "./rooms/"+name+".json";
+    f.open(path);
+    if(f.is_open()){
+        const Document& document = parseFromFile(&f);
+
+        this->set_room_name(document["name"].GetString());
+        this->setDC_Perception(document["DC_Perception"].GetInt());
+        this->setDC_Investigation(document["DC_Investigation"].GetInt());
+        this->setDC_Survival(document["DC_Survival"].GetInt());
+        this->setDC_Arcana(document["DC_Arcana"].GetInt());
+        this->setPerception_SUCC_text(document["Perc_SUCC"].GetString());
+        this->setInvestigation_SUCC_text(document["Invest_SUCC"].GetString());
+        this->setSurvival_SUCC_text(document["Surv_SUCC"].GetString());
+        this->setArcana_SUCC_text(document["Arc_SUCC"].GetString());
+        this->setPerception_FAIL_text(document["Perc_FAIL"].GetString());
+        this->setInvestigation_FAIL_text(document["Invest_FAIL"].GetString());
+        this->setSurvival_FAIL_text(document["Surv_FAIL"].GetString());
+        this->setArcana_FAIL_text(document["Arc_FAIL"].GetString());
+        this->set_combat_desc(document["combatDesc"].GetString());
+        this->setMaxRollsAllowed(document["maxRolls"].GetInt());
+
+        const Value& a = document["connectedRooms"];              //setting connected rooms
+        int j=0;
+        this->numberOfConnections=0;
+        for (SizeType i = 0; i < a.Size(); i++){
+            this->room_next[j]=a[i].GetString();
+            j++;
+            this->numberOfConnections++;
+        }
+
+        const Value& b = document["monsters"];              //setting monsters
+        j=0;
+        this->numberOfMonsters=0;
+        if(b.Size()>0){
+            for (SizeType i = 0; i < b.Size(); i++){
+                this->room_monsters[j]=b[i].GetString();
+                //cout<<this->room_monsters[j]<<endl;
+                j++;
+                this->numberOfMonsters++;
+            }
+        }
+        const Value& c = document["events"];              //setting events
+        j=0;
+        this->numberOfTraps=0;
+        if(c.Size()>0) {
+            for (SizeType i = 0; i < c.Size(); i++) {
+
+                this->room_traps[j] = new trap(c[i].GetString());
+                //cout<<"ASS"<<endl;
+                //cout<<this->room_events[j]<<endl;
+                j++;
+                this->numberOfTraps++;
+            }
+        }
+        const Value& d = document["GroundItems"];              //setting events
+
+        if(d.Size()>0){
+            for (SizeType i = 0; i <d.Size(); i++){
+
+                Item* Iptr=new Item(d[i].GetString());
+                groundItems.push_back(Iptr);
+
+            }
+        }
+        const Value& e = document["Shrines"];
+        shared_ptr<event> ptr;
+        if(e.Size()>0) {
+            for (SizeType i = 0; i < a.Size(); i++) {
+                ptr = make_shared<trap>(e[i].GetString());
+                room_shrine.push_back(ptr);
+            }
+        }
+    }
+    else cout<<"room file not open"<<endl;
+    f.close();
+}
+
 
 room* room::enterRoom(Creature *p)
 {
@@ -355,6 +437,15 @@ int room::basic_checks(Creature *p)
 
         }
     }
+    for(int i=0; i<room_shrine.size(); i++) //shrine discovery handling
+    {
+        if(room_shrine[i]->getSkill()==s && roll_container>=room_shrine[i]->getCheckDC())
+        {
+            room_shrine[i]->eDisc=true;
+            cout<<room_shrine[i]->getCheck_succ_text()<<endl;
+            isSomethingFound = true;
+        }
+    }
     if(getSUCCbyString(s)!="" && roll_container>=this->getDCbyString(s))
     {
         cout<<getSUCCbyString(s)<<endl;
@@ -378,79 +469,7 @@ void room::basic_checks_text()
     cout<<"5. Back "<<endl;
 }
 
-room::room(string name)
-{
-    ifstream f;
-    string path;
-    if(PLATFORM_NAME == "windows") path = "rooms\\"+name+".json";
-    else path = "./rooms/"+name+".json";
-    f.open(path);
-    if(f.is_open()){
-        const Document& document = parseFromFile(&f);
 
-        this->set_room_name(document["name"].GetString());
-        this->setDC_Perception(document["DC_Perception"].GetInt());
-        this->setDC_Investigation(document["DC_Investigation"].GetInt());
-        this->setDC_Survival(document["DC_Survival"].GetInt());
-        this->setDC_Arcana(document["DC_Arcana"].GetInt());
-        this->setPerception_SUCC_text(document["Perc_SUCC"].GetString());
-        this->setInvestigation_SUCC_text(document["Invest_SUCC"].GetString());
-        this->setSurvival_SUCC_text(document["Surv_SUCC"].GetString());
-        this->setArcana_SUCC_text(document["Arc_SUCC"].GetString());
-        this->setPerception_FAIL_text(document["Perc_FAIL"].GetString());
-        this->setInvestigation_FAIL_text(document["Invest_FAIL"].GetString());
-        this->setSurvival_FAIL_text(document["Surv_FAIL"].GetString());
-        this->setArcana_FAIL_text(document["Arc_FAIL"].GetString());
-        this->set_combat_desc(document["combatDesc"].GetString());
-        this->setMaxRollsAllowed(document["maxRolls"].GetInt());
-
-        const Value& a = document["connectedRooms"];              //setting connected rooms
-        int j=0;
-        this->numberOfConnections=0;
-        for (SizeType i = 0; i < a.Size(); i++){
-            this->room_next[j]=a[i].GetString();
-            j++;
-            this->numberOfConnections++;
-        }
-
-            const Value& b = document["monsters"];              //setting monsters
-        j=0;
-        this->numberOfMonsters=0;
-        if(b.Size()>0){
-            for (SizeType i = 0; i < b.Size(); i++){
-                this->room_monsters[j]=b[i].GetString();
-                //cout<<this->room_monsters[j]<<endl;
-                j++;
-                this->numberOfMonsters++;
-            }
-        }
-        const Value& c = document["events"];              //setting events
-        j=0;
-        this->numberOfTraps=0;
-        if(c.Size()>0) {
-            for (SizeType i = 0; i < c.Size(); i++) {
-
-                this->room_traps[j] = new trap(c[i].GetString());
-                //cout<<"ASS"<<endl;
-                //cout<<this->room_events[j]<<endl;
-                j++;
-                this->numberOfTraps++;
-            }
-        }
-        const Value& d = document["GroundItems"];              //setting events
-
-        if(d.Size()>0){
-            for (SizeType i = 0; i <d.Size(); i++){
-
-                Item* Iptr=new Item(d[i].GetString());
-                groundItems.push_back(Iptr);
-
-            }
-        }
-}
-else cout<<"room file not open"<<endl;
-        f.close();
-}
 
 string room::exit_room(Creature *p)
 {
@@ -489,7 +508,7 @@ string room::exit_room(Creature *p)
 int room::special_interactions(Creature *p)
 {
     int choice_container,roll_container;
-    int counter=1, counterTraps=0;
+    int counter=1, counterTraps=0,counterShrines=0;
     int item_counter=groundItems.size();
     do{             //prints choices and takes input
         counter=1;
@@ -502,6 +521,15 @@ int room::special_interactions(Creature *p)
                 counterTraps++;
             }
         }
+        for(int i=0; i<room_shrine.size();i++)
+        {
+            if(room_shrine[i]->eDisc==true && room_traps[i]->isDisarmed==false)
+            {
+                cout<<counter<<". "<<room_shrine[i]->getInteract_text()<<endl;
+                counter++;
+                counterShrines++;
+            }
+        }
         for(int i=0; i<groundItems.size(); i++)
         {
             cout<<counter<<". Pick up "<<groundItems[i]->getName()<<endl;
@@ -512,9 +540,9 @@ int room::special_interactions(Creature *p)
         if(choice_container>counter || choice_container<1) cout<<"Invalid input, try again! "<<endl;
     }while(choice_container>counter || choice_container<1);
     if(choice_container==counter) return 0;
-    else if(choice_container<counter-item_counter)
+    else if(choice_container<counter-item_counter-counterShrines)
     {
-        roll_container=dRoll();                                                                                  //trap disarm
+        roll_container=p->rollSave(room_traps[choice_container-1]->getSave());                                                                                  //trap disarm
         if(roll_container>=room_traps[choice_container-1]->getDisarmDC() && roll_container!=1)
         {
             cout<<room_traps[choice_container-1]->getDisarm_succ_text()<<endl;
@@ -529,10 +557,28 @@ int room::special_interactions(Creature *p)
         }
 
     }
+    else if(choice_container<counter-item_counter) {
+        if (room_shrine[choice_container - 1 - counterTraps]->eventStatusEffect.size() != 2)
+        {
+            cout<<"ERROR shrine needs to have 2 status effects"<<endl;
+            return -2;
+        }
+        roll_container=p->rollSave(room_shrine[choice_container-1-counterTraps]->getSave());
+        if(roll_container>=room_shrine[choice_container-1-counterTraps]->getDisarmDC() && roll_container!=1)
+        {
+            cout<<room_shrine[choice_container-1-counterTraps]->getDisarm_succ_text()<<endl;
+            p->SE_Inflict(room_shrine[choice_container-1-counterTraps]->eventStatusEffect[0],p);
+        }
+        else
+        {
+            cout<<room_shrine[choice_container-1-counterTraps]->getDisarm_fail_text()<<endl;
+            p->SE_Inflict(room_shrine[choice_container-1-counterTraps]->eventStatusEffect[1],p);
+        }
+    }
     else
     {
-        p->inventory.push_back(groundItems[choice_container-counterTraps-1]);
-        groundItems.erase(groundItems.begin()+choice_container-counterTraps-1);
+        p->inventory.push_back(groundItems[choice_container-counterTraps-1-counterShrines]);
+        groundItems.erase(groundItems.begin()+choice_container-counterTraps-1-counterShrines);
     }
     return -2;
 }

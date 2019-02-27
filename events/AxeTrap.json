@@ -12,5 +12,6 @@
 	"DisarmDC" : 2,
 	"SaveMulti" : 0.5,
 	"DisSucc" : "Trap disarmed succesfully",
-	"DisFail" : "Disarm failed"
+	"DisFail" : "Disarm failed",
+	"statusEffectList" : ["Jbleed"]
 }

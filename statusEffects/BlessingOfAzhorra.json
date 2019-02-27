@@ -1,0 +1,11 @@
+{
+	"Name" : "Blessing Of Azhorra",
+	"Value" : 1,
+	"DOT" : false,
+	"SavingThrowSkill" : "STR",
+	"SaveDC" : 0,
+	"Duration" : 30,
+	"Target" : "Self",
+	"Affects" : ["globalAdv"],
+	"Description" : "Blessed by Azhorra you gain advantage on all saving and attack throws "
+}

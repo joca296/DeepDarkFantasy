@@ -16,6 +16,7 @@
   "combatDesc" : "An ambush! Send these vermin a message: the rightful owner has returned, and their kind is no longer welcome.",
   "monsters" : ["goblin","twigBlight","kobold"],
   "events" : ["AxeTrap"],
+  "Shrines" : [],
   "connectedRooms" : ["caveEntrance"],
   "GroundItems" : []
 }

@@ -42,6 +42,7 @@ private:
     bool roomEnteredFlag=false;
 public:
     vector<Item*> groundItems;
+    vector <shared_ptr<event>> room_shrine;
     event* room_traps[MAX_ROOM_TRAPS];
     string room_next[MAX_CONNECTED_ROOMS];
 

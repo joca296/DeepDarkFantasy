@@ -1,0 +1,17 @@
+{
+	"Interact" : "Pray to the shrine",
+	"DMG" : 0,
+	"dNum" : 0,
+	"CheckDC" : 6,
+	"Skill" : "Investigation",
+	"CheckSUCC" : "You recognize a shrine to the goddess Azhorra ",
+	"SaveDC" : 0,
+	"Save" : "DEX",
+	"SaveSUCC" : "",
+	"SaveFAIL" : "",
+	"DisarmDC" : 12,
+	"SaveMulti" : 0.5,
+	"DisSucc" : "You gain Azhorra's blessing",
+	"DisFail" : "The goddess senses that your prayer is insincere, you become cursed",
+	"statusEffectList" : ["BlessingOfAzhorra","CurseOfAzhorra"]
+}

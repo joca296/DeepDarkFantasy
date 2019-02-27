@@ -147,6 +147,14 @@ trap::trap(string name)
         this->setDisarm_succ_text(document["DisSucc"].GetString());
         this->setDisarm_fail_text(document["DisFail"].GetString());
 
+        const Value& a = document["statusEffectList"];
+        shared_ptr<statusEffect> ptr;
+        for(SizeType i = 0; i<a.Size(); i++)
+        {
+            ptr=make_shared<statusEffect>(a[i].GetString());
+            eventStatusEffect.push_back(ptr);
+        }
+
     }
     else cout<<"trap file not open"<<endl;
     f.close();

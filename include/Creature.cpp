@@ -750,6 +750,43 @@ int Creature::SE_Inflict(vector <shared_ptr<statusEffect>> SEV,Creature* trg)   
 
 }
 
+int Creature::SE_Inflict(shared_ptr<statusEffect> ptr,Creature* trg)    //overloaded for single statuseffect
+{
+    Creature* target = trg;
+
+        ptr->target=="Self"? target=this : target=trg;   //If target is "Self" the Creature doing the action inflicts the effect on itself regardless of his targeting
+        if(target->getCurHP()>0){ //Checks if target is alive
+
+            if(ptr->saveDC<1 ||  ptr->saveDC>target->rollSave(ptr->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
+            {
+                if(ptr->target=="Self"){ //Slightly different output text if target is self
+                    cout << this->getName() << " gets inflicted by " << ptr->name << endl;
+                }
+                else
+                    cout << this->getName() << " inflicted " << ptr->name << " on "<< target->getName() << endl;
+
+
+                target->activeSE.push_back(ptr); //Inserts the effect into the targets vector for holding status effects
+                target->SEcounter.push_back(ptr->duration); //Sets a counter parallel(same i) to the effect in another vector that counts down the duration later on to determine when the (de)buff should end
+
+                for (int j = 0; j < ptr->affects.size(); j++) { //Iterates through "affects" of the effect which determine what is changed by the (de)buff
+
+                    string s = ptr->affects[j];  //set s equal to the string of the j-th attribute in the status effect that needs to be changed     (this is for readability purposes only)
+
+                    target->setFieldsByString(s, target->getFieldsByString(s) + ptr->val); //(de)buff the attribute of the target
+                }
+            }
+            if(target->getMaxHP()<target->getCurHP())       target->setCurHP(target->getMaxHP());                           //Set HP to Max HP if it overflows due to status effects
+            if(target->getMaxMana()<target->getCurMana())   target->setCurMana(target->getMaxMana());
+
+        }
+
+
+
+    return 0;
+
+}
+
 void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle debuffs etc.
 
     while (ticks >= 1 && activeSE.size() != 0 && SEcounter.size() != 0) {                               //while the creature is debuffed

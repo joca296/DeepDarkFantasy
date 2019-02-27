@@ -16,6 +16,7 @@
   "combatDesc" : "Boz pomoz",
   "monsters" : [],
   "events" : ["AxeTrap"],
+  "Shrines" : ["ShrineOfAzhorra"],
   "connectedRooms" : ["caveHallwayA"],
   "GroundItems" : ["dagger"]
 }
