@@ -603,10 +603,12 @@ int Creature::execHeal(struct cList* actors, Spell *action, Creature* tar) {
 
         tmp = actors;
         while(tmp!=NULL){
-            int missingHealthTmp = tmp->CPL->getMaxHP() - tmp->CPL->getCurHP();
-            int missingHealthLargest = mostInjuredDude->getMaxHP() - mostInjuredDude->getCurHP();
-            if(missingHealthTmp > missingHealthLargest)
-                mostInjuredDude = tmp->CPL;
+            if(tmp->CPL->isHero() == 0){
+                int missingHealthTmp = tmp->CPL->getMaxHP() - tmp->CPL->getCurHP();
+                int missingHealthLargest = mostInjuredDude->getMaxHP() - mostInjuredDude->getCurHP();
+                if(missingHealthTmp > missingHealthLargest)
+                    mostInjuredDude = tmp->CPL;
+            }
             tmp=tmp->next;
         }
 
