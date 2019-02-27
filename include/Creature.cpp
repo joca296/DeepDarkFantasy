@@ -682,6 +682,7 @@ string Creature::toString(){
     string s;
     if(curHP<=0) s = name+" is dead.\n";
     else s = "Name: "+name;
+    s += "\nLevel: "+to_string(level);
     s += "\nMax HP: "+to_string(maxHP);
     s += "\nCurrent HP: "+to_string(curHP);
     s += "\nMax Mana: "+to_string(maxMana);
