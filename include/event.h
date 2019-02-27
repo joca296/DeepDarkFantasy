@@ -3,6 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <memory>
+#include <vector>
+#include "statusEffect.h"
 using namespace std;
 
 
@@ -27,6 +30,7 @@ private:
 
     public:
 
+    vector <shared_ptr<statusEffect>> eventStatusEffect;
     void setCheckDC(int);
     int getCheckDC();
     void setSaveDC(int);
@@ -72,5 +76,12 @@ private:
 class trap:public event
 {
     public:
-    trap(string);
+        trap(string);
 };
+
+/*class shrine:public event
+{
+public:
+    shrine(string);
+};
+*/

@@ -756,12 +756,6 @@ void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle
         if (activeSE.size() != SEcounter.size())
             cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
 
-
-        for (int i = 0; i < SEcounter.size(); i++)
-            SEcounter[i]--;                         //Decrementing duration counters for all (de)buffs at beginning of the creatures turn
-
-
-
         for (int i = 0; i < SEcounter.size(); i++) {
 
             if (activeSE.size() != SEcounter.size())
@@ -770,7 +764,7 @@ void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle
 
             if (activeSE[i]->DOTflag == true) { //if status effect is a dot
 
-                setCurHP(getCurHP() + activeSE[i]->val);
+                setCurHP(getCurHP() + activeSE[i]->val);    //dot effect
                 if (activeSE[i]->val > 0)
                     cout << this->getName() << " heals for " << activeSE[i]->val << " from " << activeSE[i]->name<< endl;                       //output if heal dot                                                                         //auto assumes dots only applies to current hp
                 else
@@ -782,8 +776,8 @@ void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle
             if (SEcounter[i]<1) {                                       //if counter to the corresponding status effect is less than 1 reverse the affected attributes and end the (de)buff
                 for (int j = 0;j < activeSE[i]->affects.size(); j++) {  //iterates over all the attributes a single effect changed
 
-                    string s = activeSE[i]->affects[j];                                         // set s equal to the string of the j-th attribute in the i-th status effect that needs to be reversed (readability purposes)
-                    this->setFieldsByString(s, this->getFieldsByString(s) - activeSE[i]->val); //restore attribute
+                    string s = activeSE[i]->affects[j];                                                      // set s equal to the string of the j-th attribute in the i-th status effect that needs to be reversed (readability purposes)
+                    if(s!="CurHP")this->setFieldsByString(s, this->getFieldsByString(s) - activeSE[i]->val); //restore attribute
 
                 }
                 activeSE.erase(activeSE.begin() + i);
@@ -793,6 +787,10 @@ void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle
 
         if (this->getMaxMana() < this->getCurMana()) this->setCurMana(this->getMaxMana());   //Stop mana and HP from overflowing
         if (this->getMaxHP() < this->getCurHP()) this->setCurHP(this->getMaxHP());
+
+        for (int i = 0; i < SEcounter.size(); i++)
+            SEcounter[i]--;                         //Decrementing duration counters for all (de)buffs at beginning of the creatures turn
+
         ticks--; //decrement ticks
     }
 
