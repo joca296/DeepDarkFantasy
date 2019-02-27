@@ -36,8 +36,15 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
         ptr=head;
         while(ptr!=NULL /*&& fightOverFlag==false*/)
         {
+            ptr->CPL->CTurnTick();
+            if(ptr->CPL->getCurHP()<1)              //should handle the situation if the creature dies from a DOT
+            {
+                ptr=ptr->next;
+                dcount++;
+                prune_cList();
+                continue;
+            }
             for(int i=0; i<ptr->CPL->getActionsPerRound(); i++){
-                ptr->CPL->CTurnTick();
                 head=prune_cList(head);
                 do{
                     target = ptr->CPL->chooseTarget(head);
