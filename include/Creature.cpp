@@ -673,10 +673,11 @@ int Creature::SE_Inflict(Action* aptr,Creature* trg)    //Inflicting status effe
 
                 }
             }
+            if(target->getMaxHP()<target->getCurHP())       target->setCurHP(target->getMaxHP());                           //Set HP to Max HP if it overflows due to status effects
+            if(target->getMaxMana()<target->getCurMana())   target->setCurMana(target->getMaxMana());
+
         }
     }
-    if(target->getMaxHP()<target->getCurHP())       target->setCurHP(target->getMaxHP());                           //Set HP to Max HP if it overflows due to status effects
-    if(target->getMaxMana()<target->getCurMana())   target->setCurMana(target->getMaxMana());
 
 
     return 0;
