@@ -427,14 +427,24 @@ room::room(string name)
         const Value& c = document["events"];              //setting events
         j=0;
         this->numberOfTraps=0;
-        if(c.Size()>0){
-            for (SizeType i = 0; i <c.Size(); i++){
+        if(c.Size()>0) {
+            for (SizeType i = 0; i < c.Size(); i++) {
 
-                this->room_traps[j]=new trap(c[i].GetString());
+                this->room_traps[j] = new trap(c[i].GetString());
                 //cout<<"ASS"<<endl;
                 //cout<<this->room_events[j]<<endl;
                 j++;
                 this->numberOfTraps++;
+            }
+        }
+        const Value& d = document["GroundItems"];              //setting events
+
+        if(d.Size()>0){
+            for (SizeType i = 0; i <d.Size(); i++){
+
+                Item* Iptr=new Item(d[i].GetString());
+                groundItems.push_back(Iptr);
+
             }
         }
 }

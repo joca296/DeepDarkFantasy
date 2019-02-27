@@ -16,5 +16,6 @@
   "combatDesc" : "Boz pomoz",
   "monsters" : [],
   "events" : ["AxeTrap"],
-  "connectedRooms" : ["caveHallwayA"]
+  "connectedRooms" : ["caveHallwayA"],
+  "GroundItems" : ["dagger"]
 }
