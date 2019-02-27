@@ -486,7 +486,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
 
     //attack roll
     bool critFlag = false;
-    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),action->getDiceNumber());
+    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),1);
     if(atcRoll == 20) critFlag = true;
     else atcRoll += bonus+this->getProf();
 
@@ -531,7 +531,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
 
     //attack roll
     bool critFlag = false;
-    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),action->getDiceNumber());
+    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),1);
     if(atcRoll == 20) critFlag = true;
     else atcRoll += bonus+this->getProf();
 
