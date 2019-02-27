@@ -340,8 +340,9 @@ Creature* room::InspectHero(Creature* p) {
         cout << "2. Show Equipped items " << endl;
         cout << "3. Open Spellbook" << endl;
         cout << "4. Open Stats " << endl;
-        cout << "5. Swap Hero " << endl;
-        cout << "6. Back" << endl;
+        cout << "5. Open Status Effects"<<endl;
+        cout << "6. Swap Hero " << endl;
+        cout << "7. Back" << endl;
         cin >> choice_container;
         switch (choice_container) {
             case 1: {
@@ -361,11 +362,14 @@ Creature* room::InspectHero(Creature* p) {
                 cout << p->toString() << endl;
                 break;
             case 5:
+                p->StatusEffectMenu(p);
+                break;
+            case 6:
                 cout<<"Swap Hero WIP"<<endl;
                 break;
-            case 6: return p;
+            case 7: return p;
         }
-    }while(choice_container!=6);
+    }while(choice_container!=7);
     return p;
 }
 //meta getters
