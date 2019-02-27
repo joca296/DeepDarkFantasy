@@ -41,7 +41,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
             {
                 ptr=ptr->next;
                 dcount++;
-                prune_cList();
+                prune_cList(head);
                 continue;
             }
             for(int i=0; i<ptr->CPL->getActionsPerRound(); i++){
