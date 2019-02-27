@@ -161,7 +161,7 @@ struct cList *delete_node(struct cList *head,struct cList *TBD)
     return head;
 }
 
-struct cList *prune_cList(struct cList* head)
+struct cList *prune_cList(struct cList* head, float* expPool)
 {
     struct cList* ptr,*ptr2;
     ptr=head;
@@ -171,6 +171,7 @@ struct cList *prune_cList(struct cList* head)
         if(ptr->CPL->getCurHP()<1)
         {
             cout<<ptr->CPL->getName()<<" died"<<endl;
+            *expPool += ptr->CPL->getExperience();
             head=delete_node(head,ptr);
         }
         ptr=ptr2;

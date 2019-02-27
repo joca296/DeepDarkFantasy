@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Creature.h"
 #include "cList.h"
 
@@ -146,6 +147,9 @@ Creature::Creature(string name) {
         WIS = document["wis"].GetInt();
         CHA = document["cha"].GetInt();
         actionsPerRound = document["actionsPerRound"].GetInt();
+        level=1;
+        hitDiceNumber=1;
+
 
         //AC modifier for status effects
         tempAcGain = 0;
@@ -182,7 +186,7 @@ Creature::Creature(string name) {
     f.close();
 }
 //Monster constructor
-Monster::Monster(string name) : Creature(name) {
+Monster::Monster(string name, int level) : Creature(name) {
     ifstream f;
     string path;
     if(PLATFORM_NAME == "windows") path = "monsters\\"+name+".json";
@@ -193,6 +197,12 @@ Monster::Monster(string name) : Creature(name) {
 
         //setting monster name
         this->setName(document["name"].GetString()+to_string(rand()%100));
+
+        //Setting hit dice
+        this->setHitDice(6);
+
+        //setting experience
+        this->setExperience(document["experience"].GetInt());
 
         //setting actions
         const Value& a = document["actionList"];
@@ -207,12 +217,14 @@ Monster::Monster(string name) : Creature(name) {
             actionWeight.push_back(b[i].GetInt());
         }
 
+        //setting level
+        this->lvlUp(level);
     }
     else cout<<"monster file not open"<<endl;
     f.close();
 }
 //Hero constructor
-Hero::Hero(string name) : Creature(name) {
+Hero::Hero(string name, int level) : Creature(name) {
     ifstream f;
     string path;
     if(PLATFORM_NAME == "windows") path = "heroClasses\\"+name+".json";
@@ -226,6 +238,12 @@ Hero::Hero(string name) : Creature(name) {
         cout<<"Name your character."<<endl;
         cin>>name;
         this->setName(name);
+
+        //Setting hit dice
+        this->setHitDice(document["hitDice"].GetInt());
+
+        //setting experience
+        this->setExperience(0);
 
         //setting actions
         const Value& a = document["weapons"];
@@ -242,6 +260,9 @@ Hero::Hero(string name) : Creature(name) {
 
         //setting armor
         if(document["armor"].GetString() != "") armor = new Armor(document["armor"].GetString());
+
+        //setting level
+        this->lvlUp(level);
     }
     else cout<<"hero file not open"<<endl;
     f.close();
@@ -937,4 +958,87 @@ void Creature::setFieldsByString(string s,int n)
     if(s == "chaAdv")   this->advantages->CHA=n;
     if(s == "attackAdv")this->advantages->attack=n;
     if(s == "globalAdv")this->advantages->global=n;
+}
+
+int Creature::getLevel() const {
+    return level;
+}
+
+void Creature::setLevel(int level) {
+    Creature::level = level;
+}
+
+
+int Creature::getHitDice() const {
+    return hitDice;
+}
+
+void Creature::setHitDice(int hitDice) {
+    Creature::hitDice = hitDice;
+}
+
+int Creature::getHitDiceNumber() const {
+    return hitDiceNumber;
+}
+
+void Creature::setHitDiceNumber(int hitDiceNumber) {
+    Creature::hitDiceNumber = hitDiceNumber;
+}
+
+float Creature::getExperience() const {
+    return experience;
+}
+
+void Creature::setExperience(float experience) {
+    Creature::experience = experience;
+}
+
+void Creature::lvlUp(int newLevel){
+    for(int i=this->getLevel(); i<newLevel; i++){
+        //setting new health
+        int newHealth = this->getMaxHP();
+        newHealth += dRoll(this->getHitDice())+this->getCON();
+        this->setMaxHP(newHealth);
+        this->setCurHP(newHealth);
+
+        //setting new mana
+        int newMana = this->getMaxMana();
+        newMana *= 1.25;
+        this->setMaxMana(newMana);
+        this->setCurMana(newMana);
+
+        //every even level add +1 to prof
+        if(i%2 == 0){
+            int newProf = this->getProf();
+            newProf++;
+            this->setProf(newProf);
+        }
+
+        //every level add +1 to random stat
+        int randomStat=rand()%6;
+        switch (randomStat){
+            case 0: this->setSTR(this->getSTR()+1); break;
+            case 1: this->setDEX(this->getDEX()+1); break;
+            case 2: this->setCON(this->getCON()+1); break;
+            case 3: this->setINT(this->getINT()+1); break;
+            case 4: this->setWIS(this->getWIS()+1); break;
+            case 5: this->setCHA(this->getCHA()+1); break;
+        }
+
+        //updating level
+        this->setLevel(this->getLevel()+1);
+
+        //updating hit dice numer
+        this->setHitDiceNumber(this->getLevel());
+    }
+}
+
+void Hero::checkExperience() {
+    float expOverflow = this->getExperience() - 50*1.25*(this->getLevel()+1);
+    if(expOverflow >=0){
+        cout<<"You have leveled up"<<endl;
+        this->lvlUp(this->getLevel()+1);
+        this->setExperience(expOverflow);
+        this->checkExperience();
+    }
 }

@@ -25,7 +25,14 @@ struct Advantages{
 
 class Creature {
 private:
-    int maxHP, curHP, maxMana, curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound, tempAcGain;
+    int maxHP, curHP, maxMana, curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound, tempAcGain, level, hitDice, hitDiceNumber;
+    float experience;
+public:
+    float getExperience() const;
+
+    void setExperience(float experience);
+
+private:
     string name, tag;
 public:
     //Inventory
@@ -77,6 +84,12 @@ public:
     void setTempAcGain(int tempAcGain);
     int getInit() const;
     void setInit(int init);
+    int getLevel() const;
+    void setLevel(int level);
+    int getHitDice() const;
+    void setHitDice(int hitDice);
+    int getHitDiceNumber() const;
+    void setHitDiceNumber(int hitDiceNumber);
 
     //constructors
     Creature(){};
@@ -106,6 +119,8 @@ public:
     int getAdvantage(string type = "globalAdv");
     int getFieldsByString(string s);
     void setFieldsByString(string s,int n);
+    void lvlUp(int level);
+    virtual void checkExperience(){};
 };
 
 class Monster: public Creature{
@@ -115,7 +130,7 @@ public:
 
     //constructors
     Monster(){};
-    Monster(string name);
+    Monster(string name, int level=1);
 
     //overrides
     int isHero() override;
@@ -129,7 +144,7 @@ public:
 
     //constructors
     Hero(){};
-    Hero(string name);
+    Hero(string name, int level=1);
 
     //overrides and methods
     int isHero() override;
@@ -140,4 +155,5 @@ public:
     void listEquipped() override;
     void listSpellBook() override;
     Item* listInventory() override;
+    void checkExperience() override;
 };

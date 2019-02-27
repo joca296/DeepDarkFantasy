@@ -31,6 +31,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
     //displayList(head);
     Creature* target;
     Action* action;
+    float expPool = 0;
     while(true/*fightOverFlag==false*/)
     {
         ptr=head;
@@ -41,11 +42,11 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
             {
                 ptr=ptr->next;
                 dcount++;
-                head=prune_cList(head);
+                head=prune_cList(head,&expPool);
                 continue;
             }
             for(int i=0; i<ptr->CPL->getActionsPerRound(); i++){
-                head=prune_cList(head);
+                head=prune_cList(head,&expPool);
                 do{
                     target = ptr->CPL->chooseTarget(head);
                     action = ptr->CPL->actionChoose(target);
@@ -56,9 +57,12 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                     dcount+=deathsThisTurn;
                     if(target->getCurHP()<1 && target->isHero())
                         return -1;
-                    head=prune_cList(head);
+                    head=prune_cList(head,&expPool);
                     if(dcount==n){
                         cout<<"Battle won!"<<endl;
+                        //split exp pool between party when implemented
+                        h->setExperience(h->getExperience()+expPool);
+                        h->checkExperience();
                         delete_cList(head);
                         return 1;
                     }

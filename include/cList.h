@@ -19,4 +19,4 @@ struct cList* delete_node(struct cList *head,struct cList *TBD);
 void sortList(struct cList *head);
 void swapNode(struct cList *a, struct cList *b);
 int displayList(struct cList* head);
-struct cList* prune_cList(struct cList* head);
+struct cList* prune_cList(struct cList* head, float* expPool);

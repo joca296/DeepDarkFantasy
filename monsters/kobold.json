@@ -1,5 +1,6 @@
 {
   "name" : "Kobold",
+  "experience" : 5,
   "hp" : 5,
   "mana" : 0,
   "ac" : 12,

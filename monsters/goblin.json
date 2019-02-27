@@ -1,5 +1,6 @@
 {
   "name" : "goblin",
+  "experience" : 5,
   "hp" : 7,
   "mana" : 0,
   "ac" : 15,
