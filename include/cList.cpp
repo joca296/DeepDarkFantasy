@@ -267,8 +267,8 @@ Creature* getRandomListMember(struct cList* head,int heroTarget)
     }
     struct cList* ptr;
     do {
-            ptr=head;
-            n = (rand() % partySize(head)) + 1;
+        ptr=head;
+        n = rand() % partySize(head);
 
         for(int i=0; i<n;i++)
         {
@@ -300,4 +300,14 @@ int heroNum(struct cList* head)
 
     }
     return c;
+}
+bool isInList(Creature* needle, struct cList* haystack){
+    struct cList* tmp = haystack;
+    while(tmp!=NULL){
+        if(needle == tmp->CPL) {
+            return true;
+        }
+        tmp=tmp->next;
+    }
+    return false;
 }

@@ -297,12 +297,7 @@ Action* Monster::actionChoose(Creature* c) {
     else return actionList[choice];
 }
 Creature* Monster::chooseTarget(struct cList* actors){
-    struct cList* tmp = actors;
-    while(tmp!=NULL){
-        if(tmp->CPL->isHero()) return tmp->CPL;
-        tmp=tmp->next;
-    }
-    return NULL;
+    return getRandomListMember(actors,1);
 }
 
 //Hero overrides and methods
@@ -646,21 +641,23 @@ int Creature::execHeal(struct cList* actors, Spell *action, Creature* tar) {
     return 0;
 }
 int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
-    //For now if target is hero .. spell will randomly take tarNumber-1 monsters for aoe
-    //Monsters only target hero for now because party not implemented
     struct cList* targets=NULL;
     targets=append_node(tar,targets);
 
+    //number of valid targets
+    int validTargets;
+    if (tar->isHero() == 1) validTargets = monsterNum(actors);
+    else validTargets = heroNum(actors);
+
     //choosing targets
-    if(this->isHero()){
-        struct cList* tmp=actors;
-        int x = action->getNumberOfTargets()-1;
-        while(tmp!=NULL && x>0){
-            if(tmp->CPL->isHero()==0 && tmp->CPL->getName()!=tar->getName()){
-                targets=append_node(tmp->CPL,targets);
-                x--;
+    for (int i=0; i<action->getNumberOfTargets()-1;i++){
+        while(validTargets>1){
+            Creature* tmp = getRandomListMember(actors,(this->isHero() == 1? 0:1));
+            if(!isInList(tmp,targets)){
+                targets=append_node(tmp,targets);
+                validTargets--;
+                break;
             }
-            tmp=tmp->next;
         }
     }
 

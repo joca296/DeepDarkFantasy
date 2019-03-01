@@ -28,4 +28,4 @@ int partySize(struct cList* partyHead);
 Creature* getRandomListMember(struct cList* head,int heroTarget=1);
 int monsterNum(struct cList* head);
 int heroNum(struct cList* head);
-
+bool isInList(Creature* needle, struct cList* haystack);
