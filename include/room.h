@@ -96,11 +96,12 @@ public:
     int getDCbyString(string s);
 
 
-    room* enterRoom(Creature *p);
+    room* enterRoom(struct cList* partyHead);
     void basic_choise_text(Creature *p);
     int basic_checks(Creature *p);
     int special_interactions(Creature *p);
-    Creature* InspectHero(Creature* p);
+    void InspectHero(struct cList* partyHead);
+    void swapHero(struct cList* partyHead);
     void basic_checks_text();
     void activateTrap(event* e,Creature *p);
     string exit_room(Creature *p);
@@ -120,3 +121,5 @@ struct rList *findRoom(struct rList *rHead,string& s);
 extern struct rList* rHead;
 
 void printMap(struct rList *rHead, int level=1);
+
+void partyTurnTick(struct cList* partyHead, int n=10);

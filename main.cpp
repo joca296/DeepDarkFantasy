@@ -1,7 +1,9 @@
 #include <iostream>
 #include "include/Creature.h"
+#include "include/cList.h"
 #include "include/room.h"
 #include <windows.h>
+
 
 //cross-platform support
 #ifdef __linux__
@@ -16,18 +18,17 @@ using namespace std;
 
 
 int main(){
-
-    srand(time(NULL));
-    /*HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole,1);*/
-    Hero x("barbarian");
-    //cout<<x.toString();
+    srand(time(nullptr));
+    const int PARTY_SIZE = 3;
+    struct cList* partyHead = createParty(PARTY_SIZE);
     room* r;
     r=new room("caveEntrance");
 
-    while(r!=NULL){
-    r=r->enterRoom(&x);
+    while(r!=nullptr){
+    r=r->enterRoom(partyHead);
     }
     delete_rList(rHead);
 
 }
+//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+//SetConsoleTextAttribute(hConsole,1);

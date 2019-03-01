@@ -1,5 +1,6 @@
 #include "room.h"
 #include "combat.h"
+#include "cList.h"
 
 void room::set_room_desc(string s)
     {
@@ -89,7 +90,7 @@ void room::set_room_desc(string s)
     }
     void room::setInvestigation_SUCC_text(string s)
     {
-        Survival_SUCC_text=s;
+        Investigation_SUCC_text=s;
     }
     string room::getInvestigation_SUCC_text()
     {
@@ -127,7 +128,7 @@ void room::set_room_desc(string s)
     }
     string room::getInvestigation_FAIL_text()
     {
-        return Survival_FAIL_text;
+        return Investigation_FAIL_text;
     }
     void room::setSurvival_FAIL_text(string s)
     {
@@ -261,9 +262,9 @@ room::room(string name) //constructor
 }
 
 
-room* room::enterRoom(Creature *p)
+room* room::enterRoom(struct cList *partyHead)
 {
-    room *nRoom=NULL;
+    room *nRoom=nullptr;
     string eChoice;
 
     if(getRoomEnteredFlag()==false)
@@ -272,7 +273,7 @@ room* room::enterRoom(Creature *p)
 
         if(numberOfMonsters>0)
         {
-            if(combat(p,room_monsters,numberOfMonsters,combat_desc)==-1) return nRoom;
+            if(combat(partyHead,room_monsters,numberOfMonsters,combat_desc)==-1) return nRoom;
         }
     }
     int current_tries_remain = this->getMaxRollsAllowed();
@@ -284,57 +285,53 @@ room* room::enterRoom(Creature *p)
     while(true)
     {
         //choice_made_flag=false;
-        basic_choise_text(p);
+        basic_choise_text(partyHead->CPL);
         cin>>choice_container;
         switch(choice_container)
         {
             case 1:
                 if(current_tries_remain>0 && this->getRoomEnteredFlag()==false)
                 {
-                    if(basic_checks(p)!=5) current_tries_remain--;
+                    if(basic_checks(partyHead->CPL)!=5) current_tries_remain--;
                 }
                 else cout<<"You have no further interest in this place "<<endl;
                 break;
             case 2:
                 cout<<"Special Interactions WIP "<<endl;
-                special_interactions(p);
+                special_interactions(partyHead->CPL);
                 break;
             case 3:
-                p=this->InspectHero(p);
+                this->InspectHero(partyHead);
                 break;
             case 4:
                 printMap(rHead);
                 cout<<endl;
                 break;
-            case 5: cout<<"shor rest WIP"<<endl;
+            case 5: cout<<"short rest WIP"<<endl;
                     break;
             case 6:
                 //cout<<"EXIT WIP"<<endl;
-                eChoice=exit_room(p);
-                if(p->getCurHP()<1)
+                eChoice=exit_room(partyHead->CPL);
+                if(partyHead->CPL->getCurHP()<1)
                 {
-                    cout<<"you ded "<<endl;
-                    return nRoom;
+                    partyHead=prune_cList(partyHead);
                 }
                 if(!eChoice.empty())
                 {
-                    if(findRoom(rHead,eChoice)==NULL)
+                    if(findRoom(rHead,eChoice)==nullptr)
                     {
-
-                        nRoom=new room(eChoice);
-                        //cout<<"Making new Room "<<nRoom->get_room_name()<<endl;
-                        //if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
                         setRoomEnteredFlag(true);
-                        p->CTurnTick(10);
+                        partyTurnTick(partyHead);
+                        partyHead=pruneParty(partyHead);
+                        if(partyHead==nullptr)return nRoom;
+                        nRoom=new room(eChoice);
                         return nRoom;
                     }
                     else
                     {
 
-                        //if(getRoomEnteredFlag()==false)rHead=append_node(this,rHead);
-                        // cout<<"going into old room "<<endl;
+
                         setRoomEnteredFlag(true);
-                        p->CTurnTick(10);
                         return findRoom(rHead,eChoice)->RPL;
                     }
 
@@ -356,7 +353,7 @@ void room::basic_choise_text(Creature *p)
     cout<<"6. Exit Room "<<endl;
 }
 
-Creature* room::InspectHero(Creature* p) {
+void room::InspectHero(struct cList* partyHead) {
 
     int choice_container;
     do {
@@ -370,31 +367,58 @@ Creature* room::InspectHero(Creature* p) {
         cin >> choice_container;
         switch (choice_container) {
             case 1: {
-                Item *Itmp = p->listInventory();
+                Item *Itmp = partyHead->CPL->listInventory();
                 //cout<<Itmp->getName()<<endl;
 
-                if (Itmp != NULL) this->groundItems.push_back(Itmp);
+                if (Itmp != nullptr) this->groundItems.push_back(Itmp);
                 break;
             }
             case 2:
-                p->listEquipped();
+                partyHead->CPL->listEquipped();
                 break;
             case 3:
-                p->listSpellBook();
+                partyHead->CPL->listSpellBook();
                 break;
             case 4:
-                cout << p->toString() << endl;
+                cout << partyHead->CPL->toString() << endl;
                 break;
             case 5:
-                p->StatusEffectMenu(p);
+                partyHead->CPL->StatusEffectMenu(partyHead->CPL);
                 break;
             case 6:
                 cout<<"Swap Hero WIP"<<endl;
+                this->swapHero(partyHead);
                 break;
-            case 7: return p;
+            case 7: return ;
         }
     }while(choice_container!=7);
-    return p;
+    return ;
+}
+
+void room::swapHero(struct cList* partyHead)
+{
+    int counter=1,choice_container;
+    struct cList* ptr=partyHead;
+    while(ptr!=nullptr)
+    {
+        cout<<counter<<". "<<ptr->CPL->getName();
+        if(partyHead->CPL==ptr->CPL) cout<<" (active) ";
+        cout<<endl;
+        counter++;
+        ptr=ptr->next;
+    }
+    ptr=partyHead;
+    do {
+        cin >> choice_container;
+        if(choice_container<1 || choice_container>counter)cout<<"Invalid input, try again"<<endl;
+    }while(choice_container<1 || choice_container>counter);
+
+    for(int i=1;i!=choice_container; i++)
+    {
+        ptr=ptr->next;
+    }
+    swapNode(partyHead,ptr);
+    return ;
 }
 //meta getters
 string room::getSUCCbyString(string s)
@@ -712,18 +736,27 @@ void room::activateTrap(event* e, Creature *p)
 
 
 void printMap(struct rList *rHead, int level){
-    if(rHead!=NULL){
+    if(rHead!=nullptr){
         for (int i = 1; i < level; i++)
             cout<<"\t";
         cout<<rHead->RPL->getRoom_name_ui();
         cout<<endl;
         for (int i=0; i<rHead->RPL->getNumberOfConnections();i++) {
             rList* tmp = findRoom(rHead,rHead->RPL->room_next[i]);
-            if(tmp != NULL)
+            if(tmp != nullptr)
                 printMap(tmp,level+1);
         }
     }
 }
 
-struct rList* rHead=NULL;
+struct rList* rHead=nullptr;
+
+void partyTurnTick(struct cList* partyHead,int n)
+{
+    while(partyHead!=NULL)
+    {
+        partyHead->CPL->CTurnTick(n);
+        partyHead=partyHead->next;
+    }
+}
 

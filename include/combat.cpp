@@ -1,14 +1,14 @@
 #include "combat.h"
 #include "cList.h"
 
-int combat(Creature *h,string MonsterList[],int n,string combatText)
+int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
 {
     struct cList* head=NULL;
-    struct cList* ptr=head;
+    struct cList* ptr=partyHead;
     struct cList* ptr2=head;
     bool fightOverFlag=false;
-    Creature *cp[n+1];
-    int initiative[n+1];
+    Creature *cp[n];
+    int initiative[n];
     int dcount=0;
     cout<<combatText<<endl;
     for(int i=0; i<n; i++)
@@ -21,12 +21,13 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
         head=insert_node(cp[i],head);
 
     }
-    cp[n]=h;
-    initiative[n]=dRoll()+cp[n]->getDEX();
-    cout<<cp[n]->getName()<<" rolls "<<initiative[n]<<"("<<initiative[n]-cp[n]->getDEX()<<"+"<<cp[n]->getDEX()<<")"<<" initiative "<<endl;
-    cp[n]->setInit(initiative[n]);
-    head=insert_node(cp[n],head);
-
+    while(ptr!=NULL) {
+        initiative[0] = dRoll(20,ptr->CPL->getAdvantage("globalAdv"),1) + ptr->CPL->getDEX();
+        cout << ptr->CPL->getName() << " rolls " << initiative[0] << "(" << initiative[0] - ptr->CPL->getDEX() << "+"<< ptr->CPL->getDEX() << ")" << " initiative " << endl;
+        ptr->CPL->setInit(initiative[0]);
+        head = insert_node(ptr->CPL, head);
+        ptr=ptr->next;
+    }
     sortList(head);
     //displayList(head);
     Creature* target;
@@ -35,7 +36,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
     while(true/*fightOverFlag==false*/)
     {
         ptr=head;
-        while(ptr!=NULL /*&& fightOverFlag==false*/)
+        while(ptr!=nullptr /*&& fightOverFlag==false*/)
         {
             ptr->CPL->CTurnTick();
             if(ptr->CPL->getCurHP()<1)              //should handle the situation if the creature dies from a DOT
@@ -43,6 +44,7 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                 ptr=ptr->next;
                 dcount++;
                 head=prune_cList(head,&expPool);
+                partyHead=pruneParty(partyHead);
                 continue;
             }
             for(int i=0; i<ptr->CPL->getActionsPerRound(); i++){
@@ -50,19 +52,20 @@ int combat(Creature *h,string MonsterList[],int n,string combatText)
                 do{
                     target = ptr->CPL->chooseTarget(head);
                     action = ptr->CPL->actionChoose(target);
-                }while(action==NULL);
+                }while(action==nullptr);
                 int deathsThisTurn = 0;
                 deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
                 if(deathsThisTurn>0){
-                    dcount+=deathsThisTurn;
-                    if(target->getCurHP()<1 && target->isHero())
-                        return -1;
+
                     head=prune_cList(head,&expPool);
+                    partyHead=pruneParty(partyHead);
+                    if(partyHead==nullptr) return -1;
                     if(dcount==n){
                         cout<<"Battle won!"<<endl;
-                        //split exp pool between party when implemented
-                        h->setExperience(h->getExperience()+expPool);
-                        h->checkExperience();
+
+                        expPool=expPool/partySize(partyHead);
+                        levelParty(partyHead,expPool);//split exp pool between party when implemented
+
                         delete_cList(head);
                         return 1;
                     }

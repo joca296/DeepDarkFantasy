@@ -9,22 +9,22 @@ struct cList *append_node(Creature *c,struct cList *head)
 
     newNode->CPL=c;
 
-    if(head==NULL)
+    if(head==nullptr)
     {
         head=newNode;
-        newNode->next=NULL;
+        newNode->next=nullptr;
         return head;
     }
     else
         {
             ptr=head;
-            while(ptr->next!=NULL)
+            while(ptr->next!=nullptr)
             {
             ptr=ptr->next;
 
             }
             ptr->next=newNode;
-            newNode->next=NULL;
+            newNode->next=nullptr;
             return head;
         }
 
@@ -34,7 +34,7 @@ struct cList* prefix_node(  Creature *c, struct cList* head)
 {
     struct cList* newNode;
 
-    if(head==NULL)
+    if(head==nullptr)
     {
         cout<<"ERROR no list created "<<endl;
     }
@@ -59,7 +59,7 @@ void delete_cList(struct cList *head)
     struct cList* ptr;
     struct cList* tmp;
 
-    while(head!=NULL)
+    while(head!=nullptr)
     {
         ptr=head;
         head=head->next;
@@ -73,13 +73,13 @@ void delete_cList(struct cList *head)
 int displayList(struct cList* head)
 {
     struct cList* ptr=head;
-    if(head==NULL)
+    if(head==nullptr)
     {
         cout<<"ERROR list not initialized "<<endl;
         return 1;
     }
     else
-        while(ptr!=NULL)
+        while(ptr!=nullptr)
         {
             cout<<ptr->CPL->getName()<<" Init: "<<ptr->CPL->getInit()<<endl;
             ptr=ptr->next;
@@ -90,7 +90,7 @@ int displayList(struct cList* head)
 
 struct cList* insert_node(Creature *c,struct cList *head)
 {
-    if(head==NULL)
+    if(head==nullptr)
     {
         return append_node(c,head);
     }
@@ -111,10 +111,10 @@ void sortList(struct cList *head)
 {
     int swapped, i;
     struct cList *ptr1;
-    struct cList *lptr = NULL;
+    struct cList *lptr = nullptr;
 
     /* Checking for empty list */
-    if (head == NULL)
+    if (head == nullptr)
         return;
 
     do
@@ -136,7 +136,7 @@ void sortList(struct cList *head)
     while (swapped);
 };
 
-struct cList *delete_node(struct cList *head,struct cList *TBD)
+struct cList *delete_node(struct cList *head,struct cList *TBD,bool deletHero)
 {
     struct cList *prev,*ptr;
     ptr=head;
@@ -149,14 +149,14 @@ struct cList *delete_node(struct cList *head,struct cList *TBD)
     if(ptr==head)
     {
        ptr=ptr->next;
-       //cout<<"Deleting "<<head->CPL->getName()<<endl;
-       delete head->CPL;
+        //cout<<head->CPL->getName()<<" died"<<endl;
+       if(deletHero==true || head->CPL->isHero()==0)delete head->CPL;
        delete head;
        return ptr;
     }
-    if(prev!=ptr)prev->next=ptr->next;
-    //cout<<"Deleting "<<ptr->CPL->getName()<<endl;
-    delete ptr->CPL;
+    prev->next=ptr->next;
+    //cout<<ptr->CPL->getName()<<" died"<<endl;
+    if(deletHero==true || head->CPL->isHero()==0) delete ptr->CPL;
     delete ptr;
     return head;
 }
@@ -165,13 +165,13 @@ struct cList *prune_cList(struct cList* head, float* expPool)
 {
     struct cList* ptr,*ptr2;
     ptr=head;
-    while(ptr!=NULL)
+    while(ptr!=nullptr)
     {
         ptr2=ptr->next;
         if(ptr->CPL->getCurHP()<1)
         {
+            if(ptr->CPL->isHero()==0)*expPool += ptr->CPL->getExperience();
             cout<<ptr->CPL->getName()<<" died"<<endl;
-            *expPool += ptr->CPL->getExperience();
             head=delete_node(head,ptr);
         }
         ptr=ptr2;
@@ -179,3 +179,81 @@ struct cList *prune_cList(struct cList* head, float* expPool)
     return head;
 
 };
+struct cList* prune_cList(struct cList* head)
+{
+    struct cList* ptr,*ptr2;
+    ptr=head;
+    while(ptr!=nullptr)
+    {
+        ptr2=ptr->next;
+        if(ptr->CPL->getCurHP()<1)
+        {
+            cout<<ptr->CPL->getName()<<" died"<<endl;
+            head=delete_node(head,ptr);
+        }
+        ptr=ptr2;
+    }
+    return head;
+
+};
+
+struct cList* createParty(int n)
+{
+
+    int c=1,choice_container;
+    Creature *cptr;
+    struct cList* partyHead=nullptr;
+    while(c!=n+1) {
+        cout<<"Choose a class for party member "<<c<<endl<<endl;
+
+        cout<<"1. Barbarian"<<endl;
+
+        cin>>choice_container;
+        switch(choice_container) {
+            case 1: {
+                cptr = new Hero("barbarian");
+                partyHead = append_node(cptr,partyHead);
+                c++;
+                break;
+            }
+
+            default:
+                cout << "Invalid input, try again" << endl;
+        }
+
+    }
+    return partyHead;
+}
+
+struct cList* pruneParty(struct cList* partyHead)
+{
+    struct cList* ptr=partyHead;
+    while(ptr!=nullptr)
+    {
+        if(ptr->CPL->getCurHP()<1)partyHead=delete_node(partyHead,ptr,true);
+        ptr = ptr->next;
+        
+    }
+
+    return partyHead;
+}
+int partySize(struct cList* partyHead)
+{
+    int c=0;
+    while(partyHead!=nullptr && partyHead->CPL->getCurHP()>0)
+    {
+        c++;
+        partyHead=partyHead->next;
+    }
+    return c;
+}
+
+void levelParty(struct cList* partyHead,float expPool)
+{
+    while(partyHead!=nullptr) {
+        partyHead->CPL->setExperience(partyHead->CPL->getExperience() + expPool);
+        partyHead->CPL->checkExperience();
+        partyHead=partyHead->next;
+    }
+}
+
