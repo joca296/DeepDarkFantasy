@@ -1072,7 +1072,7 @@ void Creature::lvlUp(int newLevel){
 void Hero::checkExperience() {
     float expOverflow = this->getExperience() - 50*1.25*(this->getLevel()+1);
     if(expOverflow >=0){
-        cout<<"You have leveled up"<<endl;
+        cout<<this->getName()<<" has leveled up"<<endl;
         this->lvlUp(this->getLevel()+1);
         this->setExperience(expOverflow);
         this->checkExperience();
