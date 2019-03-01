@@ -153,6 +153,22 @@ void room::set_room_desc(string s)
     {
         return roomEnteredFlag;
     }
+    int room::getNumberOfConnections() const {
+        return numberOfConnections;
+    }
+
+    void room::setNumberOfConnections(int numberOfConnections) {
+        room::numberOfConnections = numberOfConnections;
+    }
+
+    const string &room::getRoom_name_ui() const {
+        return room_name_ui;
+    }
+
+    void room::setRoom_name_ui(const string &room_name_ui) {
+        room::room_name_ui = room_name_ui;
+    }
+
 
 room::room(string name) //constructor
 {
@@ -231,7 +247,15 @@ room::room(string name) //constructor
                 room_shrine.push_back(ptr);
             }
         }
+        const Value& f = document["connectedRoomsUI"];
+        j=0;
+        for (SizeType i = 0; i < f.Size(); i++){
+            this->room_next_ui[j]=f[i].GetString();
+            j++;
+
+        }
     }
+
     else cout<<"room file not open"<<endl;
     f.close();
 }
@@ -493,7 +517,7 @@ string room::exit_room(Creature *p)
     int j=0;
     for(int i=0; i<this->numberOfConnections; i++)
     {
-        cout<<i+1<<". "<<this->room_next[i];if(findRoom(rHead,room_next[i])!=NULL)cout<<" (visited)";
+        cout<<i+1<<". "<<this->room_next_ui[i];if(findRoom(rHead,room_next[i])!=NULL)cout<<" (visited)";
         cout<<endl;
         j=i+2;
     }
@@ -667,7 +691,7 @@ void room::activateTrap(event* e, Creature *p)
         if(roll_container>=e->getSaveDC())
         {
             cout<<e->getSave_succ_text()<<endl;
-            dimaga=floor(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
+            dimaga=(e->getSaveMulti()*dRoll(e->getDMG(),0,e->getDNum()));
             cout<<p->getName()<<" takes "<<dimaga<<" damage"<<endl;
             p->setCurHP(p->getCurHP()-dimaga);
 
@@ -686,19 +710,12 @@ void room::activateTrap(event* e, Creature *p)
     e->isDisarmed=true;
 }
 
-int room::getNumberOfConnections() const {
-    return numberOfConnections;
-}
-
-void room::setNumberOfConnections(int numberOfConnections) {
-    room::numberOfConnections = numberOfConnections;
-}
 
 void printMap(struct rList *rHead, int level){
     if(rHead!=NULL){
         for (int i = 1; i < level; i++)
             cout<<"\t";
-        cout<<rHead->RPL->get_room_name();
+        cout<<rHead->RPL->getRoom_name_ui();
         cout<<endl;
         for (int i=0; i<rHead->RPL->getNumberOfConnections();i++) {
             rList* tmp = findRoom(rHead,rHead->RPL->room_next[i]);

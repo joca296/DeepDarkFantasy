@@ -1,5 +1,6 @@
 {
   "name" : "caveEntrance",
+  "UIname": "Cave Entrance",
   "DC_Perception" : -1,
   "DC_Investigation" : -1,
   "DC_Survival" : -1,
@@ -18,5 +19,6 @@
   "events" : ["AxeTrap"],
   "Shrines" : ["ShrineOfAzhorra"],
   "connectedRooms" : ["caveHallwayA"],
+  "connectedRoomsUI": ["Cave Hallway"],
   "GroundItems" : ["dagger"]
 }

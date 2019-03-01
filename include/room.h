@@ -11,7 +11,7 @@
 
 
 #define MAX_ROOM_MONSTERS 10
-#define MAX_CONNECTED_ROOMS 5
+#define MAX_CONNECTED_ROOMS 8
 #define MAX_ROOM_TRAPS 5
 
 //cross-platform support
@@ -37,7 +37,10 @@ private:
     int maxRollsAllowed;
     int numberOfConnections,numberOfMonsters,numberOfTraps;
     string Perception_SUCC_text, Investigation_SUCC_text, Survival_SUCC_text, Arcana_SUCC_text, Perception_FAIL_text, Investigation_FAIL_text, Survival_FAIL_text, Arcana_FAIL_text;
-    string room_name,room_desc,combat_desc;
+    string room_name,room_desc,combat_desc,room_name_ui;
+
+
+private:
     string room_monsters[MAX_ROOM_MONSTERS];
     bool roomEnteredFlag=false;
 public:
@@ -45,7 +48,7 @@ public:
     vector <shared_ptr<event>> room_shrine;
     event* room_traps[MAX_ROOM_TRAPS];
     string room_next[MAX_CONNECTED_ROOMS];
-
+    string room_next_ui[MAX_CONNECTED_ROOMS];
 
     void set_room_desc(string s);
     string get_room_desc();
@@ -85,6 +88,8 @@ public:
     bool getRoomEnteredFlag();
     int getNumberOfConnections() const;
     void setNumberOfConnections(int numberOfConnections);
+    void setRoom_name_ui(const string &room_name_ui);
+    const string &getRoom_name_ui() const;
 
     string getSUCCbyString(string s);
     string getFAILbyString(string s);

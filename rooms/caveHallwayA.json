@@ -1,5 +1,6 @@
 {
   "name" : "caveHallwayA",
+  "UIname": "Cave Hallway",
   "DC_Perception" : 10,
   "DC_Investigation" : -1,
   "DC_Survival" : -1,
@@ -18,5 +19,6 @@
   "events" : ["AxeTrap"],
   "Shrines" : [],
   "connectedRooms" : ["caveEntrance"],
+  "connectedRoomsUI": ["Cave Entrance"],
   "GroundItems" : []
 }
