@@ -262,7 +262,11 @@ Creature* getRandomListMember(struct cList* head,int heroTarget)
     int n;
     if(heroTarget!=1 && heroTarget!=-1 && heroTarget!=0)
     {
-        cout<<"error in getListMember, heroTarget parametar needs to be 1,-1, or 0"<<endl;
+        cout<<"error in getRandomListMember, heroTarget parametar needs to be 1,-1, or 0"<<endl;
+        return nullptr;
+    }
+    if(monsterNum(head)==0 && heroTarget==0)
+    {
         return nullptr;
     }
     struct cList* ptr;
