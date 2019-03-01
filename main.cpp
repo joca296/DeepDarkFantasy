@@ -1,7 +1,7 @@
 #include <iostream>
 #include "include/Creature.h"
 #include "include/room.h"
-#include "include/functions.h"
+#include <windows.h>
 
 //cross-platform support
 #ifdef __linux__
@@ -18,24 +18,16 @@ using namespace std;
 int main(){
 
     srand(time(NULL));
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    /*HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole,1);*/
     Hero x("barbarian");
     //cout<<x.toString();
     room* r;
     r=new room("caveEntrance");
-    for(int i = 1; i<255; i++)
-    {
-        SetConsoleTextAttribute(hConsole,i);
-        cout<<"AAAAAA"<<endl;
-    }
 
-
-    //rHead=append_node(r,rHead);
     while(r!=NULL){
     r=r->enterRoom(&x);
     }
     delete_rList(rHead);
-   /*
-    cout<<x.toString();
-    cout<<y.toString();*/
+
 }

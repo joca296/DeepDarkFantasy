@@ -725,5 +725,5 @@ void printMap(struct rList *rHead, int level){
     }
 }
 
-struct rList *rHead=NULL;
+struct rList* rHead=NULL;
 
