@@ -6,10 +6,13 @@
 #include <string>
 #include <ctime>
 #include <vector>
+#include <windows.h>
 #include "rapidjson/document.h"
 
 using namespace std;
 using namespace rapidjson;
+
+
 
 int dRoll(int sideNum = 20, int adv = 0,int dNum = 1);
 int randomWeight(const vector<int>& choiceWeight);

@@ -1,5 +1,6 @@
 #include "functions.h"
 
+
 int dRoll(int sideNum, int adv, int dNum)
 {
     int r1=0, r2=0,sum=0;
