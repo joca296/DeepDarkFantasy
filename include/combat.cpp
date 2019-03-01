@@ -56,7 +56,7 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
                 int deathsThisTurn = 0;
                 deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
                 if(deathsThisTurn>0){
-
+                    dcount+=deathsThisTurn;
                     head=prune_cList(head,&expPool);
                     partyHead=pruneParty(partyHead);
                     if(partyHead==nullptr) return -1;
