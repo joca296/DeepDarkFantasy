@@ -25,4 +25,7 @@ struct cList* createParty(int n);
 struct cList* pruneParty(struct cList* partyHead);
 void levelParty(struct cList* partyHead,float exp);
 int partySize(struct cList* partyHead);
+Creature* getRandomListMember(struct cList* head,int heroTarget=1);
+int monsterNum(struct cList* head);
+int heroNum(struct cList* head);
 

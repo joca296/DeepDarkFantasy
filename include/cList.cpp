@@ -240,7 +240,7 @@ struct cList* pruneParty(struct cList* partyHead)
 int partySize(struct cList* partyHead)
 {
     int c=0;
-    while(partyHead!=nullptr && partyHead->CPL->getCurHP()>0)
+    while(partyHead!=nullptr)
     {
         c++;
         partyHead=partyHead->next;
@@ -257,3 +257,47 @@ void levelParty(struct cList* partyHead,float expPool)
     }
 }
 
+Creature* getRandomListMember(struct cList* head,int heroTarget)
+{
+    int n;
+    if(heroTarget!=1 && heroTarget!=-1 && heroTarget!=0)
+    {
+        cout<<"error in getListMember, heroTarget parametar needs to be 1,-1, or 0"<<endl;
+        return nullptr;
+    }
+    struct cList* ptr;
+    do {
+            ptr=head;
+            n = (rand() % partySize(head)) + 1;
+
+        for(int i=0; i<n;i++)
+        {
+            ptr=ptr->next;
+        }
+    }while((ptr->CPL->isHero()!=heroTarget) || heroTarget==-1);
+    return ptr->CPL;
+}
+
+int monsterNum(struct cList* head)
+{
+    int c=0;
+    while(head!=NULL)
+    {
+        if(head->CPL->isHero()==0)c++;
+        head=head->next;
+
+    }
+    return c;
+}
+
+int heroNum(struct cList* head)
+{
+    int c=0;
+    while(head!=NULL)
+    {
+        if(head->CPL->isHero()==1)c++;
+        head=head->next;
+
+    }
+    return c;
+}
