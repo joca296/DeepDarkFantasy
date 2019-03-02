@@ -7,7 +7,6 @@
 #include <math.h>
 #include "Creature.h"
 #include "event.h"
-#include "Item.h"
 
 
 #define MAX_ROOM_MONSTERS 10
@@ -24,10 +23,6 @@
 
 using namespace std;
 
-const string global_default_Perception_FAIL_text = "You don't see anything of value";
-const string global_default_Investigation_FAIL_text = "You don't find anything helpful";
-const string global_default_Survival_FAIL_text = "Survival placeholder omegaLUL";
-const string global_default_Arcana_FAIL_text = "You don't sense any specific magic";
 
 class room
 {
@@ -46,6 +41,7 @@ private:
 public:
     vector<Item*> groundItems;
     vector <shared_ptr<event>> room_shrine;
+    vector <hiddenItem*> room_hidden_items;
     event* room_traps[MAX_ROOM_TRAPS];
     string room_next[MAX_CONNECTED_ROOMS];
     string room_next_ui[MAX_CONNECTED_ROOMS];

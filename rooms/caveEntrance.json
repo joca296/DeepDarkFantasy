@@ -20,5 +20,6 @@
   "Shrines" : ["ShrineOfAzhorra"],
   "connectedRooms" : ["caveHallwayA"],
   "connectedRoomsUI": ["Cave Hallway"],
-  "GroundItems" : ["dagger"]
+  "GroundItems" : ["dagger"],
+  "HiddenItems": ["hiddenGreataxe"]
 }

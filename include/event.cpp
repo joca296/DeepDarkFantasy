@@ -159,3 +159,29 @@ trap::trap(string name)
     else cout<<"trap file not open"<<endl;
     f.close();
 }
+
+hiddenItem::hiddenItem(string name)
+{
+    ifstream f;
+    string path;
+    if(PLATFORM_NAME == "windows") path = "events\\"+name+".json";
+    else path = "./events/"+name+".json";
+    f.open(path);
+    if(f.is_open()){
+        const Document& document = parseFromFile(&f);
+
+        this->setCheckDC(document["CheckDC"].GetInt());
+        this->setSkill(document["Skill"].GetString());
+        this->setCheck_succ_text(document["CheckSUCC"].GetString());
+
+        const Value& a = document["ItemList"];
+        Item* ptr;
+        for(SizeType i = 0; i<a.Size(); i++)
+        {
+            ptr=new Item(a[i].GetString());
+            hItems.push_back(ptr);
+        }
+    }
+    else cout<<"hiddenItem file not open"<<endl;
+    f.close();
+}
