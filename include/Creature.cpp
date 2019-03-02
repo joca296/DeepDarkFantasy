@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 #include "Creature.h"
 #include "cList.h"
 
@@ -161,7 +162,12 @@ Creature::Creature(string name) {
         const Value& c = document["inventory"];
         for (SizeType i = 0; i < c.Size(); i++){
             Item* item = new Item(c[i].GetString());
-            inventory.push_back(item);
+            //if duplicate stack items
+            int check = isInVector(inventory,item);
+            if(check == -1)
+                inventory.push_back(item);
+            else
+                inventory[check]->setCount(inventory[check]->getCount()+1);
         }
 
         //setting immunities
@@ -311,16 +317,18 @@ Action* Hero::actionChoose(Creature* c) {
         while(1){
             cout<<"1. Weapon"<<endl;
             cout<<"2. Spell"<<endl;
-            cout<<"3. Check Status Effects"<<endl;
-            cout<<"4. Check Stats"<<endl;
-            cout<<"5. Back"<<endl;
+            cout<<"3. Use consumable"<<endl;
+            cout<<"4. Check Status Effects"<<endl;
+            cout<<"5. Check Stats"<<endl;
+            cout<<"6. Back"<<endl;
             int choice;
             cin>>choice;
             if(choice==1) return this->selectWeapon();
             else if (choice==2) return this->selectSpell();
-            else if (choice==3) StatusEffectMenu(c);
-            else if (choice==4) StatsMenu(c);
-            else if (choice==5) return NULL;
+            else if (choice==3) return this->selectConsumable();
+            else if (choice==4) StatusEffectMenu(c);
+            else if (choice==5) StatsMenu(c);
+            else if (choice==6) return NULL;
             else cout<<"Invalid input, try again."<<endl;
         }
     }
@@ -359,6 +367,40 @@ Action* Hero::selectSpell() {
                 return NULL;
             }
             else return spellBook[choice-1];
+        }
+    }
+}
+Action* Hero::selectConsumable() {
+    cout<<"Consumables:"<<endl;
+    vector<Item*> consumables;
+    int i=1;
+    for(int j=0; j<inventory.size(); j++){
+        if(inventory[j]->getItemType() == 'c'){
+            cout<<i<<". "<<inventory[j]->getName();
+            if(inventory[j]->getCount() > 1) cout<<" ("<<inventory[j]->getCount()<<")";
+            cout<<endl;
+            consumables.push_back(inventory[j]);
+            i++;
+        }
+    }
+    cout<<i<<". Back"<<endl;
+    while(1){
+        int choice;
+        cin>>choice;
+        if(choice<1 || choice>i) cout<<"Invalid input, try again."<<endl;
+        else if (choice == i) return nullptr;
+        else {
+            Action* tmp = new Action(consumables[choice-1]->consumableEffectList);
+
+            //using in inventory
+            int positionInInventory = isInVector(inventory,consumables[choice-1]);
+            inventory[positionInInventory]->setCount(inventory[positionInInventory]->getCount() - 1);
+            if(inventory[positionInInventory]->getCount()==0){
+                delete inventory[positionInInventory];
+                this->inventory.erase(this->inventory.begin() + positionInInventory);
+            }
+
+            return tmp;
         }
     }
 }
@@ -432,7 +474,9 @@ Item* Hero::listInventory(){
         cout<<"Inventory:"<<endl;
         int i=1;
         for(i=1; i<=inventory.size(); i++){
-            cout<<i<<". "<<inventory[i-1]->getName()<<endl;
+            cout<<i<<". "<<inventory[i-1]->getName();
+            if(inventory[i-1]->getCount() > 1) cout<<" ("<<inventory[i-1]->getCount()<<")";
+            cout<<endl;
         }
         cout<<i<<". Back"<<endl;
         while(1){
@@ -447,31 +491,54 @@ Item* Hero::listInventory(){
                     cout<<"0. Equip"<<endl;
                     equipFlag=true;
                 }
+                else if (itemType == 'c'){
+                    cout<<"0. Use"<<endl;
+                    equipFlag=true;
+                }
                 cout<<"1. Show item description"<<endl;
-                cout<<"2. Drop item"<<endl;
-                cout<<"3. Back"<<endl;
+                cout<<"2. Drop one"<<endl;
+                cout<<"3. Drop all"<<endl;
+                cout<<"4. Back"<<endl;
                 while(1){
                     int itemManagementChoice;
                     cin>>itemManagementChoice;
                     int tmp = (equipFlag? 0:1);
-                    if(itemManagementChoice<tmp || itemManagementChoice>3) cout<<"Invalid input, try again."<<endl;
+                    if(itemManagementChoice<tmp || itemManagementChoice>4) cout<<"Invalid input, try again."<<endl;
                     else {
                         switch (itemManagementChoice) {
                             case 0:
-                                if (itemType == 'w') this->weapons.push_back(callConstuctor(inventory[choice-1]->getName()));
-                                else armor=new Armor(inventory[choice-1]->getName());
-                                delete inventory[choice-1];
-                                this->inventory.erase(this->inventory.begin() + choice-1);
+                                if (itemType == 'w')
+                                    this->weapons.push_back(callConstuctor(inventory[choice-1]->getName()));
+                                else if(itemType == 'a')
+                                    armor=new Armor(inventory[choice-1]->getName());
+                                else
+                                    this->SE_Inflict(inventory[choice-1]->consumableEffectList,this);
+
+                                inventory[choice-1]->setCount(inventory[choice-1]->getCount() - 1);
+
+                                if(inventory[choice-1]->getCount()==0){
+                                    delete inventory[choice-1];
+                                    this->inventory.erase(this->inventory.begin() + choice-1);
+                                }
                                 return NULL;
                             case 1:
                                 cout<<inventory[choice-1]->getDesc()<<endl;
                                 return NULL;
                             case 2:
+                                ajtem = new Item(inventory[choice-1]->getName());
 
+                                inventory[choice-1]->setCount(inventory[choice-1]->getCount() - 1);
+                                if(inventory[choice-1]->getCount()==0){
+                                    delete inventory[choice-1];
+                                    this->inventory.erase(this->inventory.begin() + choice-1);
+                                }
+
+                                return ajtem;
+                            case 3:
                                 ajtem=inventory[choice-1];
                                 this->inventory.erase(this->inventory.begin() + choice-1);
                                 return ajtem;
-                            case 3:
+                            case 4:
                                 return NULL;
                             default:
                                 break;
@@ -499,6 +566,11 @@ int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
         case 'a':{
             SpellAoE* spellAoE = (SpellAoE*) action;
             return this->execAoE(actors,spellAoE,tar);
+        }
+        case 'c':{
+            this->SE_Inflict(action->actionStatusEffect,tar);
+            delete action;
+            return 0;
         }
         default:{
             cout<<"invalid action type in "<<action->getName()<<endl;

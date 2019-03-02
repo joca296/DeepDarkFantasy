@@ -1,0 +1,11 @@
+{
+  "Name" : "Healing potion",
+  "Value" : 10,
+  "DOT" : false,
+  "SavingThrowSkill" : "STR",
+  "SaveDC" : 0,
+  "Duration" : 0,
+  "Target" : "Self",
+  "Affects" : ["CurHP"],
+  "Description" : "Healing potion"
+}

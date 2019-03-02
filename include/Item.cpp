@@ -17,7 +17,7 @@ void Item::setDesc(const string &desc) {
     Item::desc = desc;
 }
 
-Item::Item(string name) {
+Item::Item(string name, int count) {
     ifstream f;
     string path;
     if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+name+".json";
@@ -28,6 +28,17 @@ Item::Item(string name) {
         this->name=document["name"].GetString();
         desc=document["desc"].GetString();
         itemType=document["itemType"].GetString()[0];
+        this->count=count;
+
+        if(itemType=='c'){
+            const Value& a = document["consumableEffectList"];
+            shared_ptr<statusEffect> ptr;
+            for(SizeType i = 0; i<a.Size(); i++)
+            {
+                ptr=make_shared<statusEffect>(a[i].GetString());
+                consumableEffectList.push_back(ptr);
+            }
+        }
     }
     f.close();
 }
@@ -38,6 +49,14 @@ char Item::getItemType() const {
 
 void Item::setItemType(char itemType) {
     Item::itemType = itemType;
+}
+
+int Item::getCount() const {
+    return count;
+}
+
+void Item::setCount(int count) {
+    Item::count = count;
 }
 
 int Armor::getAc() const {
@@ -56,7 +75,7 @@ void Armor::setType(char type) {
     Armor::type = type;
 }
 
-Armor::Armor(string name) : Item(name) {
+Armor::Armor(string name, int count) : Item(name,count) {
     ifstream f;
     string path;
     if(PLATFORM_NAME == "windows") path = "items_and_spells\\"+name+".json";
@@ -68,4 +87,11 @@ Armor::Armor(string name) : Item(name) {
         type=document["type"].GetString()[0];
     }
     f.close();
+}
+
+int isInVector(vector<Item*> haystack, Item* needle){
+    for (int i=0 ; i<haystack.size(); i++)
+        if(haystack[i]->getName() == needle->getName())
+            return i;
+    return -1;
 }

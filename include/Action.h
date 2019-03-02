@@ -44,6 +44,7 @@ public:
     void setRollType(const string &rollType);
 
     Action(const Document& action);
+    Action(vector <shared_ptr<statusEffect>> consumableEffectList);
     Action();
 };
 

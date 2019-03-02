@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+#include <memory>
+#include <vector>
+#include "statusEffect.h"
 
 //cross-platform support
 #ifdef __linux__
@@ -16,7 +19,12 @@ class Item {
 private:
     string name, desc;
     char itemType;
+    int count;
 public:
+    vector <shared_ptr<statusEffect>> consumableEffectList;
+
+    int getCount() const;
+    void setCount(int count);
     char getItemType() const;
     void setItemType(char itemType);
     const string &getName() const;
@@ -25,7 +33,7 @@ public:
     void setDesc(const string &desc);
 
     Item(){};
-    Item(string name);
+    Item(string name, int count =1);
 };
 
 class Armor: public Item {
@@ -39,5 +47,7 @@ public:
     void setType(char type);
 
     Armor(){};
-    Armor(string name);
+    Armor(string name, int count =1);
 };
+
+int isInVector(vector<Item*> haystack, Item* needle);

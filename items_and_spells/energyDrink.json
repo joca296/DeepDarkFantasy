@@ -1,0 +1,6 @@
+{
+  "name" : "energyDrink",
+  "desc" : "Energy drink za benzinske unerground pumpe, napad skace na 1800!",
+  "itemType" : "c",
+  "consumableEffectList" : ["energyDrink"]
+}

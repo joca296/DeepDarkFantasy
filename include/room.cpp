@@ -370,7 +370,13 @@ void room::InspectHero(struct cList* partyHead) {
                 Item *Itmp = partyHead->CPL->listInventory();
                 //cout<<Itmp->getName()<<endl;
 
-                if (Itmp != nullptr) this->groundItems.push_back(Itmp);
+                if (Itmp != nullptr) {
+                    for(int i=0; i<Itmp->getCount(); i++){
+                        Item* x = new Item(Itmp->getName());
+                        this->groundItems.push_back(x);
+                    }
+                    delete Itmp;
+                }
                 break;
             }
             case 2:
@@ -629,7 +635,13 @@ int room::special_interactions(Creature *p)
     }
     else
     {
-        p->inventory.push_back(groundItems[choice_container-counterTraps-1-counterShrines]);
+        int x = isInVector(p->inventory,groundItems[choice_container-counterTraps-1-counterShrines]);
+        if(x == -1)
+            p->inventory.push_back(groundItems[choice_container-counterTraps-1-counterShrines]);
+        else{
+            p->inventory[x]->setCount(p->inventory[x]->getCount()+1);
+            delete groundItems[choice_container-counterTraps-1-counterShrines];
+        }
         groundItems.erase(groundItems.begin()+choice_container-counterTraps-1-counterShrines);
     }
     return -2;

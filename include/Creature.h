@@ -27,12 +27,6 @@ class Creature {
 private:
     int maxHP, curHP, maxMana, curMana, ac, prof, STR, DEX, CON, INT, WIS, CHA, init, actionsPerRound, tempAcGain, level, hitDice, hitDiceNumber;
     float experience;
-public:
-    float getExperience() const;
-
-    void setExperience(float experience);
-
-private:
     string name, tag;
 public:
     //Inventory
@@ -90,6 +84,8 @@ public:
     void setHitDice(int hitDice);
     int getHitDiceNumber() const;
     void setHitDiceNumber(int hitDiceNumber);
+    float getExperience() const;
+    void setExperience(float experience);
 
     //constructors
     Creature(){};
@@ -152,6 +148,7 @@ public:
     Action* actionChoose(Creature* c) override;
     Action* selectSpell();
     Action* selectWeapon();
+    Action* selectConsumable();
     Creature* chooseTarget(struct cList* actors) override;
     void listEquipped() override;
     void listSpellBook() override;

@@ -1,0 +1,11 @@
+{
+  "Name" : "Mana potion",
+  "Value" : 10,
+  "DOT" : false,
+  "SavingThrowSkill" : "STR",
+  "SaveDC" : 0,
+  "Duration" : 0,
+  "Target" : "Self",
+  "Affects" : ["CurMana"],
+  "Description" : "Mana potion"
+}

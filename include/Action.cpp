@@ -132,6 +132,12 @@ Action::Action(const Document& action) {
     }
 }
 
+Action::Action(vector<shared_ptr<statusEffect>> consumableEffectList) {
+    type = 'c';
+    for(int i=0; i<consumableEffectList.size(); i++)
+        actionStatusEffect.push_back(consumableEffectList[i]);
+}
+
 const string &Action::getRollType() const {
     return rollType;
 }

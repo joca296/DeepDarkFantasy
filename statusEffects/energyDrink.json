@@ -1,0 +1,11 @@
+{
+  "Name" : "Energy drink za benzinske unerground pumpe",
+  "Value" : 1800,
+  "DOT" : false,
+  "SavingThrowSkill" : "STR",
+  "SaveDC" : 0,
+  "Duration" : 4,
+  "Target" : "Self",
+  "Affects" : ["STR","DEX","INT","WIS","CHA"],
+  "Description" : "Energy drink za benzinske unerground pumpe, napad skace na 1800!"
+}

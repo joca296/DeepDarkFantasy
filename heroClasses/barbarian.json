@@ -14,7 +14,7 @@
   "weapons" : ["greataxe","javelin"],
   "spellBook" : ["firebolt","cure_wounds","fireball"],
   "armor" : "plate_armor",
-  "inventory" : ["dagger","shortbow","crowbar"],
+  "inventory" : ["dagger","shortbow","crowbar","energyDrink"],
   "immunity" : [],
   "resist" : ["slash","pierce"],
   "weakness" : []
