@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "Item.h"
 #include "statusEffect.h"
 using namespace std;
 
@@ -69,7 +70,7 @@ private:
     void setSave(string);
     string getSave();
     //virtual void throwAwayFunction()=0;
-    virtual ~event(){};
+    virtual ~event()=0;
 
 };
 
@@ -77,6 +78,13 @@ class trap:public event
 {
     public:
         trap(string);
+};
+
+class hiddenItem:public event
+{
+    public:
+        explicit hiddenItem(string name);
+        vector <Item*> hItems;
 };
 
 /*class shrine:public event

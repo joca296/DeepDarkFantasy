@@ -255,6 +255,12 @@ room::room(string name) //constructor
             j++;
 
         }
+        const Value& g = document["HiddenItems"];
+        hiddenItem* ptr2;
+        for (SizeType i = 0; i < g.Size(); i++) {
+            ptr2=new hiddenItem(g[i].GetString());
+            this->room_hidden_items.push_back(ptr2);
+        }
     }
 
     else cout<<"room file not open"<<endl;
@@ -502,6 +508,17 @@ int room::basic_checks(Creature *p)
             room_shrine[i]->eDisc=true;
             cout<<room_shrine[i]->getCheck_succ_text()<<endl;
             isSomethingFound = true;
+        }
+    }
+    for(int i=0; i<room_hidden_items.size(); i++)                                               //Hidden Items handling
+    {
+        if(room_hidden_items.at(i)->getSkill()==s && roll_container>=room_hidden_items.at(i)->getCheckDC()) {
+            cout<<room_hidden_items.at(i)->getCheck_succ_text()<<endl;
+            isSomethingFound=true;
+            for (int j=0; j<room_hidden_items.at(i)->hItems.size(); i++)
+            {
+                groundItems.push_back(room_hidden_items.at(i)->hItems.at(j));
+            }
         }
     }
     if(getSUCCbyString(s)!="" && roll_container>=this->getDCbyString(s))

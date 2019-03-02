@@ -20,5 +20,6 @@
   "Shrines" : [],
   "connectedRooms" : ["caveEntrance"],
   "connectedRoomsUI": ["Cave Entrance"],
-  "GroundItems" : []
+  "GroundItems" : [],
+  "HiddenItems" : []
 }
