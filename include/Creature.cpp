@@ -28,7 +28,7 @@ void Creature::setCurHP(int curHP) {
     Creature::curHP = curHP;
 }
 int Creature::getAc() const {
-    if(armor != nullptr){
+    if(armor != NULL){
         int result =0;
         result += armor->getAc();
         result += ( armor->getType()== 'h'? 0 : (armor->getType()== 'm'? (this->getDEX()>2 ? 2 : this->getDEX() ) : this->getDEX() ) );
@@ -139,7 +139,7 @@ Creature::Creature(string name) {
         curHP = document["hp"].GetInt();
         maxMana = document["mana"].GetInt();
         curMana = document["mana"].GetInt();
-        ac = document["ac"].GetInt();
+        ac = document["ac"].GetInt() - document["dex"].GetInt();
         prof = document["prof"].GetInt();
         STR = document["str"].GetInt();
         DEX = document["dex"].GetInt();
@@ -156,7 +156,7 @@ Creature::Creature(string name) {
         tempAcGain = 0;
 
         //setting armor
-        armor = nullptr;
+        armor = NULL;
 
         //setting inventory;
         const Value& c = document["inventory"];
@@ -225,9 +225,6 @@ Monster::Monster(string name, int level) : Creature(name) {
 
         //setting level
         this->lvlUp(level);
-
-        //setting monster armor
-        this->setAc(this->getAc()-this->getDEX());
     }
     else cout<<"monster file not open"<<endl;
     f.close();
