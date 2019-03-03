@@ -651,7 +651,7 @@ int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
     }
 }
 int Creature::execWeaponAttack(Weapon *action, Creature* tar){
-    int atcRoll, bonus;
+    int atcRoll, bonus,deathCount=0;
 
     //determining bonus
     if(action->isFinesse()) bonus=this->getDEX();
@@ -676,14 +676,12 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
 
         if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar); //(de)buff handling here
         if(tar->getCurHP() <= 0){
-            //cout<<tar->getName()<<" died."<<endl;
-            return 1; //something died
-        }
-        else
-        {
 
-            return 0; //something didn't die
+            deathCount++; //target died
         }
+        if(tar!=this && this->getCurHP()<1)deathCount++; //attacker died
+
+        return deathCount;
     }
 
     //attack failed
@@ -694,7 +692,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
 }
 int Creature::execSpellAttackST(Spell *action, Creature* tar){
     if(action->isStatusEffectOnly() == false){
-        int atcRoll, bonus;
+        int atcRoll, bonus,deathCount=0;
 
         //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
         if(action->getType() == 's') this->setCurMana(this->getCurMana()-action->getManaCost());
@@ -727,14 +725,12 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
 
             if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar);//(de)buff handling here
             if(tar->getCurHP() <= 0){
-                cout<<tar->getName()<<" died."<<endl;
-                return 1; //something died
-            }
-            else
-            {
 
-                return 0; //something didn't die
+                deathCount++; //target died
             }
+            if(this!=tar && this->getCurHP() <= 0) deathCount++; //attacker died
+
+            return deathCount;
         }
 
             //attack failed
