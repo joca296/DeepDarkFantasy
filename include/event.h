@@ -70,7 +70,7 @@ private:
     void setSave(string);
     string getSave();
     //virtual void throwAwayFunction()=0;
-    virtual ~event()=0;
+    //virtual ~event()=0;
 
 };
 

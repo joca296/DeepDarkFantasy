@@ -515,7 +515,7 @@ int room::basic_checks(Creature *p)
         if(room_hidden_items.at(i)->getSkill()==s && roll_container>=room_hidden_items.at(i)->getCheckDC()) {
             cout<<room_hidden_items.at(i)->getCheck_succ_text()<<endl;
             isSomethingFound=true;
-            for (int j=0; j<room_hidden_items.at(i)->hItems.size(); i++)
+            for (int j=0; j<room_hidden_items.at(i)->hItems.size(); j++)
             {
                 groundItems.push_back(room_hidden_items.at(i)->hItems.at(j));
             }
