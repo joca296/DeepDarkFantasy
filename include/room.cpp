@@ -284,7 +284,8 @@ room* room::enterRoom(struct cList *partyHead)
     }
     int current_tries_remain = this->getMaxRollsAllowed();
 
-    int choice_container;
+    int choice_container_int;
+    string choice_container;
 
     //bool choice_made_flag=false;;
     cout<<get_room_desc()<<endl;
@@ -293,7 +294,14 @@ room* room::enterRoom(struct cList *partyHead)
         //choice_made_flag=false;
         basic_choise_text(partyHead->CPL);
         cin>>choice_container;
-        switch(choice_container)
+        try{
+            choice_container_int=stoi(choice_container);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER of the class you wish to choose"<<endl;
+            choice_container_int=0;
+        }
+        switch(choice_container_int)
         {
             case 1:
                 if(current_tries_remain>0 && this->getRoomEnteredFlag()==false)
@@ -361,7 +369,8 @@ void room::basic_choise_text(Creature *p)
 
 void room::InspectHero(struct cList* partyHead) {
 
-    int choice_container;
+    int choice_container_int;
+    string choice_container;
     do {
         cout << "1. Open Inventory " << endl;
         cout << "2. Show Equipped items " << endl;
@@ -371,7 +380,14 @@ void room::InspectHero(struct cList* partyHead) {
         cout << "6. Swap Hero " << endl;
         cout << "7. Back" << endl;
         cin >> choice_container;
-        switch (choice_container) {
+        try{
+            choice_container_int=stoi(choice_container);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER of the class you wish to choose"<<endl;
+            choice_container_int=0;
+        }
+        switch (choice_container_int) {
             case 1: {
                 Item *Itmp = partyHead->CPL->listInventory();
                 //cout<<Itmp->getName()<<endl;
@@ -403,7 +419,7 @@ void room::InspectHero(struct cList* partyHead) {
                 break;
             case 7: return ;
         }
-    }while(choice_container!=7);
+    }while(choice_container_int!=7);
     return ;
 }
 
@@ -463,12 +479,19 @@ int room::getDCbyString(string s)
 int room::basic_checks(Creature *p)
 {
     int choice_container,roll_container;
-    string s;
+    string s,choice_container_string;
     bool isSomethingFound = false;
     do
     {
         basic_checks_text();
-        cin>>choice_container;
+        cin>>choice_container_string;
+        try{
+            choice_container=stoi(choice_container_string);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER of the class you wish to choose"<<endl;
+            choice_container=0;
+        }
         switch(choice_container)                    //Converting choice int to needed string
         {
         case 1:
@@ -561,6 +584,7 @@ string room::exit_room(Creature *p)
     }
     while(true){
     int cContainer=0;
+    string cContainer_string;
     int j=0;
     for(int i=0; i<this->numberOfConnections; i++)
     {
@@ -569,7 +593,14 @@ string room::exit_room(Creature *p)
         j=i+2;
     }
     cout<<j<<". Back "<<endl;
-    cin>>cContainer;
+    cin>>cContainer_string;
+        try{
+            cContainer=stoi(cContainer_string);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER"<<endl;
+            cContainer=0;
+        }
     if(cContainer<j && cContainer>0)
     {
         return this->room_next[cContainer-1];
@@ -585,6 +616,7 @@ int room::special_interactions(Creature *p)
     int choice_container,roll_container;
     int counter=1, counterTraps=0,counterShrines=0;
     int item_counter=groundItems.size();
+    string choice_container_string;
     do{             //prints choices and takes input
         counter=1;
         for(int i=0; i<numberOfTraps; i++)
@@ -611,7 +643,14 @@ int room::special_interactions(Creature *p)
             counter++;
         }
         cout<<counter<<". "<<"Back"<<endl;
-        cin>>choice_container;
+        cin>>choice_container_string;
+        try{
+            choice_container=stoi(choice_container_string);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER"<<endl;
+            choice_container=0;
+        }
         if(choice_container>counter || choice_container<1) cout<<"Invalid input, try again! "<<endl;
     }while(choice_container>counter || choice_container<1);
     if(choice_container==counter) return 0;

@@ -216,6 +216,7 @@ struct cList* createParty(int n)
         }
         catch(...) {
                   cout<<"INVALID INPUT enter a NUMBER of the class you wish to choose"<<endl;
+                choice_container_int=0;
         }
 
         switch(choice_container_int) {
@@ -231,7 +232,7 @@ struct cList* createParty(int n)
 
             }
         }
-        choice_container_int=0;    
+
     }
     return partyHead;
 }

@@ -322,7 +322,15 @@ Action* Hero::actionChoose(Creature* c) {
             cout<<"5. Check Stats"<<endl;
             cout<<"6. Back"<<endl;
             int choice;
-            cin>>choice;
+            string choice_string;
+            cin>>choice_string;
+            try{
+                choice=stoi(choice_string);
+            }
+            catch(...) {
+                cout<<"INVALID INPUT enter a NUMBER"<<endl;
+                choice=0;
+            }
             if(choice==1) return this->selectWeapon();
             else if (choice==2) return this->selectSpell();
             else if (choice==3) return this->selectConsumable();
@@ -344,7 +352,15 @@ Action* Hero::selectWeapon() {
     cout<<weapons.size()+1<<". Back"<<endl;
     while(1){
         int choice;
-        cin>>choice;
+        string choice_string;
+        cin>>choice_string;
+        try{
+            choice=stoi(choice_string);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER"<<endl;
+            choice=0;
+        }
         if(choice<1 || choice>weapons.size()+1) cout<<"Invalid input, try again."<<endl;
         else if(weapons.size()+1==choice) return NULL;
         else return weapons[choice-1];
@@ -357,7 +373,15 @@ Action* Hero::selectSpell() {
     cout<<spellBook.size()+1<<". Back"<<endl;
     while(1){
         int choice;
-        cin>>choice;
+        string choice_string;
+        cin>>choice_string;
+        try{
+            choice=stoi(choice_string);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER"<<endl;
+            choice=0;
+        }
         if(choice<1 || choice>spellBook.size()+1) cout<<"Invalid input, try again."<<endl;
         else if(spellBook.size()+1==choice) return NULL;
         else {
@@ -386,7 +410,15 @@ Action* Hero::selectConsumable() {
     cout<<i<<". Back"<<endl;
     while(1){
         int choice;
-        cin>>choice;
+        string choice_string;
+        cin>>choice_string;
+        try{
+            choice=stoi(choice_string);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER"<<endl;
+            choice=0;
+        }
         if(choice<1 || choice>i) cout<<"Invalid input, try again."<<endl;
         else if (choice == i) return nullptr;
         else {
@@ -414,12 +446,20 @@ Creature* Hero::chooseTarget(struct cList* actors){
         tmp=tmp->next;
     }
     while(1){
-        int choice;
-        cin>>choice;
-        if(choice<1 || choice>numberOfTargets) cout<<"Invalid input, try again.";
+        int choice_container_int;
+        string choice_container;
+        cin>>choice_container;
+        try{
+            choice_container_int=stoi(choice_container);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER"<<endl;
+            choice_container_int=0;
+        }
+        if(choice_container_int<1 || choice_container_int>numberOfTargets) cout<<"Invalid input, try again.";
         else{
             tmp=actors;
-            for(int i=1; i<choice; i++) tmp=tmp->next;
+            for(int i=1; i<choice_container_int; i++) tmp=tmp->next;
             return tmp->CPL;
         }
     }
@@ -439,7 +479,15 @@ void Hero::listEquipped() {
         cout<<choiceMax<<". Back"<<endl;
         while(1){
             int choice;
+            string choice_string;
             cin>>choice;
+            try{
+                choice=stoi(choice_string);
+            }
+            catch(...) {
+                cout<<"INVALID INPUT enter a NUMBER"<<endl;
+                choice=0;
+            }
             if(choice<1 || choice>choiceMax) cout<<"Invalid input, try again."<<endl;
             else if (choice == choiceMax) return;
             else {
@@ -468,7 +516,7 @@ void Hero::listSpellBook() {
     }
 }
 Item* Hero::listInventory(){
-    Item* ajtem=NULL;
+    Item* ajtem=nullptr;
     if(inventory.size() == 0) cout<<"Inventory empty."<<endl;
     else{
         cout<<"Inventory:"<<endl;
@@ -480,13 +528,21 @@ Item* Hero::listInventory(){
         }
         cout<<i<<". Back"<<endl;
         while(1){
-            int choice;
+            int choice_int;
+            string choice;
             cin>>choice;
-            if(choice<1 || choice>inventory.size()+1) cout<<"Invalid input, try again."<<endl;
-            else if (choice == inventory.size()+1) return NULL;
+            try{
+                choice_int=stoi(choice);
+            }
+            catch(...) {
+                cout<<"INVALID INPUT enter a NUMBER"<<endl;
+                choice_int=0;
+            }
+            if(choice_int<1 || choice_int>inventory.size()+1) cout<<"Invalid input, try again."<<endl;
+            else if (choice_int == inventory.size()+1) return NULL;
             else {
                 bool equipFlag = false;
-                char itemType = inventory[choice-1]->getItemType();
+                char itemType = inventory[choice_int-1]->getItemType();
                 if(itemType == 'w' || itemType == 'a'){
                     cout<<"0. Equip"<<endl;
                     equipFlag=true;
@@ -500,43 +556,51 @@ Item* Hero::listInventory(){
                 cout<<"3. Drop all"<<endl;
                 cout<<"4. Back"<<endl;
                 while(1){
-                    int itemManagementChoice;
+                    string itemManagementChoice;
+                    int itemManagementChoice_int;
                     cin>>itemManagementChoice;
+                    try{
+                        itemManagementChoice_int=stoi(itemManagementChoice);
+                    }
+                    catch(...) {
+                        cout<<"INVALID INPUT enter a NUMBER"<<endl;
+                        itemManagementChoice_int=-1;
+                    }
                     int tmp = (equipFlag? 0:1);
-                    if(itemManagementChoice<tmp || itemManagementChoice>4) cout<<"Invalid input, try again."<<endl;
+                    if(itemManagementChoice_int<tmp || itemManagementChoice_int>4) cout<<"Invalid input, try again."<<endl;
                     else {
-                        switch (itemManagementChoice) {
+                        switch (itemManagementChoice_int) {
                             case 0:
                                 if (itemType == 'w')
-                                    this->weapons.push_back(callConstuctor(inventory[choice-1]->getName()));
+                                    this->weapons.push_back(callConstuctor(inventory[choice_int-1]->getName()));
                                 else if(itemType == 'a')
-                                    armor=new Armor(inventory[choice-1]->getName());
+                                    armor=new Armor(inventory[choice_int-1]->getName());
                                 else
-                                    this->SE_Inflict(inventory[choice-1]->consumableEffectList,this);
+                                    this->SE_Inflict(inventory[choice_int-1]->consumableEffectList,this);
 
-                                inventory[choice-1]->setCount(inventory[choice-1]->getCount() - 1);
+                                inventory[choice_int-1]->setCount(inventory[choice_int-1]->getCount() - 1);
 
-                                if(inventory[choice-1]->getCount()==0){
-                                    delete inventory[choice-1];
-                                    this->inventory.erase(this->inventory.begin() + choice-1);
+                                if(inventory[choice_int-1]->getCount()==0){
+                                    delete inventory[choice_int-1];
+                                    this->inventory.erase(this->inventory.begin() + choice_int-1);
                                 }
                                 return NULL;
                             case 1:
-                                cout<<inventory[choice-1]->getDesc()<<endl;
+                                cout<<inventory[choice_int-1]->getDesc()<<endl;
                                 return NULL;
                             case 2:
-                                ajtem = new Item(inventory[choice-1]->getName());
+                                ajtem = new Item(inventory[choice_int-1]->getName());
 
-                                inventory[choice-1]->setCount(inventory[choice-1]->getCount() - 1);
-                                if(inventory[choice-1]->getCount()==0){
-                                    delete inventory[choice-1];
-                                    this->inventory.erase(this->inventory.begin() + choice-1);
+                                inventory[choice_int-1]->setCount(inventory[choice_int-1]->getCount() - 1);
+                                if(inventory[choice_int-1]->getCount()==0){
+                                    delete inventory[choice_int-1];
+                                    this->inventory.erase(this->inventory.begin() + choice_int-1);
                                 }
 
                                 return ajtem;
                             case 3:
-                                ajtem=inventory[choice-1];
-                                this->inventory.erase(this->inventory.begin() + choice-1);
+                                ajtem=inventory[choice_int-1];
+                                this->inventory.erase(this->inventory.begin() + choice_int-1);
                                 return ajtem;
                             case 4:
                                 return NULL;
@@ -982,14 +1046,22 @@ int Creature::StatusEffectMenu(Creature* c)
 
 void Creature::StatsMenu(Creature *c)
 {
-    int choice;
+    int choice_int;
+    string choice;
     cout<<c->toString()<<endl;
     cout<<"1. Back"<<endl;
     do{
 
         cin>>choice;
+        try{
+            choice_int=stoi(choice);
+        }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER "<<endl;
+            choice_int=0;
+        }
 
-    }while(choice!=1);
+    }while(choice_int!=1);
 
 }
 
