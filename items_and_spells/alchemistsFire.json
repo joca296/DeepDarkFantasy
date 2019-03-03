@@ -1,0 +1,13 @@
+{
+  "type": "w",
+  "name": "Alchemist's Fire",
+  "finesse": true,
+  "roll": 1,
+  "diceNumber": 6,
+  "statusEffectList": ["alchemistsFireDOT"],
+  "desc": "Alchemist's Fire",
+  "itemType": "w",
+  "rollType": "fire",
+  "addtlEffects": [
+  ]
+}

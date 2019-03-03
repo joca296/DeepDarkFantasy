@@ -1,0 +1,11 @@
+{
+  "Name" : "Alchemist's Fire",
+  "Value" : 3,
+  "DOT" : true,
+  "SavingThrowSkill" : "CON",
+  "SaveDC" : 0,
+  "Duration" : 3,
+  "Target" : "Enemy",
+  "Affects" : [],
+  "Description" : ""
+}

@@ -1,0 +1,13 @@
+{
+  "type": "w",
+  "name": "Rotting Touch",
+  "finesse": false,
+  "roll": 6,
+  "diceNumber": 1,
+  "statusEffectList": [],
+  "desc": "",
+  "itemType": "w",
+  "rollType": "necrotic",
+  "addtlEffects": [
+  ]
+}
