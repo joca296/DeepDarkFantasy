@@ -321,8 +321,9 @@ room* room::enterRoom(struct cList *partyHead)
                 printMap(rHead);
                 cout<<endl;
                 break;
-            case 5: cout<<"short rest WIP"<<endl;
-                    break;
+            case 5:
+                cout<<"short rest WIP"<<endl;
+                break;
             case 6:
                 //cout<<"EXIT WIP"<<endl;
                 eChoice=exit_room(partyHead->CPL);
@@ -429,8 +430,10 @@ void room::swapHero(struct cList* partyHead)
     struct cList* ptr=partyHead;
     while(ptr!=nullptr)
     {
-        cout<<counter<<". "<<ptr->CPL->getName();
-        if(partyHead->CPL==ptr->CPL) cout<<" (active) ";
+        cout<<counter<<". ";
+        if(partyHead->CPL==ptr->CPL)
+            colorPrint(ptr->CPL->getName()+" (active) ","ltBlue");
+        else cout<<ptr->CPL->getName();
         cout<<endl;
         counter++;
         ptr=ptr->next;
