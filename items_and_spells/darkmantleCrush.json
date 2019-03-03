@@ -1,0 +1,10 @@
+{
+  "type" : "w",
+  "statusEffectList":["crushingBlow"],
+  "name" : "Crush",
+  "finesse" : false,
+  "roll" : 6,
+  "diceNumber" : 1,
+  "rollType" : "bludgeon",
+  "addtlEffects" : []
+}

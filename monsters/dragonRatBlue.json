@@ -1,0 +1,21 @@
+{
+  "name" : "Dragon Rat (blue)",
+  "experience" : 100,
+  "hp" : 24,
+  "mana" : 12,
+  "ac" : 11,
+  "prof" : 2,
+  "str" : 2,
+  "dex" : 2,
+  "con" : 0,
+  "int" : -4,
+  "wis" : 0,
+  "cha" : -2,
+  "actionsPerRound" : 1,
+  "actionList" : ["dragonRatBite","lightningBreath"],
+  "actionWeight" : [75,25],
+  "inventory" : [],
+  "immunity" : [],
+  "resist" : ["lightning"],
+  "weakness" : []
+}

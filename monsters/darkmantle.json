@@ -1,0 +1,21 @@
+{
+  "name" : "Darkmantle",
+  "experience" : 100,
+  "hp" : 22,
+  "mana" : 8,
+  "ac" : 11,
+  "prof" : 2,
+  "str" : 3,
+  "dex" : 1,
+  "con" : 1,
+  "int" : -4,
+  "wis" : 0,
+  "cha" : -3,
+  "actionsPerRound" : 1,
+  "actionList" : ["darknessAura","darkmantleCrush"],
+  "actionWeight" : [50,50],
+  "inventory" : [],
+  "immunity" : [],
+  "resist" : [],
+  "weakness" : []
+}

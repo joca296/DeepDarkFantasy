@@ -1,10 +1,17 @@
 {
   "type" : "w",
   "statusEffectList":[],
-  "name" : "Claws",
+  "name" : "Bite",
   "finesse" : true,
   "roll" : 4,
   "diceNumber" : 1,
   "rollType" : "pierce",
-  "addtlEffects" : []
+  "addtlEffects" : 
+  [
+  {
+    "roll" : 6,
+    "diceNumber" : 1,
+    "rollType" : "fire"
+    }
+  ]
 }

@@ -1,0 +1,10 @@
+{
+  "type" : "w",
+  "statusEffectList":["acidDeathBurst","acidExplosion"],
+  "name" : "Headbutt",
+  "finesse" : false,
+  "roll" : 4,
+  "diceNumber" : 1,
+  "rollType" : "bludgeon",
+  "addtlEffects" : []
+}

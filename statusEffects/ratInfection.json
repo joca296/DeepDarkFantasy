@@ -1,0 +1,11 @@
+{
+	"Name" : "Rat Infection",
+	"Value" : -1,
+	"DOT" : false,
+	"SavingThrowSkill" : "CON",
+	"SaveDC" : 11,
+	"Duration" : 6,
+	"Target" : "Enemy",
+	"Affects" : ["DEX","STR"],
+	"Description" : "You were bitten by a rat and infected, you lose some dexterity and strength "
+}

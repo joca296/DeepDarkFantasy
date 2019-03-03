@@ -15,7 +15,7 @@
   "Arc_FAIL" : "You don't sense any specific magic",
   "maxRolls" : 3,
   "combatDesc" : "Boz pomoz",
-  "monsters" : [],
+  "monsters" : ["giantRat","giantRat","dragonRatBlue","explodeyRat","wererat"],
   "events" : ["AxeTrap"],
   "Shrines" : ["ShrineOfAzhorra"],
   "connectedRooms" : ["caveHallwayA"],

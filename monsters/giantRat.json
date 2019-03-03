@@ -1,0 +1,21 @@
+{
+  "name" : "Giant Rat",
+  "experience" : 25,
+  "hp" : 7,
+  "mana" : 0,
+  "ac" : 15,
+  "prof" : 2,
+  "str" : -2,
+  "dex" : 2,
+  "con" : 0,
+  "int" : -4,
+  "wis" : 0,
+  "cha" : -3,
+  "actionsPerRound" : 1,
+  "actionList" : ["giantRatBite"],
+  "actionWeight" : [100],
+  "inventory" : [],
+  "immunity" : [],
+  "resist" : [],
+  "weakness" : []
+}

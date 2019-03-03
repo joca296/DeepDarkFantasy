@@ -1,0 +1,11 @@
+{
+	"Name" : "Acid Death Burst",
+	"Value" : -10,
+	"DOT" : false,
+	"SavingThrowSkill" : "CON",
+	"SaveDC" : 0,
+	"Duration" : 1,
+	"Target" : "Self",
+	"Affects" : ["CurHP"],
+	"Description" : ""
+}

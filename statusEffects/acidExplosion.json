@@ -1,0 +1,11 @@
+{
+	"Name" : "Acid Explosion",
+	"Value" : -10,
+	"DOT" : false,
+	"SavingThrowSkill" : "DEX",
+	"SaveDC" : 11,
+	"Duration" : 1,
+	"Target" : "Enemy",
+	"Affects" : ["CurHP"],
+	"Description" : "Covered by flesh-eating acid"
+}

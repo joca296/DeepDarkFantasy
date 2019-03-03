@@ -1,0 +1,17 @@
+{
+  "type": "a",
+  "name": "Lightning Breath",
+  "spellCastMod": "wis",
+  "heal": false,
+  "spellCastModAddedToRoll": false,
+  "savingThrowFlag": true,
+  "savingThrowType": "dexAdv",
+  "savingThrowDC": 12,
+  "statusEffectList": [],
+  "roll": 6,
+  "diceNumber": 2,
+  "rollType": "lightning",
+  "numberOfTargets": 2,
+  "manaCost" : 6,
+  "addtlEffects": []
+}

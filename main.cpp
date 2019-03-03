@@ -19,7 +19,7 @@ using namespace std;
 
 int main(){
     srand(time(nullptr));
-    const int PARTY_SIZE = 3;
+    const int PARTY_SIZE = 1;
     struct cList* partyHead = createParty(PARTY_SIZE);
     room* r;
     r=new room("caveEntrance");

@@ -1,0 +1,11 @@
+{
+	"Name" : "Fervor",
+	"Value" : 1,
+	"DOT" : false,
+	"SavingThrowSkill" : "DEX",
+	"SaveDC" : 0,
+	"Duration" : 3,
+	"Target" : "Self",
+	"Affects" : ["attackAdv"],
+	"Description" : "Has advantage on attack rolls"
+}

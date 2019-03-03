@@ -1,0 +1,11 @@
+{
+	"Name" : "DarknessStalker",
+	"Value" : 7,
+	"DOT" : false,
+	"SavingThrowSkill" : "CON",
+	"SaveDC" : 0,
+	"Duration" : 4,
+	"Target" : "Self",
+	"Affects" : ["AC"],
+	"Description" : "Surrounded by magical darkness, very hard to hit, AC massively increased "
+}

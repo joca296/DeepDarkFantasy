@@ -1,7 +1,7 @@
 {
   "type" : "w",
-  "statusEffectList":[],
-  "name" : "Claws",
+  "statusEffectList":["ratFervor"],
+  "name" : "Bite",
   "finesse" : true,
   "roll" : 4,
   "diceNumber" : 1,

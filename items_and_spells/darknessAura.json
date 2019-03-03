@@ -1,0 +1,17 @@
+{
+  "type" : "s",
+  "name" : "Darkness",
+  "spellCastMod" : "",
+  "heal" : false,
+  "spellCastModAddedToRoll" : false,
+  "statusEffectOnly" :true
+  "savingThrowFlag" : false,
+  "savingThrowType" : "",
+  "savingThrowDC" : "",
+  "statusEffectList":["darknessStalker"],
+  "roll" : 0,
+  "diceNumber" : 0,
+  "rollType" : "",
+  "manaCost" : 8,
+  "addtlEffects" : []
+}
