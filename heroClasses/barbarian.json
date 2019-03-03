@@ -2,7 +2,7 @@
   "hitDice" : 12,
   "hp" : 5000,
   "mana" : 12,
-  "ac" : 4,
+  "ac" : 8,
   "prof" : 3,
   "str" : 3,
   "dex" : 3,

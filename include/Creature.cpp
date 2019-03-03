@@ -28,14 +28,14 @@ void Creature::setCurHP(int curHP) {
     Creature::curHP = curHP;
 }
 int Creature::getAc() const {
-    if(armor != NULL){
+    if(armor != nullptr){
         int result =0;
         result += armor->getAc();
         result += ( armor->getType()== 'h'? 0 : (armor->getType()== 'm'? (this->getDEX()>2 ? 2 : this->getDEX() ) : this->getDEX() ) );
         result += this->getTempAcGain();
         return result;
     }
-    else return ac+this->getTempAcGain();
+    else return ac+getDEX()+this->getTempAcGain();
 }
 void Creature::setAc(int ac) {
     Creature::ac = ac;
@@ -156,7 +156,7 @@ Creature::Creature(string name) {
         tempAcGain = 0;
 
         //setting armor
-        armor = NULL;
+        armor = nullptr;
 
         //setting inventory;
         const Value& c = document["inventory"];
@@ -265,7 +265,7 @@ Hero::Hero(string name, int level) : Creature(name) {
         }
 
         //setting armor
-        if(document["armor"].GetString() != "") armor = new Armor(document["armor"].GetString());
+        if(document["armor"].GetStringLength()>0) armor = new Armor(document["armor"].GetString());
 
         //setting level
         this->lvlUp(level);
@@ -789,20 +789,22 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
 
     //number of valid targets
     int validTargets;
-    if (tar->isHero() == 1) validTargets = monsterNum(actors);
-    else validTargets = heroNum(actors);
+    if (tar->isHero() == 1) validTargets = heroNum(actors);
+    else validTargets = monsterNum(actors);
 
     //choosing targets
-    for (int i=0; i<action->getNumberOfTargets()-1;i++){
-        while(validTargets>1){
-            Creature* tmp = getRandomListMember(actors,(this->isHero() == 1? 0:1));
-            if(!isInList(tmp,targets)){
-                targets=append_node(tmp,targets);
-                validTargets--;
-                break;
-            }
-        }
-    }
+     if(validTargets>1){
+         for (int i=0; i<action->getNumberOfTargets()-1;i++){
+             while(validTargets>1){
+                 Creature* tmp = getRandomListMember(actors,(this->isHero() == 1? 0:1));
+                 if(!isInList(tmp,targets)){
+                     targets=append_node(tmp,targets);
+                     validTargets--;
+                     break;
+                 }
+             }
+         }
+     }
 
     //removing mana
     this->setCurMana(this->getCurMana()-action->getManaCost());

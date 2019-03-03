@@ -13,7 +13,7 @@
   "cha" : -2,
   "actionsPerRound" : 1,
   "actionList" : ["dragonRatBite","lightningBreath"],
-  "actionWeight" : [75,25],
+  "actionWeight" : [0,100],
   "inventory" : [],
   "immunity" : [],
   "resist" : ["lightning"],
