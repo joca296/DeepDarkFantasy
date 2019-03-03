@@ -1204,12 +1204,25 @@ void Creature::lvlUp(int newLevel){
     for(int i=this->getLevel(); i<newLevel; i++){
         //setting new health
         int newHealth = this->getMaxHP();
-        newHealth += dRoll(this->getHitDice())+this->getCON();
+        int ignoreStatusEffects = 0;
+        for(int i=0; i<this->activeSE.size(); i++){
+            for(int j=0; j<this->activeSE[i]->affects.size(); j++)
+                if(this->activeSE[i]->affects[j] == "MaxHP" || this->activeSE[i]->affects[j] == "CON")
+                    ignoreStatusEffects += activeSE[i]->val;
+        }
+        newHealth += dRoll(this->getHitDice())+this->getCON()-ignoreStatusEffects;
         this->setMaxHP(newHealth);
         this->setCurHP(newHealth);
 
         //setting new mana
         int newMana = this->getMaxMana();
+        ignoreStatusEffects = 0;
+        for(int i=0; i<this->activeSE.size(); i++){
+            for(int j=0; j<this->activeSE[i]->affects.size(); j++)
+                if(this->activeSE[i]->affects[j] == "MaxMana")
+                    ignoreStatusEffects += activeSE[i]->val;
+        }
+        newMana -= ignoreStatusEffects;
         newMana *= 1.25;
         this->setMaxMana(newMana);
         this->setCurMana(newMana);
