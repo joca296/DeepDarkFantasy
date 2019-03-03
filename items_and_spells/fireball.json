@@ -1,5 +1,6 @@
 {
   "type": "a",
+  "statusEffectOnly" : false,
   "name": "fireball",
   "spellCastMod": "int",
   "heal": false,

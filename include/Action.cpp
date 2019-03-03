@@ -148,6 +148,7 @@ void Action::setRollType(const string &rollType) {
 
 Spell::Spell() {}
 Spell::Spell(const Document& action) : Action(action){
+    statusEffectOnly = action["statusEffectOnly"].GetBool();
     spellCastMod = action["spellCastMod"].GetString();
     spellCastModAddedToRoll = action["spellCastModAddedToRoll"].GetBool();
     heal = action["heal"].GetBool();
@@ -157,6 +158,14 @@ Spell::Spell(const Document& action) : Action(action){
         savingThrowType = action["savingThrowType"].GetString();
         savingThrowDC = action["savingThrowDC"].GetInt();
     }
+}
+
+bool Spell::isStatusEffectOnly() const {
+    return statusEffectOnly;
+}
+
+void Spell::setStatusEffectOnly(bool statusEffectOnly) {
+    Spell::statusEffectOnly = statusEffectOnly;
 }
 
 SpellAoE::SpellAoE() {}

@@ -4,7 +4,7 @@
   "spellCastMod" : "",
   "heal" : false,
   "spellCastModAddedToRoll" : false,
-  "statusEffectOnly" :true
+  "statusEffectOnly" :true,
   "savingThrowFlag" : false,
   "savingThrowType" : "",
   "savingThrowDC" : "",

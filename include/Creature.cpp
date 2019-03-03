@@ -225,6 +225,9 @@ Monster::Monster(string name, int level) : Creature(name) {
 
         //setting level
         this->lvlUp(level);
+
+        //setting monster armor
+        this->setAc(this->getAc()-this->getDEX());
     }
     else cout<<"monster file not open"<<endl;
     f.close();
@@ -690,37 +693,57 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     }
 }
 int Creature::execSpellAttackST(Spell *action, Creature* tar){
-    int atcRoll, bonus;
+    if(action->isStatusEffectOnly() == false){
+        int atcRoll, bonus;
 
-    //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
-    if(action->getType() == 's') this->setCurMana(this->getCurMana()-action->getManaCost());
+        //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
+        if(action->getType() == 's') this->setCurMana(this->getCurMana()-action->getManaCost());
 
-    //setting bonus
-    if (action->getSpellCastMod() == "int") bonus=this->getINT();
-    else if (action->getSpellCastMod() == "wis") bonus=this->getWIS();
-    else bonus=this->getCHA();
+        //setting bonus
+        if (action->getSpellCastMod() == "int") bonus=this->getINT();
+        else if (action->getSpellCastMod() == "wis") bonus=this->getWIS();
+        else bonus=this->getCHA();
 
-    //attack roll
-    bool critFlag = false;
-    atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),1);
-    if(atcRoll == 20) critFlag = true;
-    else atcRoll += bonus+this->getProf();
+        //attack roll
+        bool critFlag = false;
+        atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),1);
+        if(atcRoll == 20) critFlag = true;
+        else atcRoll += bonus+this->getProf();
 
-    //attack success
-    if(action->isSavingThrowFlag()? true : (critFlag || atcRoll >= tar->getAc())){
-        vector<string> dmgBreakdown;
+        //attack success
+        if(action->isSavingThrowFlag()? true : (critFlag || atcRoll >= tar->getAc())){
+            vector<string> dmgBreakdown;
 
-        int dmgTotal = tar->calcDamage(( action->isSpellCastModAddedToRoll()? bonus:0 ),action,dmgBreakdown);
-        if( action->isSavingThrowFlag() && critFlag ) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
-        if( action->isSavingThrowFlag() && tar->rollSave(action->getSavingThrowType()) >= action->getSavingThrowDC() ){
-            dmgTotal/=2;
-            dmgBreakdown.emplace_back("Succeded save (all damage halved)");
+            int dmgTotal = tar->calcDamage(( action->isSpellCastModAddedToRoll()? bonus:0 ),action,dmgBreakdown);
+            if( action->isSavingThrowFlag() && critFlag ) dmgTotal += tar->calcDamage(0,action,dmgBreakdown);
+            if( action->isSavingThrowFlag() && tar->rollSave(action->getSavingThrowType()) >= action->getSavingThrowDC() ){
+                dmgTotal/=2;
+                dmgBreakdown.emplace_back("Succeded save (all damage halved)");
+            }
+            tar->setCurHP(tar->getCurHP()-dmgTotal);
+
+            //print
+            printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
+
+            if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar);//(de)buff handling here
+            if(tar->getCurHP() <= 0){
+                cout<<tar->getName()<<" died."<<endl;
+                return 1; //something died
+            }
+            else
+            {
+
+                return 0; //something didn't die
+            }
         }
-        tar->setCurHP(tar->getCurHP()-dmgTotal);
 
-        //print
-        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
-
+            //attack failed
+        else {
+            cout<<this->getName()<<" missed."<<endl;
+            return 0;
+        }
+    }
+    else {
         if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar);//(de)buff handling here
         if(tar->getCurHP() <= 0){
             cout<<tar->getName()<<" died."<<endl;
@@ -731,12 +754,6 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
 
             return 0; //something didn't die
         }
-    }
-
-    //attack failed
-    else {
-        cout<<this->getName()<<" missed."<<endl;
-        return 0;
     }
 }
 int Creature::execHeal(struct cList* actors, Spell *action, Creature* tar) {

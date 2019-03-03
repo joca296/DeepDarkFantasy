@@ -1,5 +1,6 @@
 {
   "type" : "s",
+  "statusEffectOnly" : false,
   "name" : "cure_wounds",
   "spellCastMod" : "cha",
   "heal" : true,
