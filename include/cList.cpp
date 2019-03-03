@@ -200,16 +200,25 @@ struct cList* prune_cList(struct cList* head)
 struct cList* createParty(int n)
 {
 
-    int c=1,choice_container;
+    int c=1,choice_container_int=0;
+    string choice_container;
     Creature *cptr;
     struct cList* partyHead=nullptr;
     while(c!=n+1) {
+
         cout<<"Choose a class for party member "<<c<<endl<<endl;
 
         cout<<"1. Barbarian"<<endl;
 
         cin>>choice_container;
-        switch(choice_container) {
+        try{
+            choice_container_int=stoi(choice_container);
+        }
+        catch(...) {
+                  cout<<"INVALID INPUT enter a NUMBER of the class you wish to choose"<<endl;
+        }
+
+        switch(choice_container_int) {
             case 1: {
                 cptr = new Hero("barbarian");
                 partyHead = append_node(cptr,partyHead);

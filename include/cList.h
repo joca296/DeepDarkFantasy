@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Creature.h"
+#include <stdexcept>
 
 using namespace std;
 
