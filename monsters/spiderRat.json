@@ -1,0 +1,21 @@
+{
+  "name": "Spider Rat",
+  "experience": 100,
+  "hp": 22,
+  "mana": 10,
+  "ac": 13,
+  "prof": 2,
+  "str": 1,
+  "dex": 3,
+  "con": 2,
+  "int": -4,
+  "wis": 1,
+  "cha": -3,
+  "actionsPerRound": 1,
+  "actionList": ["srBite"],
+  "actionWeight": [100],
+  "inventory": [],
+  "immunity": [],
+  "resist": [],
+  "weakness": []
+}

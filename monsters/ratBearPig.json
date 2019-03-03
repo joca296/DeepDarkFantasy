@@ -1,0 +1,21 @@
+{
+  "name": "Rat-Bear-Pig",
+  "experience": 200,
+  "hp": 51,
+  "mana": 10,
+  "ac": 11,
+  "prof": 1,
+  "str": 4,
+  "dex": 0,
+  "con": 3,
+  "int": -4,
+  "wis": 1,
+  "cha": -2,
+  "actionsPerRound": 2,
+  "actionList": ["rbpTusk","rbpClaw"],
+  "actionWeight": [50,50],
+  "inventory": [],
+  "immunity": [],
+  "resist": [],
+  "weakness": []
+}

@@ -1,0 +1,18 @@
+{
+  "type": "w",
+  "name": "Bite",
+  "finesse": false,
+  "roll": 8,
+  "diceNumber": 1,
+  "statusEffectList": [],
+  "desc": "",
+  "itemType": "w",
+  "rollType": "pierce",
+  "addtlEffects": [
+    {
+      "roll" : 8,
+      "diceNumber" : 1,
+      "rollType" : "acid"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "",
+  "experience":,
+  "hp":,
+  "mana":,
+  "ac":,
+  "prof":,
+  "str":,
+  "dex":,
+  "con":,
+  "int": -,
+  "wis":,
+  "cha":,
+  "actionsPerRound": 1,
+  "actionList": [],
+  "actionWeight": [],
+  "inventory": [],
+  "immunity": [],
+  "resist": [],
+  "weakness": []
+}

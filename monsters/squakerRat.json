@@ -1,0 +1,21 @@
+{
+  "name": "Squaker Rat",
+  "experience": 50,
+  "hp": 15,
+  "mana": 20,
+  "ac": 13,
+  "prof": 2,
+  "str": -2,
+  "dex": 3,
+  "con": 0,
+  "int": -4,
+  "wis": 0,
+  "cha": -3,
+  "actionsPerRound": 1,
+  "actionList": ["bigSqueak","squeakerBite"],
+  "actionWeight": [],
+  "inventory": [],
+  "immunity": [],
+  "resist": [],
+  "weakness": []
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Skeleton",
+  "experience": 50,
+  "hp": 13,
+  "mana": 10,
+  "ac": 13,
+  "prof": 2,
+  "str": 0,
+  "dex": 2,
+  "con": 2,
+  "int": -2,
+  "wis": -1,
+  "cha": -3,
+  "actionsPerRound": 1,
+  "actionList": ["shortsword","shortbow"],
+  "actionWeight": [50,50],
+  "inventory": [],
+  "immunity": [],
+  "resist": [],
+  "weakness": []
+}

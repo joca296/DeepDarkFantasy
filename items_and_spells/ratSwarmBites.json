@@ -1,0 +1,13 @@
+{
+  "type": "w",
+  "name": "Bites",
+  "finesse": true,
+  "roll": 6,
+  "diceNumber": 2,
+  "statusEffectList": [],
+  "desc": "",
+  "itemType": "w",
+  "rollType": "pierce",
+  "addtlEffects": [
+  ]
+}

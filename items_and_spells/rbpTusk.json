@@ -1,0 +1,13 @@
+{
+  "type": "w",
+  "name": "Tusk",
+  "finesse": false,
+  "roll":8,
+  "diceNumber":1,
+  "statusEffectList": [],
+  "desc": "",
+  "itemType": "w",
+  "rollType": "",
+  "addtlEffects": [
+  ]
+}

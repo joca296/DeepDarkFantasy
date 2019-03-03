@@ -6,7 +6,7 @@
   "diceNumber" : 1,
   "desc" : "",
   "itemType" : "w",
-  "rollType" : "pierce",
+  "rollType" : "slash",
   "statusEffectList":[],
   "addtlEffects" : []
 }

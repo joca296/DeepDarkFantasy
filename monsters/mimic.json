@@ -1,0 +1,21 @@
+{
+  "name": "Mimic",
+  "experience": 450,
+  "hp": 58,
+  "mana": 10,
+  "ac": 14,
+  "prof": 2,
+  "str": 3,
+  "dex": 1,
+  "con": 2,
+  "int": -3,
+  "wis": 1,
+  "cha": -1,
+  "actionsPerRound": 1,
+  "actionList": ["mimicPseoudoPod","mimicBite"],
+  "actionWeight": [60,40],
+  "inventory": [],
+  "immunity": ["acid"],
+  "resist": [],
+  "weakness": []
+}

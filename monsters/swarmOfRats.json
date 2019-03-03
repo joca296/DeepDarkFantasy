@@ -1,0 +1,21 @@
+{
+  "name": "Swarm of Rats",
+  "experience": 50,
+  "hp": 24,
+  "mana": 10,
+  "ac": 13,
+  "prof": 2,
+  "str": -1,
+  "dex": 0,
+  "con": -1,
+  "int": -4,
+  "wis": 0,
+  "cha": -4,
+  "actionsPerRound": 1,
+  "actionList": ["ratSwarmBites"],
+  "actionWeight": [100],
+  "inventory": [],
+  "immunity": [],
+  "resist": ["pierce","bludgeon","slash"],
+  "weakness": []
+}

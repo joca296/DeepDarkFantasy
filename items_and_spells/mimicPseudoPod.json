@@ -1,0 +1,13 @@
+{
+  "type": "w",
+  "name": "Pseudopod",
+  "finesse": false,
+  "roll": 8,
+  "diceNumber": 1,
+  "statusEffectList": [],
+  "desc": "",
+  "itemType": "w",
+  "rollType": "pierce",
+  "addtlEffects": [
+  ]
+}

@@ -1207,10 +1207,11 @@ void Creature::lvlUp(int newLevel){
         int ignoreStatusEffects = 0;
         for(int i=0; i<this->activeSE.size(); i++){
             for(int j=0; j<this->activeSE[i]->affects.size(); j++)
-                if(this->activeSE[i]->affects[j] == "MaxHP" || this->activeSE[i]->affects[j] == "CON")
+                if(this->activeSE[i]->affects[j] == "CON")
                     ignoreStatusEffects += activeSE[i]->val;
         }
-        newHealth += dRoll(this->getHitDice())+this->getCON()-ignoreStatusEffects;
+        int x= dRoll(this->getHitDice())+this->getCON()-ignoreStatusEffects;
+        newHealth += x<1? 1:x;
         this->setMaxHP(newHealth);
         this->setCurHP(newHealth);
 
@@ -1225,6 +1226,7 @@ void Creature::lvlUp(int newLevel){
         newMana -= ignoreStatusEffects;
         newMana *= 1.25;
         this->setMaxMana(newMana);
+        this->setMaxMana(this->getMaxMana()+ignoreStatusEffects);
         this->setCurMana(newMana);
 
         //every even level add +1 to prof
