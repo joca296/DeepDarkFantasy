@@ -1,0 +1,12 @@
+{
+  "type" : "w",
+  "name" : "Necrotic Pulse",
+  "finesse" : true,
+  "roll" : 6,
+  "diceNumber" : 2,
+  "desc" : "placeholder",
+  "itemType" : "w",
+  "rollType" : "necrotic",
+  "statusEffectList":["wisdomDrain"],
+  "addtlEffects" : []
+}

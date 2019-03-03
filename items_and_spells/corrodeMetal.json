@@ -1,0 +1,19 @@
+{
+  "type" : "w",
+  "name" : "Corrode Metal",
+  "finesse" : false,
+  "roll" : 6,
+  "diceNumber" : 1,
+  "desc" : "placeholder",
+  "itemType" : "w",
+  "rollType" : "bludgeon",
+  "statusEffectList":["corroded"],
+  "addtlEffects" :
+  [
+    {
+    "roll" : 6,
+    "diceNumber" : 2,
+    "rollType" : "acid"
+    }
+  ]
+}

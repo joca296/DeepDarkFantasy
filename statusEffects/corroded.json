@@ -1,0 +1,11 @@
+{
+	"Name" : "Corroded",
+	"Value" : -1,
+	"DOT" : false,
+	"SavingThrowSkill" : "STR",
+	"SaveDC" : 0,
+	"Duration" : 30,
+	"Target" : "Enemy",
+	"Affects" : ["STR","DEX"],
+	"Description" : "Affected by corrosion, temporarely reduced strength of weapones and armor "
+}

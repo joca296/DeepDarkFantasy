@@ -109,7 +109,7 @@ public:
     int SE_Inflict(vector <shared_ptr<statusEffect>> SEV,Creature* trg);
     int SE_Inflict(shared_ptr<statusEffect> ptr,Creature* trg); //overloaded for single SE
     int rollSave(string atr);
-    void CTurnTick(int ticks=1);
+    void CTurnTick(int ticks=1,bool overrideTimer = false);
     int calcDamage(int bonus, Action* action, vector<string> &dmgBreakdown);
     int StatusEffectMenu(Creature* c);
     void StatsMenu(Creature *c);

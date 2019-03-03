@@ -949,7 +949,7 @@ int Creature::SE_Inflict(shared_ptr<statusEffect> ptr,Creature* trg)    //overlo
 
 }
 
-void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle debuffs etc.
+void Creature::CTurnTick(int ticks,bool overrideTimer) {       //turn ticks of a creature to handle debuffs etc.
 
     while (ticks >= 1 && activeSE.size() != 0 && SEcounter.size() != 0) {                               //while the creature is debuffed
         if (activeSE.size() != SEcounter.size())
@@ -963,7 +963,7 @@ void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle
             for (int i = 0; i < SEcounter.size(); i++)
                 SEcounter[i]--;                         //Decrementing duration counters for all (de)buffs at beginning of the creatures turn
 
-            if (activeSE[i]->DOTflag == true) { //if status effect is a dot
+            if (activeSE[i]->DOTflag == true && overrideTimer==false) { //if status effect is a dot
 
                 setCurHP(getCurHP() + activeSE[i]->val);    //dot effect
                 if (activeSE[i]->val > 0)
@@ -974,7 +974,7 @@ void Creature::CTurnTick(int ticks) {       //turn ticks of a creature to handle
                 if (getCurHP() > getMaxHP()) setCurHP(getMaxHP()); //stops current hp from overflowing
             }
 
-            if (SEcounter[i]<1) {                                       //if counter to the corresponding status effect is less than 1 reverse the affected attributes and end the (de)buff
+            if (SEcounter[i]<1 ||overrideTimer==true) {                                       //if counter to the corresponding status effect is less than 1 reverse the affected attributes and end the (de)buff
                 for (int j = 0;j < activeSE[i]->affects.size(); j++) {  //iterates over all the attributes a single effect changed
 
                     string s = activeSE[i]->affects[j];                                                      // set s equal to the string of the j-th attribute in the i-th status effect that needs to be reversed (readability purposes)

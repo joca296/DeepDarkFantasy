@@ -1,0 +1,21 @@
+{
+  "name" : "Fresco Spirit",
+  "experience" : 100,
+  "hp" : 16,
+  "mana" : 0,
+  "ac" : 12,
+  "prof" : 2,
+  "str" : -2,
+  "dex" : 2,
+  "con" : 1,
+  "int" : -2,
+  "wis" : 0,
+  "cha" : -1,
+  "actionsPerRound" : 1,
+  "actionList" : ["necroPulse"],
+  "actionWeight" : [100],
+  "inventory" : [],
+  "immunity" : ["necrotic","poison"],
+  "resist" : ["bludgeon","pierce","slash"],
+  "weakness" : []
+}

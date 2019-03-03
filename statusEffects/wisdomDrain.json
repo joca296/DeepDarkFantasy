@@ -1,0 +1,11 @@
+{
+	"Name" : "Wisdom Drain",
+	"Value" : -1,
+	"DOT" : false,
+	"SavingThrowSkill" : "WIS",
+	"SaveDC" : 0,
+	"Duration" : 300,
+	"Target" : "Enemy",
+	"Affects" : ["WIS"],
+	"Description" : "Necrotic power corrupts yout thoughts, your wisdom is drained untill you rest "
+}

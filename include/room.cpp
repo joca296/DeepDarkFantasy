@@ -2,6 +2,7 @@
 #include "combat.h"
 #include "cList.h"
 
+
 void room::set_room_desc(string s)
     {
         room_desc=s;
@@ -322,7 +323,7 @@ room* room::enterRoom(struct cList *partyHead)
                 cout<<endl;
                 break;
             case 5:
-                cout<<"short rest WIP"<<endl;
+                short_rest(partyHead);
                 break;
             case 6:
                 //cout<<"EXIT WIP"<<endl;
@@ -831,3 +832,27 @@ void partyTurnTick(struct cList* partyHead,int n)
     }
 }
 
+int room::getShortRestsAllowed()
+{
+    return short_rests_allowed;
+}
+void room::decrementShortRestsAllowed()
+{
+    short_rests_allowed--;
+}
+
+int room::short_rests_allowed=1;
+
+void room::short_rest(struct cList* partyHead)
+{
+ if(getShortRestsAllowed()>0){
+     decrementShortRestsAllowed();
+    while(partyHead!=NULL)
+    {
+        partyHead->CPL->CTurnTick(1,true);
+        partyHead->CPL->setCurHP(partyHead->CPL->getCurHP()+(partyHead->CPL->getLevel()*partyHead->CPL->getHitDice()));
+        partyHead=partyHead->next;
+    }
+ }
+ else cout<<"No more time for this now"<<endl;
+}

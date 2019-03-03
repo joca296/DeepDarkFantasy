@@ -33,6 +33,7 @@ private:
     int numberOfConnections,numberOfMonsters,numberOfTraps;
     string Perception_SUCC_text, Investigation_SUCC_text, Survival_SUCC_text, Arcana_SUCC_text, Perception_FAIL_text, Investigation_FAIL_text, Survival_FAIL_text, Arcana_FAIL_text;
     string room_name,room_desc,combat_desc,room_name_ui;
+    static int short_rests_allowed;
 
 
 private:
@@ -100,7 +101,11 @@ public:
     void swapHero(struct cList* partyHead);
     void basic_checks_text();
     void activateTrap(event* e,Creature *p);
+    void short_rest(struct cList* partyHead);
     string exit_room(Creature *p);
+
+   int getShortRestsAllowed();
+   void decrementShortRestsAllowed();
 
     room(string name);
 };
