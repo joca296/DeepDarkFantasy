@@ -2,8 +2,6 @@
 #include "include/Creature.h"
 #include "include/cList.h"
 #include "include/room.h"
-#include <windows.h>
-
 
 //cross-platform support
 #ifdef __linux__

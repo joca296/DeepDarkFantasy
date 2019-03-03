@@ -442,7 +442,11 @@ Creature* Hero::chooseTarget(struct cList* actors){
     cout<<"Choose your target (sorted by initiative) "<<endl;
     while(tmp!=NULL){
         numberOfTargets++;
-        cout<<numberOfTargets<<". "<<tmp->CPL->getName()<<" "<<tmp->CPL->getCurHP()<<"/"<<tmp->CPL->getMaxHP()<<" HP"<<endl;
+        const string output = tmp->CPL->getName()+" "+to_string(tmp->CPL->getCurHP())+"/"+to_string(tmp->CPL->getMaxHP())+" HP";
+        cout<<numberOfTargets<<". ";
+        if (this == tmp->CPL) colorPrint(output,"ltBlue");
+        else cout<<output;
+        cout<<endl;
         tmp=tmp->next;
     }
     while(1){
@@ -665,7 +669,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
         tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print
-        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
+        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
 
         if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar); //(de)buff handling here
         if(tar->getCurHP() <= 0){
@@ -715,7 +719,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
         tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print
-        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag);
+        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
 
         if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar);//(de)buff handling here
         if(tar->getCurHP() <= 0){
@@ -772,7 +776,10 @@ int Creature::execHeal(struct cList* actors, Spell *action, Creature* tar) {
     tar->setCurHP( tar->getCurHP()+healRoll > tar->getMaxHP()? tar->getMaxHP() : tar->getCurHP()+healRoll );
 
     //print
-    cout<<this->getName()<<" healed "<<tar->getName()<<" for "<<healRoll<<" with "<<action->getName()<<"."<<endl;
+    colorPrint(this->getName(),this->isHero());
+    cout<<" healed ";
+    colorPrint(tar->getName(),tar->isHero());
+    cout<<" for "<<healRoll<<" with "<<action->getName()<<"."<<endl;
     if(action->actionStatusEffect.size()>0) SE_Inflict(action->actionStatusEffect,tar);
     return 0;
 }
@@ -850,10 +857,16 @@ int Creature::SE_Inflict(vector <shared_ptr<statusEffect>> SEV,Creature* trg)   
             if(SEV[i]->saveDC<1 ||  SEV[i]->saveDC>target->rollSave(SEV[i]->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
             {
                 if(SEV[i]->target=="Self"){ //Slightly different output text if target is self
-                    cout << this->getName() << " gets inflicted by " << SEV[i]->name << endl;
+                    colorPrint(this->getName(),this->isHero());
+                    cout <<" gets inflicted by " << SEV[i]->name << endl;
                 }
-                else
-                    cout << this->getName() << " inflicted " << SEV[i]->name << " on "<< target->getName() << endl;
+                else{
+                    colorPrint(this->getName(),this->isHero());
+                    cout << " inflicted " << SEV[i]->name << " on "<< target->getName();
+                    colorPrint(target->getName(),target->isHero());
+                    cout << endl;
+                }
+
 
 
                 target->activeSE.push_back(SEV[i]); //Inserts the effect into the targets vector for holding status effects
@@ -893,11 +906,15 @@ int Creature::SE_Inflict(shared_ptr<statusEffect> ptr,Creature* trg)    //overlo
             if(ptr->saveDC<1 ||  ptr->saveDC>target->rollSave(ptr->saving_throw_skill)) //Saving throw for the effect, assumes the effect auto-passes if SaveDC is 0 or less
             {
                 if(ptr->target=="Self"){ //Slightly different output text if target is self
-                    cout << this->getName() << " gets inflicted by " << ptr->name << endl;
+                    colorPrint(this->getName(),this->isHero());
+                    cout << " gets inflicted by " << ptr->name << endl;
                 }
-                else
-                    cout << this->getName() << " inflicted " << ptr->name << " on "<< target->getName() << endl;
-
+                else{
+                    colorPrint(this->getName(),this->isHero());
+                    cout << " inflicted " << ptr->name << " on ";
+                    colorPrint(target->getName(),target->isHero());
+                    cout << endl;
+                }
 
                 target->activeSE.push_back(ptr); //Inserts the effect into the targets vector for holding status effects
                 target->SEcounter.push_back(ptr->duration); //Sets a counter parallel(same i) to the effect in another vector that counts down the duration later on to determine when the (de)buff should end

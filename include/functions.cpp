@@ -76,8 +76,13 @@ Document parseFromFile(ifstream *f){
     return document;
 }
 
-void printDamage(const string& actorName,const string& targetName,const string& actionName, int& dmgTotal,const vector<string>& dmgBreakdown, bool critFlag){
-    cout<<actorName<<" hit "<<targetName<<" for "<<dmgTotal<<" damage with ";
+void printDamage(const string& actorName,const string& targetName,const string& actionName, int& dmgTotal,const vector<string>& dmgBreakdown, bool critFlag, int actorHero, int targetHero){
+    //setting colors for hero or monster names
+    colorPrint(actorName,actorHero);
+    cout<<" hit ";
+    colorPrint(targetName,targetHero);
+    cout<<" for "<<dmgTotal<<" damage with ";
+
     if(actionName[0]=='a') cout<<"an ";
     else cout<<"a ";
     cout<<actionName<<".";
@@ -92,4 +97,43 @@ void printDamage(const string& actorName,const string& targetName,const string& 
         else
             cout<<", ";
     }
+}
+
+void colorPrint(const string& output,const  string& color) {
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    int col;
+
+    if(color=="blue") col=9;
+    else if(color=="green") col=10;
+    else if(color=="ltBlue") col=11;
+    else if(color=="red") col=12;
+    else if(color=="pink") col=13;
+    else if(color=="yellow") col=14;
+    else if(color=="white") col=7;
+
+    FlushConsoleInputBuffer(hConsole);
+    SetConsoleTextAttribute(hConsole, col);
+
+    cout<<output;
+
+    SetConsoleTextAttribute(hConsole, 7); //set back to black background and white text
+}
+
+void colorPrint(const string& output,int hero){
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    int col;
+
+    if(hero==1) col=10;
+    else col=12;
+
+    FlushConsoleInputBuffer(hConsole);
+    SetConsoleTextAttribute(hConsole, col);
+
+    cout<<output;
+
+    SetConsoleTextAttribute(hConsole, 7); //set back to black background and white text
 }
