@@ -226,10 +226,12 @@ struct cList* createParty(int n)
                 break;
             }
 
-            default:
+            default: {
                 cout << "Invalid input, try again" << endl;
-        }
 
+            }
+        }
+        choice_container_int=0;    
     }
     return partyHead;
 }
