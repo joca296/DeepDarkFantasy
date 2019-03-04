@@ -1,0 +1,21 @@
+{
+  "name" : "Laser Rat",
+  "experience" : 100,
+  "hp" : 27,
+  "mana" : 12,
+  "ac" : 14,
+  "prof" : 2,
+  "str" : -2,
+  "dex" : 2,
+  "con" : 1,
+  "int" : -4,
+  "wis" : 0,
+  "cha" : -3,
+  "actionsPerRound" : 1,
+  "actionList" : ["woundingRay","cripplingRay"],
+  "actionWeight" : [75,25],
+  "inventory" : [],
+  "immunity" : [],
+  "resist" : [],
+  "weakness" : []
+}

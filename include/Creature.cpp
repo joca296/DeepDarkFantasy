@@ -874,7 +874,7 @@ int Creature::SE_Inflict(vector <shared_ptr<statusEffect>> SEV,Creature* trg)   
                 }
                 else{
                     colorPrint(this->getName(),this->isHero());
-                    cout << " inflicted " << SEV[i]->name << " on "<< target->getName();
+                    cout << " inflicted "<<SEV[i]->name << " on ";
                     colorPrint(target->getName(),target->isHero());
                     cout << endl;
                 }
@@ -955,12 +955,10 @@ void Creature::CTurnTick(int ticks,bool overrideTimer) {       //turn ticks of a
         if (activeSE.size() != SEcounter.size())
             cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
 
-        for (int i = 0; i < SEcounter.size(); i++) {
-
             if (activeSE.size() != SEcounter.size())
                 cout << "FATAL ERROR RELATED TO (DE)BUFFS IN " << this->getName() << " activeSE != SEcounter" << endl;
 
-            for (int i = 0; i < SEcounter.size(); i++)
+            for (int i = 0; i < SEcounter.size(); i++){
                 SEcounter[i]--;                         //Decrementing duration counters for all (de)buffs at beginning of the creatures turn
 
             if (activeSE[i]->DOTflag == true && overrideTimer==false) { //if status effect is a dot

@@ -1,0 +1,17 @@
+{
+  "type" : "s",
+  "name" : "Crippling Ray",
+  "spellCastMod" : "",
+  "heal" : false,
+  "spellCastModAddedToRoll" : false,
+  "statusEffectOnly" :true,
+  "savingThrowFlag" : false,
+  "savingThrowType" : "",
+  "savingThrowDC" : "",
+  "statusEffectList":["cripple"],
+  "roll" : 0,
+  "diceNumber" : 0,
+  "rollType" : "",
+  "manaCost" : 4,
+  "addtlEffects" : []
+}

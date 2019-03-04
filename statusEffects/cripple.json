@@ -1,0 +1,11 @@
+{
+	"Name" : "Cripple",
+	"Value" : -2,
+	"DOT" : false,
+	"SavingThrowSkill" : "WIS",
+	"SaveDC" : 12,
+	"Duration" : 2,
+	"Target" : "Enemy",
+	"Affects" : ["globalAdv","AC"],
+	"Description" : "You find it very hard to do move your body, you are heavily disadvantaged in fighting and evading enemies and their effects"
+}

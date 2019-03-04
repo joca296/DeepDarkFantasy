@@ -849,8 +849,8 @@ void room::short_rest(struct cList* partyHead)
      decrementShortRestsAllowed();
     while(partyHead!=NULL)
     {
-        partyHead->CPL->CTurnTick(1,true);
         partyHead->CPL->setCurHP(partyHead->CPL->getCurHP()+(partyHead->CPL->getLevel()*partyHead->CPL->getHitDice()));
+        partyHead->CPL->CTurnTick(1,true);
         partyHead=partyHead->next;
     }
  }
