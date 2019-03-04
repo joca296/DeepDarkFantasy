@@ -21,5 +21,6 @@
   "connectedRooms" : ["caveEntrance"],
   "connectedRoomsUI": ["Cave Entrance"],
   "GroundItems" : [],
-  "HiddenItems" : []
+  "HiddenItems" : [],
+  "SecretRooms" : []
 }

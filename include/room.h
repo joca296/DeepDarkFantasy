@@ -9,7 +9,7 @@
 #include "event.h"
 
 
-#define MAX_ROOM_MONSTERS 10
+#define MAX_ROOM_MONSTERS 20
 #define MAX_CONNECTED_ROOMS 8
 #define MAX_ROOM_TRAPS 5
 
@@ -23,6 +23,10 @@
 
 using namespace std;
 
+struct secretRoom {
+    int DC;
+    string Skill,jName,UIname,check_succ_text;
+};
 
 class room
 {
@@ -40,6 +44,8 @@ private:
     string room_monsters[MAX_ROOM_MONSTERS];
     bool roomEnteredFlag=false;
 public:
+
+    vector<shared_ptr<secretRoom>> room_hidden_room;
     vector<Item*> groundItems;
     vector <shared_ptr<event>> room_shrine;
     vector <hiddenItem*> room_hidden_items;

@@ -15,11 +15,21 @@
   "Arc_FAIL" : "You don't sense any specific magic",
   "maxRolls" : 3,
   "combatDesc" : "Boz pomoz",
-  "monsters" : ["giantRat","dragonRatBlue","explodeyRat","wererat","grayOoze","laserRat","frescoSpirit"],
+  "monsters" : [],
   "events" : ["AxeTrap"],
   "Shrines" : ["ShrineOfAzhorra"],
-  "connectedRooms" : ["caveHallwayA"],
-  "connectedRoomsUI": ["Cave Hallway"],
+  "connectedRooms" : [],
+  "connectedRoomsUI": [],
   "GroundItems" : ["dagger"],
-  "HiddenItems": ["hiddenGreataxe"]
+  "HiddenItems": ["hiddenGreataxe"],
+  "SecretRooms" :
+  [
+    {
+      "DC": 4,
+      "Skill": "Arcana",
+      "jName" : "caveHallwayA",
+      "UIname" : "Cave Hallway",
+      "succText": "You find a secret Room"
+    }
+  ]
 }

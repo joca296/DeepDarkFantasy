@@ -262,7 +262,18 @@ room::room(string name) //constructor
             ptr2=new hiddenItem(g[i].GetString());
             this->room_hidden_items.push_back(ptr2);
         }
+        const Value& h = document["SecretRooms"];
+        for(SizeType i=0; i<h.Size(); i++){
+            shared_ptr<secretRoom> ptr = make_shared<secretRoom>();
+            ptr->DC = h[i]["DC"].GetInt();
+            ptr->Skill = h[i]["Skill"].GetString();
+            ptr->jName = h[i]["jName"].GetString();
+            ptr->UIname = h[i]["UIname"].GetString();
+            ptr->check_succ_text = h[i]["succText"].GetString();
+            room_hidden_room.push_back(ptr);
+        }
     }
+
 
     else cout<<"room file not open"<<endl;
     f.close();
@@ -548,6 +559,24 @@ int room::basic_checks(Creature *p)
             }
         }
     }
+
+    for(int i=0; i<room_hidden_room.size(); i++)                                               //Hidden rooms handling
+    {
+        if(room_hidden_room.at(i)->Skill==s && roll_container>=room_hidden_room.at(i)->DC) {
+            cout<<room_hidden_room.at(i)->check_succ_text<<endl; //print text that a room is found
+            room_next[getNumberOfConnections()]=room_hidden_room.at(i)->jName;  //set json name of the secret room
+            //cout<<"room_next["<<getNumberOfConnections()<<"] = "<<room_hidden_room.at(i)->jName<<endl;
+            room_next_ui[getNumberOfConnections()]=room_hidden_room.at(i)->UIname;  //set ui name of the secret room
+            setNumberOfConnections(getNumberOfConnections()+1);
+            //cout<<"number of connections: "<<getNumberOfConnections()<<endl;
+            room_hidden_room.erase(room_hidden_room.begin()+i);
+            isSomethingFound=true;
+
+
+
+
+        }
+    }
     if(getSUCCbyString(s)!="" && roll_container>=this->getDCbyString(s))
     {
         cout<<getSUCCbyString(s)<<endl;
@@ -594,8 +623,9 @@ string room::exit_room(Creature *p)
     {
         cout<<i+1<<". "<<this->room_next_ui[i];if(findRoom(rHead,room_next[i])!=NULL)cout<<" (visited)";
         cout<<endl;
-        j=i+2;
+        j++;
     }
+    j++;
     cout<<j<<". Back "<<endl;
     cin>>cContainer_string;
         try{
