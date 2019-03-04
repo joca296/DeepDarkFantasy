@@ -1,0 +1,30 @@
+{
+  "name" : "breedingChamber",
+  "UIname": "Breeding Chamber",
+  "DC_Perception" : -1,
+  "DC_Investigation" : -1,
+  "DC_Survival" : -1,
+  "DC_Arcana" : -1,
+  "Perc_SUCC" : "",
+  "Invest_SUCC" : "",
+  "Surv_SUCC" : "",
+  "Arc_SUCC" : "",
+  "Perc_FAIL" : "You don't see anything of value",
+  "Invest_FAIL" : "You don't find anything helpful",
+  "Surv_FAIL" : "No use for this right now",
+  "Arc_FAIL" : "You don't sense any specific magic",
+  "maxRolls" : 3,
+  "combatDesc" : "As you enter a room filled with cages you are spotted by 2 monstrosities and a small white rat commanding them, he squeaks orders and they charge towards you",
+  "roomDesc" : "Rows of long wood tables hog most of the space in this filthy room. \n Dozens of metal cages sit atop the tables, most containing rats of \nall shapes and sizes. The air is filled with the sound of chittering \nand the foul smell of rat droppings.",
+  "monsters" : ["ratBearPig","ratBearPig","nibbles"],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : [],
+  "connectedRoomsUI": [],
+  "GroundItems" : ["alchemistsFire"],
+  "HiddenItems": [],
+  "SecretRooms" :
+  [
+    
+  ]
+}

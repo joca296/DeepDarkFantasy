@@ -1,0 +1,30 @@
+{
+  "name" : "laboratory",
+  "UIname": "Laboratory",
+  "DC_Perception" : -1,
+  "DC_Investigation" : -1,
+  "DC_Survival" : -1,
+  "DC_Arcana" : -1,
+  "Perc_SUCC" : "",
+  "Invest_SUCC" : "",
+  "Surv_SUCC" : "",
+  "Arc_SUCC" : "",
+  "Perc_FAIL" : "You don't see anything of value",
+  "Invest_FAIL" : "You don't find anything helpful",
+  "Surv_FAIL" : "No use for this right now",
+  "Arc_FAIL" : "You don't sense any specific magic",
+  "maxRolls" : 3,
+  "combatDesc" : "A high-strung elf in a long white coat impatiently strides from table to table, his head jerking quickly to examine the bubbling liquids as he twitches his nose while sniffing their contents. His hands busily work a mortar and pestle, the awkward jerking movements spilling half its contents on the floor. “Intruders!” the elf yells in a high-pitched shriek, revealing sharp feral teeth, “how dare you enter my royal sanctum? I will teach you to interfere with my work!”",
+  "roomDesc" : "",
+  "monsters" : [],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : ["ratKingsBedroom"],
+  "connectedRoomsUI": ["Rat King's Bedroom"],
+  "GroundItems" : [],
+  "HiddenItems": [],
+  "SecretRooms" :
+  [
+    
+  ]
+}

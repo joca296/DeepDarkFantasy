@@ -1,0 +1,30 @@
+{
+  "name" : "ratKingsBedroom",
+  "UIname": "Rat King's Bedroom",
+  "DC_Perception" : -1,
+  "DC_Investigation" : -1,
+  "DC_Survival" : -1,
+  "DC_Arcana" : -1,
+  "Perc_SUCC" : "",
+  "Invest_SUCC" : "",
+  "Surv_SUCC" : "",
+  "Arc_SUCC" : "",
+  "Perc_FAIL" : "You don't see anything of value",
+  "Invest_FAIL" : "You don't find anything helpful",
+  "Surv_FAIL" : "No use for this right now",
+  "Arc_FAIL" : "You don't sense any specific magic",
+  "maxRolls" : 3,
+  "combatDesc" : "",
+  "roomDesc" : "Beyond the door is a cramped bedroom filled with amneties absent from the rest of the cavern: a large bed and small bedside table take up the northeast corner; a tall wooden wardrobe takes up the northwest corner; a reinforced wooden chest sits beside a desk; a tassled red rug is sprawled across the smooth stone floor",
+  "monsters" : [],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : ["theDemonDoor","laboratory"],
+  "connectedRoomsUI": ["The Demon Door","Laboratory"],
+  "GroundItems" : [],
+  "HiddenItems": [],
+  "SecretRooms" :
+  [
+    
+  ]
+}
