@@ -197,6 +197,7 @@ room::room(string name) //constructor
         this->setArcana_FAIL_text(document["Arc_FAIL"].GetString());
         this->set_combat_desc(document["combatDesc"].GetString());
         this->setMaxRollsAllowed(document["maxRolls"].GetInt());
+        this->set_room_desc(document["roomDesc"].GetString());
 
         const Value& a = document["connectedRooms"];              //setting connected rooms
         int j=0;

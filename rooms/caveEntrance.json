@@ -15,6 +15,7 @@
   "Arc_FAIL" : "You don't sense any specific magic",
   "maxRolls" : 3,
   "combatDesc" : "Boz pomoz",
+  "roomDesc": "Deep Dark Cave gachiBASS clap",
   "monsters" : [],
   "events" : ["AxeTrap"],
   "Shrines" : ["ShrineOfAzhorra"],

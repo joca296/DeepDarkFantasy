@@ -15,6 +15,7 @@
   "Arc_FAIL" : "You don't sense any specific magic",
   "maxRolls" : 3,
   "combatDesc" : "An ambush! Send these vermin a message: the rightful owner has returned, and their kind is no longer welcome.",
+  "roomDesc": "",
   "monsters" : [],
   "events" : ["AxeTrap"],
   "Shrines" : [],
