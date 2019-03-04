@@ -1,0 +1,30 @@
+{
+  "name" : "theDemonDoor",
+  "UIname": "The Demon Door",
+  "DC_Perception" : -1,
+  "DC_Investigation" : -1,
+  "DC_Survival" : -1,
+  "DC_Arcana" : -1,
+  "Perc_SUCC" : "",
+  "Invest_SUCC" : "",
+  "Surv_SUCC" : "",
+  "Arc_SUCC" : "",
+  "Perc_FAIL" : "You don't see anything of value",
+  "Invest_FAIL" : "You don't find anything helpful",
+  "Surv_FAIL" : "No use for this right now",
+  "Arc_FAIL" : "You don't sense any specific magic",
+  "maxRolls" : 3,
+  "combatDesc" : "You move towards the huge door  iron door whose surface resembles the face of a balor: two front-swept horns flank its sides, and its cruel eyes leer down over its short snout. Its fanged mouth is ajar and stained with purple dye that dribbles down to the floor, as you try to open it the frescs around it start moving towards you aggresively",
+  "roomDesc" : "The spirits are defeated, the way forward is clear",
+  "monsters" : ["frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit",],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : [],
+  "connectedRoomsUI": [],
+  "GroundItems" : [],
+  "HiddenItems": [],
+  "SecretRooms" :
+  [
+    
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name" : "stormsRest",
+  "UIname": "Storm's Rest",
+  "DC_Perception" : -1,
+  "DC_Investigation" : -1,
+  "DC_Survival" : -1,
+  "DC_Arcana" : -1,
+  "Perc_SUCC" : "",
+  "Invest_SUCC" : "",
+  "Surv_SUCC" : "",
+  "Arc_SUCC" : "",
+  "Perc_FAIL" : "You don't see anything of value",
+  "Invest_FAIL" : "You don't find anything helpful",
+  "Surv_FAIL" : "No use for this right now",
+  "Arc_FAIL" : "You don't sense any specific magic",
+  "maxRolls" : 3,
+  "combatDesc" : "Disguised as stalactite's scary squid-like beings drop from the ceiling and attack you",
+  "roomDesc" : "A powerful item stands on the platforma at the back of the chamber ",
+  "monsters" : ["darkmantle","darkmantle","darkmantle","darkmantle","darkmantle","darkmantle"],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : ["floodedTunnel"],
+  "connectedRoomsUI": ["Flooded Tunnel"],
+  "GroundItems" : ["energyDrink"],
+  "HiddenItems": [],
+  "SecretRooms" :
+  [
+    
+  ]
+}

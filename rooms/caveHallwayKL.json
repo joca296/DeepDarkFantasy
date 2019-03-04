@@ -1,0 +1,30 @@
+{
+  "name" : "caveHallwayKL",
+  "UIname": "Cave Hallway",
+  "DC_Perception" : -1,
+  "DC_Investigation" : -1,
+  "DC_Survival" : -1,
+  "DC_Arcana" : -1,
+  "Perc_SUCC" : "",
+  "Invest_SUCC" : "",
+  "Surv_SUCC" : "",
+  "Arc_SUCC" : "",
+  "Perc_FAIL" : "You don't see anything of value",
+  "Invest_FAIL" : "You don't find anything helpful",
+  "Surv_FAIL" : "No use for this right now",
+  "Arc_FAIL" : "You don't sense any specific magic",
+  "maxRolls" : 3,
+  "combatDesc" : "",
+  "roomDesc" : "You enter another damp hallway as you move the cave splits into two dirrections, i front of you a giant door with the face of a balor, right of you there seems to be another room",
+  "monsters" : [],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : ["theDemonDoor","breedingChamber"],
+  "connectedRoomsUI": ["The Demon Door","Breeding Chamber"],
+  "GroundItems" : [],
+  "HiddenItems": [],
+  "SecretRooms" :
+  [
+    
+  ]
+}
