@@ -1,5 +1,6 @@
 {
   "name" : "plate_armor",
+  "UIname" : "Plate Armor",
   "desc" : "placeholder",
   "itemType" : "a",
   "ac" : 18,

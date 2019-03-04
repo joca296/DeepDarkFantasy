@@ -1,12 +1,12 @@
 {
   "name" : "caveEntrance",
   "UIname": "Cave Entrance",
-  "DC_Perception" : -1,
-  "DC_Investigation" : -1,
+  "DC_Perception" : 14,
+  "DC_Investigation" : 10,
   "DC_Survival" : -1,
   "DC_Arcana" : -1,
-  "Perc_SUCC" : "",
-  "Invest_SUCC" : "",
+  "Perc_SUCC" : "You spot four giant rats in a hallway that leads deeper into the cavern.",
+  "Invest_SUCC" : "You spot a small trail of food crumbs, cheese, salted pork leading deeper into the cavern.",
   "Surv_SUCC" : "",
   "Arc_SUCC" : "",
   "Perc_FAIL" : "You don't see anything of value",
@@ -14,23 +14,17 @@
   "Surv_FAIL" : "No use for this right now",
   "Arc_FAIL" : "You don't sense any specific magic",
   "maxRolls" : 3,
-  "combatDesc" : "Boz pomoz",
-  "roomDesc": "Deep Dark Cave gachiBASS clap",
+  "combatDesc" : "",
+  "roomDesc": "This tunnel is the main entrance into the Rat King's domain. His rat minions bring in the food they forage from outside through here.",
   "monsters" : [],
-  "events" : ["AxeTrap"],
-  "Shrines" : ["ShrineOfAzhorra"],
-  "connectedRooms" : [],
-  "connectedRoomsUI": [],
-  "GroundItems" : ["dagger"],
-  "HiddenItems": ["hiddenGreataxe"],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : ["caveHallwayA"],
+  "connectedRoomsUI": ["Cave Hallway A"],
+  "GroundItems" : [],
+  "HiddenItems": [],
   "SecretRooms" :
   [
-    {
-      "DC": 4,
-      "Skill": "Arcana",
-      "jName" : "caveHallwayA",
-      "UIname" : "Cave Hallway",
-      "succText": "You find a secret Room"
-    }
+
   ]
 }

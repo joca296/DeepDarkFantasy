@@ -4,7 +4,7 @@
 	"dNum" : 2,
 	"CheckDC" : 12,
 	"Skill" : "Perception",
-	"CheckSUCC" : "You spot a giant axe suspended along the ceiling, looks to be a trap ",
+	"CheckSUCC" : "A 5-foot square of the cave floor near the entrance has been transformed into a clever pressure plate trap. The cavern inhabitants know to avoid stepping on it.",
 	"SaveDC" : 11,
 	"Save" : "DEX",
 	"SaveSUCC" : "As you step on a pressure plate and a huge axe swings across the room, you manage to avoid a direct hit",

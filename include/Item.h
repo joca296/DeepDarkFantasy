@@ -17,7 +17,7 @@ using namespace std;
 
 class Item {
 private:
-    string name, desc;
+    string name, desc, UIname;
     char itemType;
     int count;
 public:
@@ -27,6 +27,8 @@ public:
     void setCount(int count);
     char getItemType() const;
     void setItemType(char itemType);
+    const string &getUIname() const;
+    void setUIname(const string &UIname);
     const string &getName() const;
     void setName(const string &name);
     const string &getDesc() const;

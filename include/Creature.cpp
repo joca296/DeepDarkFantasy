@@ -400,7 +400,7 @@ Action* Hero::selectConsumable() {
     int i=1;
     for(int j=0; j<inventory.size(); j++){
         if(inventory[j]->getItemType() == 'c'){
-            cout<<i<<". "<<inventory[j]->getName();
+            cout<<i<<". "<<inventory[j]->getUIname();
             if(inventory[j]->getCount() > 1) cout<<" ("<<inventory[j]->getCount()<<")";
             cout<<endl;
             consumables.push_back(inventory[j]);
@@ -442,7 +442,8 @@ Creature* Hero::chooseTarget(struct cList* actors){
     cout<<"Choose your target (sorted by initiative) "<<endl;
     while(tmp!=NULL){
         numberOfTargets++;
-        const string output = tmp->CPL->getName()+" "+to_string(tmp->CPL->getCurHP())+"/"+to_string(tmp->CPL->getMaxHP())+" HP";
+        string output = tmp->CPL->getName()+" "+to_string(tmp->CPL->getCurHP())+"/"+to_string(tmp->CPL->getMaxHP())+" HP";
+        if (tmp->CPL->isHero() == 1) output += " "+to_string(tmp->CPL->getCurMana())+"/"+to_string(tmp->CPL->getMaxMana())+" Mana";
         cout<<numberOfTargets<<". ";
         if (this == tmp->CPL) colorPrint(output,"ltBlue");
         else cout<<output;
@@ -477,7 +478,7 @@ void Hero::listEquipped() {
             cout<<choiceMax<<". "<<weapons[choiceMax-1]->getName()<<endl;
         }
         if(armor!=NULL){
-            cout<<choiceMax<<". "<<armor->getName()<<endl;
+            cout<<choiceMax<<". "<<armor->getUIname()<<endl;
             choiceMax++;
         }
         cout<<choiceMax<<". Back"<<endl;
@@ -514,7 +515,9 @@ void Hero::listSpellBook() {
     else{
         cout<<"Spells:"<<endl;
         for(int i=1; i<=spellBook.size(); i++){
-            cout<<i<<". "<<spellBook[i-1]->getName()<<endl;
+            cout<<i<<". ";
+            if(this->getCurMana() < ((Spell*)spellBook[i-1])->getManaCost()) colorPrint(spellBook[i-1]->getName(),"red");
+            cout<<endl;
         }
         cout<<endl;
     }
@@ -526,7 +529,7 @@ Item* Hero::listInventory(){
         cout<<"Inventory:"<<endl;
         int i=1;
         for(i=1; i<=inventory.size(); i++){
-            cout<<i<<". "<<inventory[i-1]->getName();
+            cout<<i<<". "<<inventory[i-1]->getUIname();
             if(inventory[i-1]->getCount() > 1) cout<<" ("<<inventory[i-1]->getCount()<<")";
             cout<<endl;
         }

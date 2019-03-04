@@ -105,7 +105,8 @@ void colorPrint(const string& output,const  string& color) {
 
     int col;
 
-    if(color=="blue") col=9;
+    if (color=="gray") col=8;
+    else if(color=="blue") col=9;
     else if(color=="green") col=10;
     else if(color=="ltBlue") col=11;
     else if(color=="red") col=12;

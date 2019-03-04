@@ -7,6 +7,7 @@
   "diceNumber" : 1,
   "desc" : "placeholder",
   "itemType" : "w",
+  "UIname" : "Schimitar",
   "rollType" : "slash",
   "addtlEffects" : []
 }

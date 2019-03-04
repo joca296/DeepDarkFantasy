@@ -1,0 +1,35 @@
+{
+  "name": "storageRoom",
+  "UIname": "Storage Room",
+  "DC_Perception": -1,
+  "DC_Investigation": -1,
+  "DC_Survival": -1,
+  "DC_Arcana": -1,
+  "Perc_SUCC": "",
+  "Invest_SUCC": "",
+  "Surv_SUCC": "",
+  "Arc_SUCC": "",
+  "Perc_FAIL": "You don't see anything of value",
+  "Invest_FAIL": "You don't find anything helpful",
+  "Surv_FAIL": "No use for this right now",
+  "Arc_FAIL": "You don't sense any specific magic",
+  "maxRolls": 3,
+  "combatDesc": "",
+  "roomDesc": "Large musty wooden barrels line the walls of this cave room. Piled atop the barrels or propped beside them are smaller casks of wine and ale. A a small leather book sits on one of the barrels, alongside a small glass vial containing a strange liquid.",
+  "monsters": [],
+  "events": ["AxeTrap"],
+  "Shrines": [],
+  "connectedRooms": ["caveHallwayA"],
+  "connectedRoomsUI": ["Cave Hallway A"],
+  "GroundItems": ["potionOfRatControl","ratKingsJournal"],
+  "HiddenItems": [],
+  "SecretRooms": [
+    {
+      "DC": 15,
+      "Skill": "Investigation",
+      "jName": "secretChamber",
+      "UIname": "Secret Chamber",
+      "succText": "You notices a crease in the northern wall. The wall is hinged and can be opened outward by gripping crevices in the wall as makeshift handles, revealing a secret chamber"
+    }
+  ]
+}

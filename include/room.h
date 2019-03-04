@@ -32,15 +32,11 @@ class room
 {
 private:
     int DC_Perception, DC_Investigation, DC_Survival, DC_Arcana;
-
     int maxRollsAllowed;
     int numberOfConnections,numberOfMonsters,numberOfTraps;
     string Perception_SUCC_text, Investigation_SUCC_text, Survival_SUCC_text, Arcana_SUCC_text, Perception_FAIL_text, Investigation_FAIL_text, Survival_FAIL_text, Arcana_FAIL_text;
     string room_name,room_desc,combat_desc,room_name_ui;
     static int short_rests_allowed;
-
-
-private:
     string room_monsters[MAX_ROOM_MONSTERS];
     bool roomEnteredFlag=false;
 public:
@@ -127,6 +123,6 @@ void delete_rList(struct rList *rHead);
 struct rList *findRoom(struct rList *rHead,string& s);
 extern struct rList* rHead;
 
-void printMap(struct rList *rHead, int level=1);
+void printMap(struct rList *rHead, room* current, int level=1);
 
 void partyTurnTick(struct cList* partyHead, int n=10);

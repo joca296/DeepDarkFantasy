@@ -7,6 +7,7 @@
   "statusEffectList":["CrushingBlow","Jbleed","godHeal"],
   "desc" : "Bogom Dana ova batina udara ko milicija ",
   "itemType" : "w",
+  "UIname" : "Bozja Batina",
   "rollType" : "slash",
   "addtlEffects" :
   [

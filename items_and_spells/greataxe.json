@@ -7,6 +7,7 @@
   "statusEffectList":["CrushingBlow"],
   "desc" : "placeholder",
   "itemType" : "w",
+  "UIname" : "Greataxe",
   "rollType" : "slash",
   "addtlEffects" :
   [

@@ -183,6 +183,7 @@ room::room(string name) //constructor
         const Document& document = parseFromFile(&f);
 
         this->set_room_name(document["name"].GetString());
+        room_name_ui=document["UIname"].GetString();
         this->setDC_Perception(document["DC_Perception"].GetInt());
         this->setDC_Investigation(document["DC_Investigation"].GetInt());
         this->setDC_Survival(document["DC_Survival"].GetInt());
@@ -331,7 +332,7 @@ room* room::enterRoom(struct cList *partyHead)
                 this->InspectHero(partyHead);
                 break;
             case 4:
-                printMap(rHead);
+                printMap(rHead,this);
                 cout<<endl;
                 break;
             case 5:
@@ -674,7 +675,7 @@ int room::special_interactions(Creature *p)
         }
         for(int i=0; i<groundItems.size(); i++)
         {
-            cout<<counter<<". Pick up "<<groundItems[i]->getName()<<endl;
+            cout<<counter<<". Pick up "<<groundItems[i]->getUIname()<<endl;
             counter++;
         }
         cout<<counter<<". "<<"Back"<<endl;
@@ -838,16 +839,17 @@ void room::activateTrap(event* e, Creature *p)
 }
 
 
-void printMap(struct rList *rHead, int level){
+void printMap(struct rList *rHead, room* current, int level){
     if(rHead!=nullptr){
         for (int i = 1; i < level; i++)
             cout<<"\t";
-        cout<<rHead->RPL->getRoom_name_ui();
+        if(rHead->RPL == current) colorPrint(rHead->RPL->getRoom_name_ui(),"ltBlue");
+        else cout<<rHead->RPL->getRoom_name_ui();
         cout<<endl;
         for (int i=0; i<rHead->RPL->getNumberOfConnections();i++) {
             rList* tmp = findRoom(rHead,rHead->RPL->room_next[i]);
             if(tmp != nullptr)
-                printMap(tmp,level+1);
+                printMap(tmp,current,level+1);
         }
     }
 }

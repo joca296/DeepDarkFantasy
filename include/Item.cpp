@@ -28,6 +28,7 @@ Item::Item(string name, int count) {
         this->name=document["name"].GetString();
         desc=document["desc"].GetString();
         itemType=document["itemType"].GetString()[0];
+        UIname=document["UIname"].GetString();
         this->count=count;
 
         if(itemType=='c'){
@@ -57,6 +58,14 @@ int Item::getCount() const {
 
 void Item::setCount(int count) {
     Item::count = count;
+}
+
+const string &Item::getUIname() const {
+    return UIname;
+}
+
+void Item::setUIname(const string &UIname) {
+    Item::UIname = UIname;
 }
 
 int Armor::getAc() const {

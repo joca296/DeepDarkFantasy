@@ -6,6 +6,7 @@
   "diceNumber" : 1,
   "desc" : "",
   "itemType" : "w",
+  "UIname" : "Shortbow",
   "rollType" : "pierce",
   "statusEffectList":[],
   "addtlEffects" : []

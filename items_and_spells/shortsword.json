@@ -1,11 +1,12 @@
 {
   "type" : "w",
-  "name" : "shortbow",
+  "name" : "shortsword",
   "finesse" : true,
   "roll" : 6,
   "diceNumber" : 1,
   "desc" : "",
   "itemType" : "w",
+  "UIname" : "Shortsword",
   "rollType" : "slash",
   "statusEffectList":[],
   "addtlEffects" : []

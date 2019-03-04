@@ -6,6 +6,7 @@
   "diceNumber" : 1,
   "desc" : "placeholder",
   "itemType" : "w",
+  "UIname" : "Dagger",
   "rollType" : "pierce",
   "statusEffectList":[],
   "addtlEffects" : []
