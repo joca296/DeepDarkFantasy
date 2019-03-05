@@ -8,7 +8,7 @@
     "spellCastModAddedToRoll" : false,
     "savingThrowFlag" : false,
     "savingThrowType" : "",
-    "savingThrowDC" : "",
+    "savingThrowDC" : 0,
     "statusEffectList":[],
     "roll" : 10,
     "diceNumber" : 1,

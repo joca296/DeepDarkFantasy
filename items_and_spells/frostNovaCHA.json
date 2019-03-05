@@ -2,7 +2,7 @@
   "type": "a",
   "statusEffectOnly" : false,
   "name": "frostNovaCHA",
-  "UIname" : "Frost Nova"
+  "UIname" : "Frost Nova",
   "spellCastMod": "cha",
   "heal": false,
   "spellCastModAddedToRoll": false,

@@ -8,7 +8,7 @@
     "spellCastModAddedToRoll" : false,
     "savingThrowFlag" : false,
     "savingThrowType" : "",
-    "savingThrowDC" : "",
+    "savingThrowDC" : 0,
     "statusEffectList":["soulDevour"],
     "roll" : 8,
     "diceNumber" : 4,
