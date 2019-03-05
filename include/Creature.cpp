@@ -374,7 +374,10 @@ Action* Hero::selectWeapon() {
 }
 Action* Hero::selectSpell() {
     for(int i=1; i<=spellBook.size(); i++){
-        cout<<i<<". "<<spellBook[i-1]->getUIname()<<endl;
+        cout<<i<<". ";
+        if(this->getCurMana() < ((Spell*)spellBook[i-1])->getManaCost()) colorPrint(spellBook[i-1]->getUIname(),"red");
+        else cout<<spellBook[i-1]->getUIname();
+        cout<<endl;
     }
     cout<<spellBook.size()+1<<". Back"<<endl;
     while(1){
@@ -523,6 +526,7 @@ void Hero::listSpellBook() {
         for(int i=1; i<=spellBook.size(); i++){
             cout<<i<<". ";
             if(this->getCurMana() < ((Spell*)spellBook[i-1])->getManaCost()) colorPrint(spellBook[i-1]->getUIname(),"red");
+            else cout<<spellBook[i-1]->getUIname();
             cout<<endl;
         }
         cout<<endl;
