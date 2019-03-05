@@ -1,5 +1,5 @@
 {
-	"CheckDC" : 6,
+	"CheckDC" : 14,
 	"Skill" : "Perception",
 	"CheckSUCC" : "You find a greataxe laying on the ground, looks usable ",
 	"ItemList" : ["greataxe"]

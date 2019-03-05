@@ -1,6 +1,7 @@
 {
   "type" : "s",
-  "name" : "Darkness",
+  "name" : "darknessAura",
+  "UIname" : "Darkness",
   "spellCastMod" : "",
   "heal" : false,
   "spellCastModAddedToRoll" : false,

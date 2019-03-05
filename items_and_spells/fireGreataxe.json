@@ -1,0 +1,19 @@
+{
+  "type": "w",
+  "name": "fireGreataxe",
+  "finesse": false,
+  "roll": 12,
+  "diceNumber": 1,
+  "statusEffectList": [],
+  "desc": "As you look into the weapon, fire starts emitting from the blades.",
+  "itemType": "w",
+  "UIname" : "Fiery Greataxe",
+  "rollType": "slash",
+  "addtlEffects": [
+    {
+      "roll" : 6,
+      "diceNumber" : 1,
+      "rollType" : "fire"
+    }
+  ]
+}

@@ -15,13 +15,13 @@
   "Arc_FAIL": "You don't sense any specific magic",
   "maxRolls": 3,
   "combatDesc": "",
-  "roomDesc": "",
+  "roomDesc": "The main tunnel expands into a large chamber that divides into three more tunnels heading southwest, south, and north. A subteranean stream spills into the chamber through the northeast and continues down the southern tunnel.",
   "monsters": ["explodeyRat","explodeyRat","dragonRatBlue","dragonRatBlue","dragonRatBlue","laserRat","laserRat"],
   "events": [],
   "Shrines": [],
   "connectedRooms": ["caveHallwayB"],
   "connectedRoomsUI": ["Cave Hallway B"],
   "GroundItems": [],
-  "HiddenItems": [],
+  "HiddenItems": ["hiddenFireGreataxe"],
   "SecretRooms": []
 }

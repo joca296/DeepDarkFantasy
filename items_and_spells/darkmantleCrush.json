@@ -1,7 +1,8 @@
 {
   "type" : "w",
   "statusEffectList":["crushingBlow"],
-  "name" : "Crush",
+  "name" : "darkmantleCrush",
+  "UIname" : "Crush",
   "finesse" : false,
   "roll" : 6,
   "diceNumber" : 1,

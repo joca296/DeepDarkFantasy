@@ -2,6 +2,7 @@
   "type" : "s",
   "statusEffectOnly" : false,
   "name" : "cure_wounds",
+  "UIname" : "Cure wounds",
   "spellCastMod" : "cha",
   "heal" : true,
   "spellCastModAddedToRoll" : true,

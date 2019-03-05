@@ -1,6 +1,7 @@
 {
   "type" : "w",
-  "name" : "Corrode Metal",
+  "name" : "corrodeMetal",
+  "UIname" : "Corrode Metal",
   "finesse" : false,
   "roll" : 6,
   "diceNumber" : 1,

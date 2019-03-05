@@ -40,9 +40,11 @@ public:
 
 class Armor: public Item {
 private:
-    int ac;
+    int ac, STRreq;
     char type;
 public:
+    int getSTRreq() const;
+    void setSTRreq(int STRreq);
     int getAc() const;
     void setAc(int ac);
     char getType() const;

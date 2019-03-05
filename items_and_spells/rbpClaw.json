@@ -1,6 +1,7 @@
 {
   "type": "w",
-  "name": "Claw",
+  "name": "rbpClaw",
+  "UIname": "Claw",
   "finesse": false,
   "roll":8,
   "diceNumber":1,

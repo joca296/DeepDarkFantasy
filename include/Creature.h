@@ -118,6 +118,7 @@ public:
     void setFieldsByString(string s,int n);
     void lvlUp(int level);
     virtual void checkExperience(){};
+    int getPureAttr(const string& attr);
 };
 
 class Monster: public Creature{

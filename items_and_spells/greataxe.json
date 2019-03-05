@@ -10,11 +10,5 @@
   "UIname" : "Greataxe",
   "rollType" : "slash",
   "addtlEffects" :
-  [
-    {
-    "roll" : 4,
-    "diceNumber" : 1,
-    "rollType" : "fire"
-    }
-  ]
+  []
 }

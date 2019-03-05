@@ -4,5 +4,6 @@
   "desc" : "placeholder",
   "itemType" : "a",
   "ac" : 18,
-  "type" : "h"
+  "type" : "h",
+  "STRreq" : 3
 }

@@ -1,7 +1,8 @@
 {
   "type" : "w",
   "statusEffectList":["acidDeathBurst","acidExplosion"],
-  "name" : "Headbutt",
+  "name" : "explodeyRatHeadbutt",
+  "UIname" : "Headbutt",
   "finesse" : false,
   "roll" : 4,
   "diceNumber" : 1,

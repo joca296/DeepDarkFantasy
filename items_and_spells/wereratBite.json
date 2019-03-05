@@ -1,7 +1,8 @@
 {
   "type" : "w",
   "statusEffectList":["ratInfection"],
-  "name" : "Bite",
+  "name" : "wereratBite",
+  "UIname" : "Bite",
   "finesse" : true,
   "roll" : 4,
   "diceNumber" : 1,

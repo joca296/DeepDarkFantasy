@@ -1,6 +1,7 @@
 {
   "type": "w",
-  "name": "Tusk",
+  "name": "rbpTusk",
+  "UIname": "Tusk",
   "finesse": false,
   "roll":8,
   "diceNumber":1,

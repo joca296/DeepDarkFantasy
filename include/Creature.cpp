@@ -265,7 +265,13 @@ Hero::Hero(string name, int level) : Creature(name) {
         }
 
         //setting armor
-        if(document["armor"].GetStringLength()>0) armor = new Armor(document["armor"].GetString());
+        if(document["armor"].GetStringLength()>0){
+            armor = new Armor(document["armor"].GetString());
+            if(armor->getSTRreq() > this->getSTR()){
+                armor = NULL;
+                cout<<this->getName()<<"Doesn't meet the requirements to equip this armor."<<endl;
+            }
+        }
 
         //setting level
         this->lvlUp(level);
@@ -346,7 +352,7 @@ Action* Hero::actionChoose(Creature* c) {
 Action* Hero::selectWeapon() {
 
     for(int i=1; i<=weapons.size(); i++){
-        cout<<i<<". "<<weapons[i-1]->getName()<<endl;
+        cout<<i<<". "<<weapons[i-1]->getUIname()<<endl;
 
     }
     cout<<weapons.size()+1<<". Back"<<endl;
@@ -368,7 +374,7 @@ Action* Hero::selectWeapon() {
 }
 Action* Hero::selectSpell() {
     for(int i=1; i<=spellBook.size(); i++){
-        cout<<i<<". "<<spellBook[i-1]->getName()<<endl;
+        cout<<i<<". "<<spellBook[i-1]->getUIname()<<endl;
     }
     cout<<spellBook.size()+1<<". Back"<<endl;
     while(1){
@@ -475,7 +481,7 @@ void Hero::listEquipped() {
         cout<<"Equipped items (select to unequip):"<<endl;
         int choiceMax;
         for(choiceMax=1; choiceMax<=weapons.size(); choiceMax++){
-            cout<<choiceMax<<". "<<weapons[choiceMax-1]->getName()<<endl;
+            cout<<choiceMax<<". "<<weapons[choiceMax-1]->getUIname()<<endl;
         }
         if(armor!=NULL){
             cout<<choiceMax<<". "<<armor->getUIname()<<endl;
@@ -516,7 +522,7 @@ void Hero::listSpellBook() {
         cout<<"Spells:"<<endl;
         for(int i=1; i<=spellBook.size(); i++){
             cout<<i<<". ";
-            if(this->getCurMana() < ((Spell*)spellBook[i-1])->getManaCost()) colorPrint(spellBook[i-1]->getName(),"red");
+            if(this->getCurMana() < ((Spell*)spellBook[i-1])->getManaCost()) colorPrint(spellBook[i-1]->getUIname(),"red");
             cout<<endl;
         }
         cout<<endl;
@@ -580,8 +586,15 @@ Item* Hero::listInventory(){
                             case 0:
                                 if (itemType == 'w')
                                     this->weapons.push_back(callConstuctor(inventory[choice_int-1]->getName()));
-                                else if(itemType == 'a')
-                                    armor=new Armor(inventory[choice_int-1]->getName());
+                                else if(itemType == 'a'){
+                                    Armor* tmp = new Armor(inventory[choice_int-1]->getName());
+                                    if(tmp->getSTRreq() > this->getPureAttr("STR")){
+                                        cout<<"You don't meet the requirements to eqip this armor."<<endl;
+                                        delete tmp;
+                                        return NULL;
+                                    }
+                                    else armor=tmp;
+                                }
                                 else
                                     this->SE_Inflict(inventory[choice_int-1]->consumableEffectList,this);
 
@@ -644,7 +657,7 @@ int Creature::actionExec(struct cList* actors, Creature* tar, Action *action){
             return 0;
         }
         default:{
-            cout<<"invalid action type in "<<action->getName()<<endl;
+            cout<<"invalid action type in "<<action->getUIname()<<endl;
             return 0;
 
         }
@@ -672,7 +685,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
         tar->setCurHP(tar->getCurHP()-dmgTotal);
 
         //print
-        printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
+        printDamage(this->getName(),tar->getName(),action->getUIname(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
 
         if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar); //(de)buff handling here
         if(tar->getCurHP() <= 0){
@@ -721,7 +734,7 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
             tar->setCurHP(tar->getCurHP()-dmgTotal);
 
             //print
-            printDamage(this->getName(),tar->getName(),action->getName(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
+            printDamage(this->getName(),tar->getName(),action->getUIname(),dmgTotal,dmgBreakdown,critFlag,this->isHero(),tar->isHero());
 
             if(action->actionStatusEffect.size()>0)  SE_Inflict(action->actionStatusEffect,tar);//(de)buff handling here
             if(tar->getCurHP() <= 0){
@@ -792,7 +805,7 @@ int Creature::execHeal(struct cList* actors, Spell *action, Creature* tar) {
     colorPrint(this->getName(),this->isHero());
     cout<<" healed ";
     colorPrint(tar->getName(),tar->isHero());
-    cout<<" for "<<healRoll<<" with "<<action->getName()<<"."<<endl;
+    cout<<" for "<<healRoll<<" with "<<action->getUIname()<<"."<<endl;
     if(action->actionStatusEffect.size()>0) SE_Inflict(action->actionStatusEffect,tar);
     return 0;
 }
@@ -1267,4 +1280,21 @@ void Hero::checkExperience() {
         this->setExperience(expOverflow);
         this->checkExperience();
     }
+}
+
+int Creature::getPureAttr(const string& attr){
+    int ignoreStatusEffects=0;
+
+    for(int i=0; i<this->activeSE.size(); i++){
+        for(int j=0; j<this->activeSE[i]->affects.size(); j++)
+            if(this->activeSE[i]->affects[j] == attr)
+                ignoreStatusEffects += activeSE[i]->val;
+    }
+
+    if(attr == "STR") return this->getSTR()-ignoreStatusEffects;
+    else if (attr == "DEX") return this->getDEX()-ignoreStatusEffects;
+    else if (attr == "CON") return this->getCON()-ignoreStatusEffects;
+    else if (attr == "INT") return this->getINT()-ignoreStatusEffects;
+    else if (attr == "WIS") return this->getWIS()-ignoreStatusEffects;
+    else if (attr == "CHA") return this->getCHA()-ignoreStatusEffects;
 }

@@ -1,7 +1,8 @@
 {
   "type" : "w",
   "statusEffectList":[],
-  "name" : "Bite",
+  "name" : "dragonRatBite",
+  "UIname" : "Bite",
   "finesse" : true,
   "roll" : 4,
   "diceNumber" : 1,

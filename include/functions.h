@@ -20,3 +20,4 @@ Document parseFromFile(std::ifstream *f);
 void printDamage(const string& actorName,const string& targetName,const string& actionName, int& dmgTotal,const vector<string>& dmgBreakdown, bool critFlag, int actorHero, int targetHero);
 void colorPrint(const string& output,const string& color);
 void colorPrint(const string& output,int hero);
+int convertToAttribute(int attr);

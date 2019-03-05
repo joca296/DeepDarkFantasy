@@ -1,6 +1,7 @@
 {
   "type": "w",
-  "name": "Bite",
+  "name": "nibblesBite",
+  "UIname": "Bite",
   "finesse": true,
   "roll": 4,
   "diceNumber": 1,

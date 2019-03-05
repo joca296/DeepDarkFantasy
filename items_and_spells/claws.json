@@ -2,6 +2,7 @@
   "type" : "w",
   "statusEffectList":[],
   "name" : "Claws",
+  "UIname" : "claws",
   "finesse" : true,
   "roll" : 4,
   "diceNumber" : 1,

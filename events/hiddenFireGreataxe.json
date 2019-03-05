@@ -1,0 +1,6 @@
+{
+  "CheckDC" : 14,
+  "Skill" : "Perception",
+  "CheckSUCC" : "You find a greataxe with runes etched onto it.",
+  "ItemList" : ["fireGreataxe"]
+}

@@ -94,8 +94,17 @@ Armor::Armor(string name, int count) : Item(name,count) {
         const Document& document = parseFromFile(&f);
         ac=document["ac"].GetInt();
         type=document["type"].GetString()[0];
+        if(document["type"].GetString()[0] == 'h') STRreq=document["STRreq"].GetInt();
     }
     f.close();
+}
+
+int Armor::getSTRreq() const {
+    return STRreq;
+}
+
+void Armor::setSTRreq(int STRreq) {
+    Armor::STRreq = STRreq;
 }
 
 int isInVector(vector<Item*> haystack, Item* needle){

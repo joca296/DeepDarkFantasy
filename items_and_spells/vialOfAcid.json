@@ -1,6 +1,7 @@
 {
   "type": "w",
-  "name": "Vial of Acid",
+  "name": "vialOfAcid",
+  "UIname": "Vial of Acid",
   "finesse": true,
   "roll": 6,
   "diceNumber": 2,

@@ -1,6 +1,7 @@
 {
   "type": "w",
-  "name": "Alchemist's Fire",
+  "name": "alchemistsFire",
+  "UIname": "Alchemist's Fire",
   "finesse": true,
   "roll": 1,
   "diceNumber": 6,

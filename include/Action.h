@@ -27,11 +27,13 @@ class Action {
 private:
     int roll, diceNumber;
     char type;
-    string name, rollType;
+    string name, rollType, UIname;
     //Additional effect TBD
 public:
     vector <shared_ptr<statusEffect>> actionStatusEffect;
     vector <shared_ptr<addtlEffect>> addtlEffects;
+    const string &getUIname() const;
+    void setUIname(const string &UIname);
     char getType() const;
     void setType(char type);
     int getRoll() const;

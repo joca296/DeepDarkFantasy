@@ -109,6 +109,7 @@ void Weapon::setFinesse(bool finesse) {
 Action::Action() {}
 Action::Action(const Document& action) {
     name = action["name"].GetString();
+    UIname = action["UIname"].GetString();
     roll = action["roll"].GetInt();
     diceNumber = action["diceNumber"].GetInt();
     type = action["type"].GetString()[0];
@@ -144,6 +145,14 @@ const string &Action::getRollType() const {
 
 void Action::setRollType(const string &rollType) {
     Action::rollType = rollType;
+}
+
+const string &Action::getUIname() const {
+    return UIname;
+}
+
+void Action::setUIname(const string &UIname) {
+    Action::UIname = UIname;
 }
 
 Spell::Spell() {}

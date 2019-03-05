@@ -138,3 +138,6 @@ void colorPrint(const string& output,int hero){
 
     SetConsoleTextAttribute(hConsole, 7); //set back to black background and white text
 }
+int convertToAttribute(int attr){
+    return 10+(attr*2);
+}

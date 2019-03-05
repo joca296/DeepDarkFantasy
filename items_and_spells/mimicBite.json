@@ -1,6 +1,7 @@
 {
   "type": "w",
-  "name": "Bite",
+  "name": "mimicBite",
+  "UIname": "Bite",
   "finesse": false,
   "roll": 8,
   "diceNumber": 1,
