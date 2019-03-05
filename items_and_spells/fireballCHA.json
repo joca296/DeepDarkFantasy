@@ -1,7 +1,8 @@
 {
   "type": "a",
   "statusEffectOnly" : false,
-  "name": "fireball",
+  "name": "fireballCHA",
+  "UIname" : "Fireball",
   "spellCastMod": "cha",
   "heal": false,
   "spellCastModAddedToRoll": false,

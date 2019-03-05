@@ -2,6 +2,7 @@
     "type" : "s",
     "statusEffectOnly" : false,
     "name" : "Frostbolt",
+	"UIname" : "Frostbolt",
     "spellCastMod" : "cha",
     "heal" : false,
     "spellCastModAddedToRoll" : false,

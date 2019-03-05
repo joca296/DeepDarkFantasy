@@ -1,7 +1,8 @@
 {
     "type" : "s",
     "statusEffectOnly" : false,
-    "name" : "Coup de Grace",
+    "name" : "coupDeGrace",
+	"UIname" : "Coup de Grace",
     "spellCastMod" : "wis",
     "heal" : false,
     "spellCastModAddedToRoll" : true,

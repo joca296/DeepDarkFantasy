@@ -209,7 +209,8 @@ struct cList* createParty(int n)
         cout<<"Choose a class for party member "<<c<<endl<<endl;
 
         cout<<"1. Barbarian"<<endl;
-
+        cout<<"2. Sorceress"<<endl;
+        cout<<"3. Rogue"<<endl;
         cin>>choice_container;
         try{
             choice_container_int=stoi(choice_container);
@@ -222,6 +223,18 @@ struct cList* createParty(int n)
         switch(choice_container_int) {
             case 1: {
                 cptr = new Hero("barbarian");
+                partyHead = append_node(cptr,partyHead);
+                c++;
+                break;
+            }
+            case 2: {
+            cptr = new Hero("sorc");
+            partyHead = append_node(cptr,partyHead);
+            c++;
+            break;
+        }
+            case 3: {
+                cptr = new Hero("rogue");
                 partyHead = append_node(cptr,partyHead);
                 c++;
                 break;

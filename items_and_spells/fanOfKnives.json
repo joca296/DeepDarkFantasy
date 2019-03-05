@@ -1,7 +1,8 @@
 {
   "type": "a",
   "statusEffectOnly" : false,
-  "name": "Fan Of Knives",
+  "name": "fanOfKnives",
+  "UIname": "Fan Of Knives",
   "spellCastMod": "wis",
   "heal": false,
   "spellCastModAddedToRoll": true,

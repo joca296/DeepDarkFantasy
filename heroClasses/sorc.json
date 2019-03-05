@@ -12,7 +12,7 @@
   "cha" : 3,
   "actionsPerRound" : 1,
   "weapons" : ["dagger"],
-  "spellBook" : ["fireboltCHA","frostboltCHA","frostNovaCHA","darkPact","fireballCHA",],
+  "spellBook" : ["fireboltCHA","frostboltCHA","frostNovaCHA","darkPact","fireballCHA"],
   "armor" : "",
   "inventory" : ["manaPotion","manaPotion","healingPotion"],
   "immunity" : [],

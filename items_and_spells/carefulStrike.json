@@ -1,7 +1,8 @@
 {
     "type" : "s",
     "statusEffectOnly" : false,
-    "name" : "firebolt",
+    "name" : "carefulStrike",
+	"UIname" : "Careful Strike",
     "spellCastMod" : "wis",
     "heal" : false,
     "spellCastModAddedToRoll" : true,
