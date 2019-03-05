@@ -1,6 +1,7 @@
 {
   "type" : "s",
-  "name" : "Crippling Ray",
+  "name" : "cripplingRay",
+  "UIname" : "Crippling Ray",
   "spellCastMod" : "",
   "heal" : false,
   "spellCastModAddedToRoll" : false,

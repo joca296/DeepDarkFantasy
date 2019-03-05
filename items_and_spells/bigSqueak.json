@@ -1,7 +1,8 @@
 {
   "type": "a",
   "statusEffectOnly": false,
-  "name": "Big Squeak",
+  "name": "bigSqueak",
+  "UIname": "Big Squeak",
   "spellCastMod": "wis",
   "heal": false,
   "spellCastModAddedToRoll": false,

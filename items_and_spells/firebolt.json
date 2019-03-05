@@ -1,7 +1,8 @@
 {
     "type" : "s",
     "statusEffectOnly" : false,
-    "name" : "Firebolt",
+    "name" : "firebolt",
+	"UIname" : "Firebolt",
     "spellCastMod" : "int",
     "heal" : false,
     "spellCastModAddedToRoll" : false,

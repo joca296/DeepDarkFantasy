@@ -1,7 +1,8 @@
 {
   "type": "a",
   "statusEffectOnly" : false,
-  "name": "Lightning Breath",
+  "name": "lightningBreath",
+  "UIname": "Lightning Breath",
   "spellCastMod": "wis",
   "heal": false,
   "spellCastModAddedToRoll": false,

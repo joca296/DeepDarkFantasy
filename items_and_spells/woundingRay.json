@@ -1,7 +1,8 @@
 {
     "type" : "s",
     "statusEffectOnly" : false,
-    "name" : "Wounding Ray",
+    "name" : "woundingRay",
+	 "UIname" : "Wounding Ray",
     "spellCastMod" : "int",
     "heal" : false,
     "spellCastModAddedToRoll" : false,

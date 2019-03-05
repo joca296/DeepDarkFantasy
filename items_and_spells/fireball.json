@@ -2,6 +2,7 @@
   "type": "a",
   "statusEffectOnly" : false,
   "name": "fireball",
+  "UIname" : "Fireball",
   "spellCastMod": "int",
   "heal": false,
   "spellCastModAddedToRoll": false,
