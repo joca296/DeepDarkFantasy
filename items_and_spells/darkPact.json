@@ -1,8 +1,8 @@
 {
     "type" : "s",
     "statusEffectOnly" : false,
-    "name" : "Dark Pact",
-	"UIname" : "darkPact",
+    "name" : "darkPact",
+	"UIname" : "Dark Pact",
     "spellCastMod" : "int",
     "heal" : false,
     "spellCastModAddedToRoll" : false,
