@@ -1,0 +1,13 @@
+{
+  "type" : "w",
+  "name" : "barbedDagger",
+  "finesse" : true,
+  "roll" : 4,
+  "diceNumber" : 1,
+  "desc" : "Barbed dagger that inflicts bleed",
+  "itemType" : "w",
+  "UIname" : "Barbed Dagger",
+  "rollType" : "pierce",
+  "statusEffectList":["3bleed4"],
+  "addtlEffects" : []
+}

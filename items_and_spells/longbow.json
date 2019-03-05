@@ -1,12 +1,12 @@
 {
   "type" : "w",
-  "name" : "shortbow",
+  "name" : "longbow",
   "finesse" : true,
-  "roll" : 6,
+  "roll" : 8,
   "diceNumber" : 1,
   "desc" : "",
   "itemType" : "w",
-  "UIname" : "Shortbow",
+  "UIname" : "Longbow",
   "rollType" : "pierce",
   "statusEffectList":["safeDistance"],
   "addtlEffects" : []

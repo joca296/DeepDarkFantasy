@@ -1,0 +1,18 @@
+{
+  "type": "a",
+  "statusEffectOnly" : false,
+  "name": "Frost Nova",
+  "spellCastMod": "cha",
+  "heal": false,
+  "spellCastModAddedToRoll": false,
+  "savingThrowFlag": true,
+  "savingThrowType": "dexAdv",
+  "savingThrowDC": 13,
+  "statusEffectList": ["chill"],
+  "roll": 4,
+  "diceNumber": 3,
+  "rollType": "cold",
+  "numberOfTargets":3,
+  "manaCost" : 4,
+  "addtlEffects": []
+}

@@ -1,0 +1,21 @@
+{
+  "hitDice" : 6,
+  "hp" : 10,
+  "mana" : 10,
+  "ac" : 14,
+  "prof" : 2,
+  "str" : -1,
+  "dex" : 1,
+  "con" : 3,
+  "int" : 1,
+  "wis" : 1,
+  "cha" : 3,
+  "actionsPerRound" : 1,
+  "weapons" : ["dagger"],
+  "spellBook" : ["fireboltCHA","frostboltCHA","frostNovaCHA","darkPact","fireballCHA",],
+  "armor" : "",
+  "inventory" : ["manaPotion","manaPotion","healingPotion"],
+  "immunity" : [],
+  "resist" : [],
+  "weakness" : []
+}

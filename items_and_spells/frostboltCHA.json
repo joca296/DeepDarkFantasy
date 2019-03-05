@@ -1,17 +1,17 @@
 {
     "type" : "s",
     "statusEffectOnly" : false,
-    "name" : "Firebolt",
-    "spellCastMod" : "int",
+    "name" : "Frostbolt",
+    "spellCastMod" : "cha",
     "heal" : false,
     "spellCastModAddedToRoll" : false,
     "savingThrowFlag" : false,
     "savingThrowType" : "",
     "savingThrowDC" : "",
-    "statusEffectList":[],
-    "roll" : 10,
+    "statusEffectList":["chill"],
+    "roll" : 6,
     "diceNumber" : 1,
-    "rollType" : "fire",
+    "rollType" : "cold",
     "manaCost" : 0,
     "addtlEffects" : []
 }

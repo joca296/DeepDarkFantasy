@@ -1,0 +1,11 @@
+{
+	"Name" : "Safe Distance",
+	"Value" : 1,
+	"DOT" : false,
+	"SavingThrowSkill" : "CON",
+	"SaveDC" : 0,
+	"Duration" : 1,
+	"Target" : "Self",
+	"Affects" : ["AC"],
+	"Description" : "Slightly harder to hit cause not in melee range "
+}

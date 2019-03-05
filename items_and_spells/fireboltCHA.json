@@ -1,8 +1,8 @@
 {
     "type" : "s",
     "statusEffectOnly" : false,
-    "name" : "Firebolt",
-    "spellCastMod" : "int",
+    "name" : "firebolt",
+    "spellCastMod" : "cha",
     "heal" : false,
     "spellCastModAddedToRoll" : false,
     "savingThrowFlag" : false,

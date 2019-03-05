@@ -1,0 +1,18 @@
+{
+  "type": "a",
+  "statusEffectOnly" : false,
+  "name": "Fan Of Knives",
+  "spellCastMod": "wis",
+  "heal": false,
+  "spellCastModAddedToRoll": true,
+  "savingThrowFlag": false,
+  "savingThrowType": "",
+  "savingThrowDC": "",
+  "statusEffectList": ["2bleed4"],
+  "roll": 4,
+  "diceNumber": 3,
+  "rollType": "pierce",
+  "numberOfTargets": 5,
+  "manaCost" : 8,
+  "addtlEffects": []
+}

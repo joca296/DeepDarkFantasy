@@ -1,0 +1,11 @@
+{
+	"Name" : "Bleed",
+	"Value" : -3,
+	"DOT" : true,
+	"SavingThrowSkill" : "DEX",
+	"SaveDC" : 13,
+	"Duration" : 4,
+	"Target" : "Enemy",
+	"Affects" : [],
+	"Description" : "Takes bleed damage at the beggining of the turn "
+}

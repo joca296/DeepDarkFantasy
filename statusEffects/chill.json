@@ -1,0 +1,11 @@
+{
+	"Name" : "Chill",
+	"Value" : -1,
+	"DOT" : false,
+	"SavingThrowSkill" : "CON",
+	"SaveDC" : 13,
+	"Duration" : 2,
+	"Target" : "Enemy",
+	"Affects" : ["attackAdv"],
+	"Description" : "This creature is chilled and has disadvatage on attack rolls "
+}

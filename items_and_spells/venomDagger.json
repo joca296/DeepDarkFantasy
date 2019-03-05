@@ -1,0 +1,13 @@
+{
+  "type" : "w",
+  "name" : "venomDagger",
+  "finesse" : true,
+  "roll" : 4,
+  "diceNumber" : 1,
+  "desc" : "Dagger coated in snake venom",
+  "itemType" : "w",
+  "UIname" : "Venom Dagger",
+  "rollType" : "pierce",
+  "statusEffectList":["4poison2"],
+  "addtlEffects" : []
+}

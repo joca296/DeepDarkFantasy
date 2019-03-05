@@ -1,0 +1,18 @@
+{
+  "type": "a",
+  "statusEffectOnly" : false,
+  "name": "fireball",
+  "spellCastMod": "cha",
+  "heal": false,
+  "spellCastModAddedToRoll": false,
+  "savingThrowFlag": true,
+  "savingThrowType": "dexAdv",
+  "savingThrowDC": 14,
+  "statusEffectList": [],
+  "roll": 6,
+  "diceNumber": 8,
+  "rollType": "fire",
+  "numberOfTargets": 5,
+  "manaCost" : 16,
+  "addtlEffects": []
+}

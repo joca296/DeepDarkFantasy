@@ -1,0 +1,11 @@
+{
+	"Name" : "Poison",
+	"Value" : -4,
+	"DOT" : true,
+	"SavingThrowSkill" : "CON",
+	"SaveDC" : 13,
+	"Duration" : 2,
+	"Target" : "Enemy",
+	"Affects" : [],
+	"Description" : "Takes poison damage at the beggining of the turn "
+}

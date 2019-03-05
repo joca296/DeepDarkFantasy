@@ -1,0 +1,11 @@
+{
+	"Name" : "Soul Devour",
+	"Value" : -1,
+	"DOT" : true,
+	"SavingThrowSkill" : "DEX",
+	"SaveDC" : 0,
+	"Duration" : 5,
+	"Target" : "Self",
+	"Affects" : [],
+	"Description" : "Darkness slowly eating your soul, the pact must be fullfilled!"
+}
