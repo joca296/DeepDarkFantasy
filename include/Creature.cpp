@@ -491,7 +491,7 @@ void Hero::listEquipped() {
         while(1){
             int choice;
             string choice_string;
-            cin>>choice;
+            cin>>choice_string;
             try{
                 choice=stoi(choice_string);
             }
