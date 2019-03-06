@@ -26,6 +26,8 @@ int main(){
     r=r->enterRoom(partyHead);
     }
     delete_rList(rHead);
+    cout<<"You lost omegaLUL"<<endl;
+    return 0;
 
 }
 //HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

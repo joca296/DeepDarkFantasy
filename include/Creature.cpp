@@ -448,13 +448,30 @@ Action* Hero::selectConsumable() {
 Creature* Hero::chooseTarget(struct cList* actors){
     struct cList* tmp = actors;
     int numberOfTargets = 0;
+    const int spaceForNames=20;
+    const int HPDigits = 3;
+    int spaceForHP= HPDigits*2+1;
+    int outLen;
     cout<<"Choose your target (sorted by initiative) "<<endl;
     while(tmp!=NULL){
+        spaceForHP= HPDigits*2+1;
         numberOfTargets++;
-        string output = tmp->CPL->getName()+" "+to_string(tmp->CPL->getCurHP())+"/"+to_string(tmp->CPL->getMaxHP())+" HP";
-        if (tmp->CPL->isHero() == 1) output += " "+to_string(tmp->CPL->getCurMana())+"/"+to_string(tmp->CPL->getMaxMana())+" Mana";
+        string output = tmp->CPL->getName();
+        outLen=output.length();
+        for(int i =0; i<spaceForNames-outLen; i++) output+=" ";
+        output+=to_string(tmp->CPL->getCurHP())+"/"+to_string(tmp->CPL->getMaxHP());
+        outLen=output.length();
+        for(int i=0; i<spaceForNames+spaceForHP-outLen;i++)output+=" ";
+        output+=" HP ";
+        spaceForHP= spaceForHP*2+4;
+        if (tmp->CPL->isHero() == 1) {
+            output +=to_string(tmp->CPL->getCurMana()) + "/" + to_string(tmp->CPL->getMaxMana());
+            outLen=output.length();
+            for(int i=0; i<spaceForNames+spaceForHP-outLen;i++)output+=" ";
+            output+=" Mana";
+        }
         cout<<numberOfTargets<<". ";
-        if (this == tmp->CPL) colorPrint(output,"ltBlue");
+        if (this == tmp->CPL)colorPrint(output,"ltBlue");
         else cout<<output;
         cout<<endl;
         tmp=tmp->next;
@@ -1301,4 +1318,9 @@ int Creature::getPureAttr(const string& attr){
     else if (attr == "INT") return this->getINT()-ignoreStatusEffects;
     else if (attr == "WIS") return this->getWIS()-ignoreStatusEffects;
     else if (attr == "CHA") return this->getCHA()-ignoreStatusEffects;
+    else
+    {
+        cout<<"ERROR IN getPureAttr returning 0"<<endl;
+        return 0;
+    }
 }
