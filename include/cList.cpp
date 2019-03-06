@@ -156,7 +156,7 @@ struct cList *delete_node(struct cList *head,struct cList *TBD,bool deletHero)
     }
     prev->next=ptr->next;
     //cout<<ptr->CPL->getName()<<" died"<<endl;
-    if(deletHero==true || head->CPL->isHero()==0) delete ptr->CPL;
+    if(deletHero==true || TBD->CPL->isHero()==0) delete ptr->CPL;
     delete ptr;
     return head;
 }

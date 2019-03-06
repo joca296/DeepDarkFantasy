@@ -16,7 +16,7 @@
   "maxRolls" : 3,
   "combatDesc" : "A high-pitched hiss alerts you to trouble from above. On the ceiling there are eight-legged, multi-eyed rodents. They bare their needlelike teeth before leaping off the ceiling at your face!",
   "roomDesc": "",
-  "monsters" : ["giantRat","giantRat","giantRat","giantRat","spiderRat","spiderRat","spiderRat","spiderRat"],
+  "monsters" : ["giantRat","giantRat","giantRat","spiderRat"],
   "events" : [],
   "Shrines" : [],
   "connectedRooms" : ["caveEntrance","storageRoom","caveHallwayB"],
