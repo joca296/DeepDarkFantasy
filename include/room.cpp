@@ -95,7 +95,7 @@ void room::set_room_desc(string s)
     }
     string room::getInvestigation_SUCC_text()
     {
-        return Survival_SUCC_text;
+        return Investigation_SUCC_text;
     }
     void room::setSurvival_SUCC_text(string s)
     {
@@ -125,7 +125,7 @@ void room::set_room_desc(string s)
     }
     void room::setInvestigation_FAIL_text(string s)
     {
-        Survival_FAIL_text=s;
+        Investigation_FAIL_text=s;
     }
     string room::getInvestigation_FAIL_text()
     {
