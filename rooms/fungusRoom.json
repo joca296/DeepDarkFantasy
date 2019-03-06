@@ -16,7 +16,7 @@
   "maxRolls": 3,
   "combatDesc": "Violet fungi hides amongst the other fungi. While motionless, they are indistinguishable from the surrounding fungi. They start attacking you as you approach.",
   "roomDesc": "A forest of fungi covers the cavern here. They come in a variety of shapes and sizes, some squatting down to the floor and wiggling strange appendages, others towering up 20 or more feet into the air and puffing out golden glittery spores every so often. Orbs of violet light shine from the walls and ceiling, casting a lavender glow on the area.",
-  "monsters": ["violetFungus","violetFungus","violetFungus","violetFungus"],
+  "monsters": ["violetFungus","violetFungus","violetFungus"],
   "events": [],
   "Shrines": [],
   "connectedRooms": ["nTunnel"],

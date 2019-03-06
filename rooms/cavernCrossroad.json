@@ -16,7 +16,7 @@
   "maxRolls": 3,
   "combatDesc": "",
   "roomDesc": "The main tunnel expands into a large chamber that divides into three more tunnels heading southwest, south, and north. A subteranean stream spills into the chamber through the northeast and continues down the southern tunnel.",
-  "monsters": ["explodeyRat","explodeyRat","dragonRatBlue","dragonRatBlue","dragonRatBlue","laserRat","laserRat"],
+  "monsters": ["explodeyRat","explodeyRat","dragonRatBlue","laserRat"],
   "events": [],
   "Shrines": [],
   "connectedRooms": ["caveHallwayB","nTunnel","sTunnel","swTunnel"],

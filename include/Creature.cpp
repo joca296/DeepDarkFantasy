@@ -318,36 +318,31 @@ int Hero::isHero() {
 }
 Action* Hero::actionChoose(Creature* c) {
     cout<<"Choose an action:"<<endl;
-    if(weapons.size()>0 && spellBook.size()>0){
-
-        while(1){
-            cout<<"1. Weapon"<<endl;
-            cout<<"2. Spell"<<endl;
-            cout<<"3. Use consumable"<<endl;
-            cout<<"4. Check Status Effects"<<endl;
-            cout<<"5. Check Stats"<<endl;
-            cout<<"6. Back"<<endl;
-            int choice;
-            string choice_string;
-            cin>>choice_string;
-            try{
-                choice=stoi(choice_string);
-            }
-            catch(...) {
-                cout<<"INVALID INPUT enter a NUMBER"<<endl;
-                choice=0;
-            }
-            if(choice==1) return this->selectWeapon();
-            else if (choice==2) return this->selectSpell();
-            else if (choice==3) return this->selectConsumable();
-            else if (choice==4) StatusEffectMenu(c);
-            else if (choice==5) StatsMenu(c);
-            else if (choice==6) return NULL;
-            else cout<<"Invalid input, try again."<<endl;
+    while(1){
+        cout<<"1. Weapon"<<endl;
+        cout<<"2. Spell"<<endl;
+        cout<<"3. Use consumable"<<endl;
+        cout<<"4. Check Status Effects"<<endl;
+        cout<<"5. Check Stats"<<endl;
+        cout<<"6. Back"<<endl;
+        int choice;
+        string choice_string;
+        cin>>choice_string;
+        try{
+            choice=stoi(choice_string);
         }
+        catch(...) {
+            cout<<"INVALID INPUT enter a NUMBER"<<endl;
+            choice=0;
+        }
+        if(choice==1) return this->selectWeapon();
+        else if (choice==2) return this->selectSpell();
+        else if (choice==3) return this->selectConsumable();
+        else if (choice==4) StatusEffectMenu(c);
+        else if (choice==5) StatsMenu(c);
+        else if (choice==6) return NULL;
+        else cout<<"Invalid input, try again."<<endl;
     }
-    else if (spellBook.size() == 0) return this->selectWeapon();
-    else return this->selectSpell();
 }
 Action* Hero::selectWeapon() {
 
