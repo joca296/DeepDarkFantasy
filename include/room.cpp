@@ -498,6 +498,7 @@ int room::basic_checks(Creature *p)
     int choice_container,roll_container;
     string s,choice_container_string;
     bool isSomethingFound = false;
+    bool lootFlag = false;
     do
     {
         basic_checks_text();
@@ -533,7 +534,7 @@ int room::basic_checks(Creature *p)
     roll_container = p->rollSave(s);
     for(int i=0; i<numberOfTraps;i++) //trap discovery handling
     {
-        if(room_traps[i]->getSkill()==s && roll_container>=room_traps[i]->getCheckDC())  //if trap skill needed to find it corresponds to chosen skill and if passed the DC
+        if(room_traps[i]->eDisc==false && room_traps[i]->isDisarmed==false && room_traps[i]->getSkill()==s && roll_container>=room_traps[i]->getCheckDC())  //if trap skill needed to find it corresponds to chosen skill and if passed the DC
         {
             room_traps[i]->eDisc=true;                                                   //Trap discovered flag set to true
             cout<<room_traps[i]->getCheck_succ_text()<<endl;                             //Output that the trap is found to the user
@@ -543,7 +544,7 @@ int room::basic_checks(Creature *p)
     }
     for(int i=0; i<room_shrine.size(); i++) //shrine discovery handling
     {
-        if(room_shrine[i]->getSkill()==s && roll_container>=room_shrine[i]->getCheckDC())
+        if(room_shrine[i]->eDisc==false && room_shrine[i]->isDisarmed==false && room_shrine[i]->getSkill()==s && roll_container>=room_shrine[i]->getCheckDC())
         {
             room_shrine[i]->eDisc=true;
             cout<<room_shrine[i]->getCheck_succ_text()<<endl;
@@ -552,13 +553,19 @@ int room::basic_checks(Creature *p)
     }
     for(int i=0; i<room_hidden_items.size(); i++)                                               //Hidden Items handling
     {
+        lootFlag = false;
         if(room_hidden_items.at(i)->getSkill()==s && roll_container>=room_hidden_items.at(i)->getCheckDC()) {
             cout<<room_hidden_items.at(i)->getCheck_succ_text()<<endl;
             isSomethingFound=true;
             for (int j=0; j<room_hidden_items.at(i)->hItems.size(); j++)
             {
                 groundItems.push_back(room_hidden_items.at(i)->hItems.at(j));
+                lootFlag = true;
             }
+           if(lootFlag==true) {
+               room_hidden_items.erase(room_hidden_items.begin() + i);
+               i--;
+           }
         }
     }
 
