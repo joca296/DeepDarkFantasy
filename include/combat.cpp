@@ -1,7 +1,7 @@
 #include "combat.h"
 #include "cList.h"
 
-int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
+int combat(struct cList*& partyHead,string MonsterList[],int n,string combatText)
 {
     struct cList* head=NULL;
     struct cList* ptr=partyHead;

@@ -282,7 +282,7 @@ room::room(string name) //constructor
 }
 
 
-room* room::enterRoom(struct cList *partyHead)
+room* room::enterRoom(struct cList *&partyHead)
 {
     room *nRoom=nullptr;
     string eChoice;
@@ -475,8 +475,8 @@ void room::swapHero(struct cList* partyHead)
     ptr=partyHead;
     do {
         cin >> choice_container;
-        if(choice_container<1 || choice_container>counter)cout<<"Invalid input, try again"<<endl;
-    }while(choice_container<1 || choice_container>counter);
+        if(choice_container<1 || choice_container>=counter)cout<<"Invalid input, try again"<<endl;
+    }while(choice_container<1 || choice_container>=counter);
 
     for(int i=1;i!=choice_container; i++)
     {

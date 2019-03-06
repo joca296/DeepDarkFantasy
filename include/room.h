@@ -95,7 +95,7 @@ public:
     int getDCbyString(string s);
 
 
-    room* enterRoom(struct cList* partyHead);
+    room* enterRoom(struct cList*& partyHead);
     void basic_choise_text(Creature *p);
     int basic_checks(Creature *p);
     int special_interactions(Creature *p);
