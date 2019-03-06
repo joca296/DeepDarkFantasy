@@ -840,26 +840,25 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
     struct cList* targets=NULL;
     targets=append_node(tar,targets);
 
-    //number of valid targets
     int validTargets;
-    if (tar->isHero() == 1 && this->isHero()==0) validTargets = heroNum(actors);
+
+    if ( tar->isHero() == 1 && this->isHero() ==1 ) validTargets = heroNum(actors);
     else validTargets = monsterNum(actors);
 
-    if(this->isHero()==1 && tar->isHero()==1) validTargets++;
-
     //choosing targets
-     if(validTargets>1){
-         for (int i=0; i<action->getNumberOfTargets()-1;i++){
-             while(validTargets>1){
-                 Creature* tmp = getRandomListMember(actors,(this->isHero() == 1? 0:1));
-                 if(!isInList(tmp,targets)){
-                     targets=append_node(tmp,targets);
-                     validTargets--;
-                     break;
-                 }
-             }
-         }
-     }
+    if(validTargets>1){
+        for (int i=0; i<action->getNumberOfTargets()-1;i++){
+            while(validTargets>1){
+                Creature* tmp = getRandomListMember(actors,tar->isHero());
+                if(!isInList(tmp,targets)){
+                    targets=append_node(tmp,targets);
+                    validTargets--;
+                    break;
+                }
+            }
+        }
+    }
+
 
     //removing mana
     this->setCurMana(this->getCurMana()-action->getManaCost());

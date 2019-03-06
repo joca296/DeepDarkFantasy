@@ -267,7 +267,6 @@ struct cList* pruneParty(struct cList* partyHead)
         ptr = ptr2;
         
     }
-    cout<<"returning "<<partyHead->CPL->getName()<<" from pruneParty"<<endl;
     return partyHead;
 }
 int partySize(struct cList* partyHead)
