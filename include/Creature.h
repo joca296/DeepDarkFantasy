@@ -144,7 +144,7 @@ public:
     Hero(){};
     Hero(string name, int level=1);
 
-    ~Hero(){ cout<<"deleted"<<endl;}
+    //~Hero(){ cout<<"deleted"<<endl;}
 
     //overrides and methods
     int isHero() override;

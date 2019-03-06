@@ -33,7 +33,6 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
     Creature* target;
     Action* action;
     float expPool = 0;
-    displayList(head);
     while(true/*fightOverFlag==false*/)
     {
         ptr=head;

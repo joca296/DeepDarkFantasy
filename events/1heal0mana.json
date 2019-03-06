@@ -1,0 +1,6 @@
+{
+	"CheckDC" : 14,
+	"Skill" : "Survival",
+	"CheckSUCC" : "You find some ingredients from the local fauna and mix some potions",
+	"ItemList" : ["healingPotion"]
+}
