@@ -253,7 +253,7 @@ struct cList* createParty(int n)
 struct cList* pruneParty(struct cList* partyHead)
 {
     struct cList* ptr=partyHead;
-    while(ptr!=nullptr)
+    while(ptr!=nullptr && partyHead!=nullptr)
     {
         if(ptr->CPL->getCurHP()<1)partyHead=delete_node(partyHead,ptr,true);
         ptr = ptr->next;

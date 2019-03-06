@@ -54,14 +54,13 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
                     target = ptr->CPL->chooseTarget(head);
                     action = ptr->CPL->actionChoose(target);
                 }while(action==nullptr);
-                int deathsThisTurn = 0;
-                deathsThisTurn+=ptr->CPL->actionExec(head,target,action);
-                if(deathsThisTurn>0){
+
+                    ptr->CPL->actionExec(head,target,action);
                     if(ptr->CPL->getCurHP() < 1) {
                         suicideFlag = true;
                         ptr=ptr->next;
                     }
-                    dcount+=deathsThisTurn;
+
                     head=prune_cList(head,&expPool);
                     partyHead=pruneParty(partyHead);
                     if(partyHead==nullptr) return -1;
@@ -75,7 +74,7 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
                         return 1;
                     }
                     if(suicideFlag) break;
-                }
+
             }
             if(!suicideFlag) ptr=ptr->next;
         }
