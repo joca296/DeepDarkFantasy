@@ -673,6 +673,7 @@ int room::special_interactions(Creature *p)
         }
         for(int i=0; i<room_shrine.size();i++)
         {
+
             if(room_shrine[i]->eDisc==true && room_shrine[i]->isDisarmed==false)
             {
                 cout<<counter<<". "<<room_shrine[i]->getInteract_text()<<endl;

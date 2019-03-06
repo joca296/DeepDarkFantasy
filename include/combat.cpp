@@ -65,7 +65,7 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
                     head=prune_cList(head,&expPool);
                     partyHead=pruneParty(partyHead);
                     if(partyHead==nullptr) return -1;
-                    if(dcount==n){
+                    if(monsterNum(head)<1){
                         cout<<"Battle won!"<<endl;
 
                         expPool=expPool/partySize(partyHead);

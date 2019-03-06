@@ -451,7 +451,7 @@ Creature* Hero::chooseTarget(struct cList* actors){
     const int spaceForNames=getMaxNameLength(actors);
     const int HPDigits = getMaxDigitsLength(actors,"MaxHP");
     const int ManaDigits = getMaxDigitsLength(actors,"MaxMana");
-    cout<<"Mana Digits: "<<ManaDigits<<endl;
+
     int spaceForHP;
     int spaceForMana;
     int outLen;
@@ -475,7 +475,11 @@ Creature* Hero::chooseTarget(struct cList* actors){
             for(int i=0; i<spaceForNames+spaceForMana-outLen;i++)output+=" ";
             output+=" Mana";
         }
-        cout<<numberOfTargets<<". ";
+        if(heroNum(actors)+monsterNum(actors)<10)cout<<numberOfTargets<<". ";
+        else {
+            if (numberOfTargets<10)cout<<" "<<numberOfTargets<<". ";
+            else cout<<numberOfTargets<<". ";
+        }
         if (this == tmp->CPL)colorPrint(output,"ltBlue");
         else cout<<output;
         cout<<endl;
