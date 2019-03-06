@@ -33,6 +33,7 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
     Creature* target;
     Action* action;
     float expPool = 0;
+    displayList(head);
     while(true/*fightOverFlag==false*/)
     {
         ptr=head;
@@ -62,7 +63,7 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
                     }
 
                     head=prune_cList(head,&expPool);
-                    //partyHead=pruneParty(partyHead);
+                    partyHead=pruneParty(partyHead);
                     if(partyHead==nullptr) return -1;
                     if(monsterNum(head)<1){
                         cout<<"Battle won!"<<endl;
