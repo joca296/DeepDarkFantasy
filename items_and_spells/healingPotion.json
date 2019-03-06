@@ -1,0 +1,7 @@
+{
+  "name": "healingPotion",
+  "UIname": "Healing Potion",
+  "desc": "Use to restore 10 health.",
+  "itemType": "c",
+  "consumableEffectList": ["healingPotion"]
+}

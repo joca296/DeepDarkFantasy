@@ -1,0 +1,7 @@
+{
+  "name": "manaPotion",
+  "UIname": "Mana Potion",
+  "desc": "Use to restore 10 mana.",
+  "itemType": "c",
+  "consumableEffectList": ["manaPotion"]
+}

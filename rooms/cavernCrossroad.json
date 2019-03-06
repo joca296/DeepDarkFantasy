@@ -19,8 +19,8 @@
   "monsters": ["explodeyRat","explodeyRat","dragonRatBlue","dragonRatBlue","dragonRatBlue","laserRat","laserRat"],
   "events": [],
   "Shrines": [],
-  "connectedRooms": ["caveHallwayB"],
-  "connectedRoomsUI": ["Cave Hallway B"],
+  "connectedRooms": ["caveHallwayB","nTunnel","sTunnel","swTunnel"],
+  "connectedRoomsUI": ["Cave Hallway B","Northern tunnel","Southern tunnel","South-western tunnel"],
   "GroundItems": [],
   "HiddenItems": ["hiddenFireGreataxe"],
   "SecretRooms": []

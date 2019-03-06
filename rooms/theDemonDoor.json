@@ -16,7 +16,7 @@
   "maxRolls" : 3,
   "combatDesc" : "You move towards the huge door  iron door whose surface resembles the face of a balor: two front-swept horns flank its sides, and its cruel eyes leer down over its short snout. Its fanged mouth is ajar and stained with purple dye that dribbles down to the floor, as you try to open it the frescs around it start moving towards you aggresively",
   "roomDesc" : "The spirits are defeated, the way forward is clear",
-  "monsters" : ["frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit",],
+  "monsters" : ["frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit"],
   "events" : [],
   "Shrines" : [],
   "connectedRooms" : [],

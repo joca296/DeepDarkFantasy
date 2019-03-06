@@ -19,8 +19,8 @@
   "monsters" : ["ratBearPig","ratBearPig","nibbles"],
   "events" : [],
   "Shrines" : [],
-  "connectedRooms" : [],
-  "connectedRoomsUI": [],
+  "connectedRooms" : ["swTunnel"],
+  "connectedRoomsUI": ["South-western tunnel"],
   "GroundItems" : ["alchemistsFire"],
   "HiddenItems": [],
   "SecretRooms" :
