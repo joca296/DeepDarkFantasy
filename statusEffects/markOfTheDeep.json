@@ -1,0 +1,11 @@
+{
+  "Name": "Mark of the Deep",
+  "Value": 1,
+  "DOT": false,
+  "SavingThrowSkill": "STR",
+  "SaveDC": 0,
+  "Duration": 100,
+  "Target": "Self",
+  "Affects": ["STR","DEX","CON","INT","WIS","CHA"],
+  "Description": "Blessed by the Old Voice gain +1 to all attributes."
+}

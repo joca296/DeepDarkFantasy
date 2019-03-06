@@ -1,0 +1,35 @@
+{
+  "name": "",
+  "UIname": "",
+  "DC_Perception": -1,
+  "DC_Investigation": -1,
+  "DC_Survival": -1,
+  "DC_Arcana": -1,
+  "Perc_SUCC": "",
+  "Invest_SUCC": "",
+  "Surv_SUCC": "",
+  "Arc_SUCC": "",
+  "Perc_FAIL": "You don't see anything of value",
+  "Invest_FAIL": "You don't find anything helpful",
+  "Surv_FAIL": "No use for this right now",
+  "Arc_FAIL": "You don't sense any specific magic",
+  "maxRolls": 3,
+  "combatDesc": "Violet fungi hides amongst the other fungi. While motionless, they are indistinguishable from the surrounding fungi. They start attacking you as you approach.",
+  "roomDesc": "A forest of fungi covers the cavern here. They come in a variety of shapes and sizes, some squatting down to the floor and wiggling strange appendages, others towering up 20 or more feet into the air and puffing out golden glittery spores every so often. Orbs of violet light shine from the walls and ceiling, casting a lavender glow on the area.",
+  "monsters": ["violetFungus","violetFungus","violetFungus","violetFungus"],
+  "events": [],
+  "Shrines": [],
+  "connectedRooms": ["nTunnel"],
+  "connectedRoomsUI": ["Northern tunnel"],
+  "GroundItems": [],
+  "HiddenItems": [],
+  "SecretRooms": [
+    {
+      "DC": 12,
+      "Skill": "Investigation",
+      "jName": "altarOfForbiddenPower",
+      "UIname": "Altar of Forbidden Power",
+      "succText": "Tucked at the end of the fungus chamber is an altar dedicated to the entity known as the Old Voice. The creature's corrupting influence still manifests here, tempting mortals with power."
+    }
+  ]
+}

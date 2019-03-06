@@ -1,0 +1,17 @@
+{
+  "Interact": "You cant get here.",
+  "DMG": 300000,
+  "dNum": 300000,
+  "CheckDC": 300000,
+  "Skill": "Perception",
+  "CheckSUCC": "You cant get here.",
+  "SaveDC": 10,
+  "Save": "STR",
+  "SaveSUCC": "The stream suddenly gained momentum and you manage to hold your ground.",
+  "SaveFAIL": "The stream suddenly gained momentum and you couldn't hold your ground. The stream took you to the most southern end of the tunnel and you fall to your death.",
+  "DisarmDC": 300000,
+  "SaveMulti": 0,
+  "DisSucc": "You cant get here.",
+  "DisFail": "You cant get here.",
+  "statusEffectList": []
+}

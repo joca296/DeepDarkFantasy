@@ -1,0 +1,11 @@
+{
+  "Name": "Curse of the Depths",
+  "Value": -1,
+  "DOT": false,
+  "SavingThrowSkill": "STR",
+  "SaveDC": 0,
+  "Duration": 100,
+  "Target": "Self",
+  "Affects": ["globalAdv"],
+  "Description": "Cursed by the Old Voice gain disadvantage on all rolls."
+}

@@ -1,0 +1,17 @@
+{
+  "Interact": "Offer your blood to the statue by pouring into the bowl and mixing it with the purple liquid in it.",
+  "DMG": 0,
+  "dNum": 0,
+  "CheckDC": -1,
+  "Skill": "Investigation",
+  "CheckSUCC": "",
+  "SaveDC": 0,
+  "Save": "",
+  "SaveSUCC": "",
+  "SaveFAIL": "",
+  "DisarmDC": 15,
+  "SaveMulti": 0,
+  "DisSucc": "You gained the Mark of the Deep.",
+  "DisFail": "You gained the Curse of the Depths.",
+  "statusEffectList": ["markOfTheDeep","curseOfTheDepths"]
+}
