@@ -1,0 +1,17 @@
+{
+	"Interact" : "Pray to the Siberian Blue Boi shrine",
+	"DMG" : 0,
+	"dNum" : 0,
+	"CheckDC" : -1,
+	"Skill" : "Arcana",
+	"CheckSUCC" : "SIN OD ZMAJA OD BOSNE SIBIRSKI PLAVAC ",
+	"SaveDC" : 5,
+	"Save" : "CHA",
+	"SaveSUCC" : "",
+	"SaveFAIL" : "",
+	"DisarmDC" : 5,
+	"SaveMulti" : 0.5,
+	"DisSucc" : "Son of the Dragon of Bosnia smile's upon your tribute ",
+	"DisFail" : "E moj dijete, pojma ti o zivotu nemas",
+	"statusEffectList" : ["blessingOfBosnia","curseOfBosnia"]
+}

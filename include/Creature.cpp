@@ -1018,8 +1018,9 @@ void Creature::CTurnTick(int ticks,bool overrideTimer) {       //turn ticks of a
             if (SEcounter[i]<1 ||overrideTimer==true) {                                       //if counter to the corresponding status effect is less than 1 reverse the affected attributes and end the (de)buff
                 for (int j = 0;j < activeSE[i]->affects.size(); j++) {  //iterates over all the attributes a single effect changed
 
-                    string s = activeSE[i]->affects[j];                                                      // set s equal to the string of the j-th attribute in the i-th status effect that needs to be reversed (readability purposes)
-                    if(s!="CurHP"||s!="CurMana")this->setFieldsByString(s, this->getFieldsByString(s) - activeSE[i]->val); //restore attribute
+                    string s = activeSE[i]->affects[j];                 // set s equal to the string of the j-th attribute in the i-th status effect that needs to be reversed (readability purposes)
+
+                    if(s!="CurHP" && s!="CurMana")this->setFieldsByString(s, this->getFieldsByString(s) - activeSE[i]->val); //restore attribute
 
                 }
                 activeSE.erase(activeSE.begin() + i);

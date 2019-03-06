@@ -18,14 +18,14 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
         initiative[i]=dRoll()+cp[i]->getDEX();
         cout<<cp[i]->getName()<<" rolls "<<initiative[i]<<"("<<initiative[i]-cp[i]->getDEX()<<"+"<<cp[i]->getDEX()<<")"<<" initiative "<<endl;
         cp[i]->setInit(initiative[i]);
-        head=insert_node(cp[i],head);
+        head=append_node(cp[i],head);
 
     }
     while(ptr!=NULL) {
         initiative[0] = dRoll(20,ptr->CPL->getAdvantage("globalAdv"),1) + ptr->CPL->getDEX();
         cout << ptr->CPL->getName() << " rolls " << initiative[0] << "(" << initiative[0] - ptr->CPL->getDEX() << "+"<< ptr->CPL->getDEX() << ")" << " initiative " << endl;
         ptr->CPL->setInit(initiative[0]);
-        head = insert_node(ptr->CPL, head);
+        head = append_node(ptr->CPL, head);
         ptr=ptr->next;
     }
     sortList(head);
@@ -45,6 +45,15 @@ int combat(struct cList* partyHead,string MonsterList[],int n,string combatText)
                 dcount++;
                 head=prune_cList(head,&expPool);
                 partyHead=pruneParty(partyHead);
+                if(monsterNum(head)<1) {
+                    cout << "Battle won!" << endl;
+
+                    expPool = expPool / partySize(partyHead);
+                    levelParty(partyHead, expPool);//split exp pool between party when implemented
+
+                    delete_cList(head);
+                    return 1;
+                }
                 continue;
             }
             bool suicideFlag = false;

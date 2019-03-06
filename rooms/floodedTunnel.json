@@ -17,7 +17,7 @@
   "combatDesc": "You hear the clattering of bones and the splash of water as mosscovered skeletons rise from the stream. Your gaze shifts from their rusted scimitars to an even stranger sight: an oily pool slithers atop the water toward you, rising to strike like a liquid snake.",
   "roomDesc": "The stream is flowing faster at this point and about 3 feet in depth. The cavern floor beneath the stream is overgrown with mossy sludge. You barely hold your ground.",
   "monsters": ["skeleton","skeleton","grayOoze"],
-  "events": ["rushingStream"],
+  "events": [],
   "Shrines": [],
   "connectedRooms": ["sTunnel"],
   "connectedRoomsUI": ["Southern Tunnel"],

@@ -21,7 +21,7 @@
   "Shrines": [],
   "connectedRooms": ["caveHallwayKL","breedingChamber","cavernCrossroad"],
   "connectedRoomsUI": ["Cave Hallway", "Breeding Chamber","Cavern Crossroad"],
-  "GroundItems": [],
+  "GroundItems": ["1heal2mana"],
   "HiddenItems": [],
   "SecretRooms": []
 }

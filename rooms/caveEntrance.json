@@ -22,7 +22,7 @@
   "connectedRooms" : ["caveHallwayA"],
   "connectedRoomsUI": ["Cave Hallway A"],
   "GroundItems" : [],
-  "HiddenItems": [],
+  "HiddenItems": ["2heal1mana"],
   "SecretRooms" :
   [
 

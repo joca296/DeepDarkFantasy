@@ -1,6 +1,6 @@
 {
   "name" : "ratKingsBedroom",
-  "UIname": "Rat King's Bedroom",
+  "UIname": "Rat Kings Chambers",
   "DC_Perception" : -1,
   "DC_Investigation" : -1,
   "DC_Survival" : -1,
@@ -25,6 +25,11 @@
   "HiddenItems": [],
   "SecretRooms" :
   [
+  "DC": 8,
+      "Skill": "Investigation",
+      "jName": "ratKingsTreasureRoom",
+      "UIname": "Rat Kings Treasure Room",
+      "succText": "You push a wall that looked suspicous as it opens to reveal a secret room with a chest at the end of it, looks like you found where the Rat King keeps his treasure"
     
   ]
 }

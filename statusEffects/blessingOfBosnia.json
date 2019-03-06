@@ -1,0 +1,11 @@
+{
+	"Name" : "Blessing of Bosnia",
+	"Value" : 50,
+	"DOT" : false,
+	"SavingThrowSkill" : "WIS",
+	"SaveDC" : 0,
+	"Duration" : 60,
+	"Target" : "Self",
+	"Affects" : ["MaxHP","CurHP"],
+	"Description" : "Blessed by the ancient dragon"
+}

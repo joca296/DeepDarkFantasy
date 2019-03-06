@@ -1,6 +1,6 @@
 {
   "name" : "caveHallwayA",
-  "UIname": "Cave Hallway A",
+  "UIname": "Cave Hallway ",
   "DC_Perception" : 10,
   "DC_Investigation" : 10,
   "DC_Survival" : -1,

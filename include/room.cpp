@@ -296,8 +296,22 @@ room* room::enterRoom(struct cList *partyHead)
             if(combat(partyHead,room_monsters,numberOfMonsters,combat_desc)==-1) return nRoom;
         }
     }
-    int current_tries_remain = this->getMaxRollsAllowed();
 
+    if(room_name=="laboratory")
+    {
+        int winchoice=0;
+        cout<<"You defeated the Rat King and saved people on the surface from his wicked experiments!! "<<endl;
+        cout<<"1.Continue exploring"<<endl;
+        cout<<"2.Exit"<<endl;
+        cin>>winchoice;
+        switch(winchoice) {
+            case 1:
+                break;
+            case 2:
+                return nRoom;
+        }
+
+    }
     int choice_container_int;
     string choice_container;
 
@@ -318,14 +332,13 @@ room* room::enterRoom(struct cList *partyHead)
         switch(choice_container_int)
         {
             case 1:
-                if(current_tries_remain>0 && this->getRoomEnteredFlag()==false)
+                if(maxRollsAllowed>0)
                 {
-                    if(basic_checks(partyHead->CPL)!=5) current_tries_remain--;
+                    if(basic_checks(partyHead->CPL)!=5) maxRollsAllowed--;
                 }
                 else cout<<"You have no further interest in this place "<<endl;
                 break;
             case 2:
-                cout<<"Special Interactions WIP "<<endl;
                 special_interactions(partyHead->CPL);
                 break;
             case 3:
@@ -339,7 +352,6 @@ room* room::enterRoom(struct cList *partyHead)
                 short_rest(partyHead);
                 break;
             case 6:
-                //cout<<"EXIT WIP"<<endl;
                 eChoice=exit_room(partyHead->CPL);
                 if(partyHead->CPL->getCurHP()<1)
                 {
@@ -393,7 +405,8 @@ void room::InspectHero(struct cList* partyHead) {
         cout << "4. Open Stats " << endl;
         cout << "5. Open Status Effects"<<endl;
         cout << "6. Swap Hero " << endl;
-        cout << "7. Back" << endl;
+        cout << "7. View Party "<<endl;
+        cout << "8. Back" << endl;
         cin >> choice_container;
         try{
             choice_container_int=stoi(choice_container);
@@ -432,7 +445,11 @@ void room::InspectHero(struct cList* partyHead) {
                 cout<<"Swap Hero WIP"<<endl;
                 this->swapHero(partyHead);
                 break;
-            case 7: return ;
+            case 7:
+                displayList(partyHead);
+                break;
+            case 8:
+                return ;
         }
     }while(choice_container_int!=7);
     return ;
@@ -445,9 +462,12 @@ void room::swapHero(struct cList* partyHead)
     while(ptr!=nullptr)
     {
         cout<<counter<<". ";
-        if(partyHead->CPL==ptr->CPL)
-            colorPrint(ptr->CPL->getName()+" (active) ","ltBlue");
+        if(partyHead->CPL==ptr->CPL) {
+            colorPrint(ptr->CPL->getName() + " (active) ", "ltBlue");
+
+        }
         else cout<<ptr->CPL->getName();
+        cout<<" "<<ptr->CPL->getCurHP()<<"/"<<ptr->CPL->getMaxHP()<<" "<<ptr->CPL->getCurMana()<<"/"<<ptr->CPL->getMaxMana();
         cout<<endl;
         counter++;
         ptr=ptr->next;

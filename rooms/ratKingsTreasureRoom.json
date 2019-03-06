@@ -1,0 +1,30 @@
+{
+  "name" : "ratKingsTreasureRoom",
+  "UIname": "Rat Kings Treasure Room",
+  "DC_Perception" : -1,
+  "DC_Investigation" : -1,
+  "DC_Survival" : -1,
+  "DC_Arcana" : -1,
+  "Perc_SUCC" : "",
+  "Invest_SUCC" : "",
+  "Surv_SUCC" : "",
+  "Arc_SUCC" : "",
+  "Perc_FAIL" : "You don't see anything of value",
+  "Invest_FAIL" : "You don't find anything helpful",
+  "Surv_FAIL" : "No use for this right now",
+  "Arc_FAIL" : "You don't sense any specific magic",
+  "maxRolls" : 3,
+  "combatDesc" : "As you get neer the chest it opens...revealing rows of pointy teeth and a tounge as it lunges towards you",
+  "roomDesc" : "Seems like no treasure here afterall...",
+  "monsters" : ["mimic"],
+  "events" : [],
+  "Shrines" : [],
+  "connectedRooms" : ["ratKingsBedroom"],
+  "connectedRoomsUI": ["Rat Kings Chambers"],
+  "GroundItems" : [],
+  "HiddenItems": [],
+  "SecretRooms" :
+  [
+    
+  ]
+}

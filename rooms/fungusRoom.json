@@ -22,7 +22,7 @@
   "connectedRooms": ["nTunnel"],
   "connectedRoomsUI": ["Northern tunnel"],
   "GroundItems": [],
-  "HiddenItems": [],
+  "HiddenItems": ["1heal0mana"],
   "SecretRooms": [
     {
       "DC": 12,

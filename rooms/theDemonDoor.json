@@ -19,8 +19,8 @@
   "monsters" : ["frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit","frescoSpirit"],
   "events" : [],
   "Shrines" : [],
-  "connectedRooms" : [],
-  "connectedRoomsUI": [],
+  "connectedRooms" : ["caveHallwayKL","ratKingsBedroom"],
+  "connectedRoomsUI": ["CaveHallway","The Rat Kings Chambers"],
   "GroundItems" : [],
   "HiddenItems": [],
   "SecretRooms" :

@@ -81,7 +81,7 @@ int displayList(struct cList* head)
     else
         while(ptr!=nullptr)
         {
-            cout<<ptr->CPL->getName()<<" Init: "<<ptr->CPL->getInit()<<endl;
+            cout<<ptr->CPL->getName()<<" "<<ptr->CPL->getCurHP()<<"/"<<ptr->CPL->getMaxHP()<<" "<<ptr->CPL->getCurMana()<<"/"<<ptr->CPL->getMaxMana()<<endl;
             ptr=ptr->next;
         }
         cout<<endl;
@@ -258,7 +258,6 @@ struct cList* pruneParty(struct cList* partyHead)
     {
         ptr2 = ptr->next;
         if(ptr->CPL->getCurHP()<1) {
-            cout<<"Entering delete_node from pruneParty to delete "<<ptr->CPL->getName()<<endl;
             partyHead = delete_node(partyHead, ptr, true);
         }
         ptr = ptr2;

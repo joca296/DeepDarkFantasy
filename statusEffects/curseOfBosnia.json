@@ -1,0 +1,11 @@
+{
+	"Name" : "Curse of Bosnia",
+	"Value" : -1,
+	"DOT" : false,
+	"SavingThrowSkill" : "WIS",
+	"SaveDC" : 0,
+	"Duration" : 20,
+	"Target" : "Self",
+	"Affects" : ["globalAdv"],
+	"Description" : "Nema vise turskih pita od posavskog zlatnog zita"
+}

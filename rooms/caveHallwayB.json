@@ -1,6 +1,6 @@
 {
   "name": "caveHallwayB",
-  "UIname": "Cave Hallway B",
+  "UIname": "Cave Hallway ",
   "DC_Perception": -1,
   "DC_Investigation": -1,
   "DC_Survival": -1,
@@ -20,7 +20,7 @@
   "events": [],
   "Shrines": [],
   "connectedRooms": ["caveHallwayA","cavernCrossroad"],
-  "connectedRoomsUI": ["Cave Hallway A","Cavern Crossroad"],
+  "connectedRoomsUI": ["Cave Hallway ","Cavern Crossroad"],
   "GroundItems": [],
   "HiddenItems": [],
   "SecretRooms": []

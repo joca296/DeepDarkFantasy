@@ -21,8 +21,8 @@
   "Shrines" : [],
   "connectedRooms" : ["swTunnel"],
   "connectedRoomsUI": ["South-western tunnel"],
-  "GroundItems" : ["alchemistsFire"],
-  "HiddenItems": [],
+  "GroundItems" : ["alchemistsFire","healingPotion"],
+  "HiddenItems": ["2heal1mana"],
   "SecretRooms" :
   [
     
