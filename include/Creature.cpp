@@ -842,8 +842,10 @@ int Creature::execAoE(struct cList* actors, SpellAoE *action, Creature* tar){
 
     //number of valid targets
     int validTargets;
-    if (tar->isHero() == 1) validTargets = heroNum(actors);
+    if (tar->isHero() == 1 && this->isHero()==0) validTargets = heroNum(actors);
     else validTargets = monsterNum(actors);
+
+    if(this->isHero()==1 && tar->isHero()==1) validTargets++;
 
     //choosing targets
      if(validTargets>1){

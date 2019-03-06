@@ -258,9 +258,9 @@ struct cList* pruneParty(struct cList* partyHead)
     {
         ptr2 = ptr->next;
         if(ptr->CPL->getCurHP()<1) {
-            cout<<"partyHead points at: "<<partyHead->CPL->getName()<<endl;
+            //cout<<"partyHead points at: "<<partyHead->CPL->getName()<<endl;
             partyHead = delete_node(partyHead, ptr, true);
-            cout<<"partyHead after delete_node points at: "<<partyHead->CPL->getName()<<endl;
+            //cout<<"partyHead after delete_node points at: "<<partyHead->CPL->getName()<<endl;
         }
 
 
