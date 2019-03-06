@@ -1,0 +1,11 @@
+{
+  "Name": "Blood Rage bleed",
+  "Value": -2,
+  "DOT": true,
+  "SavingThrowSkill": "CON",
+  "SaveDC": 0,
+  "Duration": 5,
+  "Target": "Self",
+  "Affects": ["CurHP"],
+  "Description": "Take bleeding damage each turn."
+}

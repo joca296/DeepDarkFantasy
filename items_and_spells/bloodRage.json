@@ -1,0 +1,19 @@
+{
+  "type": "s",
+  "statusEffectOnly": true,
+  "name": "bloodRage",
+  "UIname": "Blood Rage",
+  "spellCastMod": "",
+  "heal": false,
+  "spellCastModAddedToRoll": false,
+  "savingThrowFlag": false,
+  "savingThrowType": "",
+  "savingThrowDC": 0,
+  "statusEffectList": ["bloodRageSTR","bloodRageDot"],
+  "roll": 0,
+  "diceNumber": 0,
+  "rollType": "",
+  "numberOfTargets": 0,
+  "manaCost": 2,
+  "addtlEffects": []
+}

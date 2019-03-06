@@ -1,0 +1,11 @@
+{
+  "Name": "Blood Rage strength",
+  "Value": 2,
+  "DOT": false,
+  "SavingThrowSkill": "CON",
+  "SaveDC": 0,
+  "Duration": 5,
+  "Target": "Self",
+  "Affects": ["STR"],
+  "Description": "Gain +2 to STR."
+}

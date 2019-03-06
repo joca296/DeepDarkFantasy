@@ -1,0 +1,19 @@
+{
+  "type": "a",
+  "statusEffectOnly": true,
+  "name": "commandingShout",
+  "UIname": "Commanding Shout",
+  "spellCastMod": "str",
+  "heal": false,
+  "spellCastModAddedToRoll": false,
+  "savingThrowFlag": false,
+  "savingThrowType": "",
+  "savingThrowDC": 0,
+  "statusEffectList": ["commandingShout"],
+  "roll": 0,
+  "diceNumber": 0,
+  "rollType": "",
+  "numberOfTargets": 5,
+  "manaCost": 5,
+  "addtlEffects": []
+}

@@ -729,15 +729,18 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     }
 }
 int Creature::execSpellAttackST(Spell *action, Creature* tar){
+    //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
+    if(action->getType() == 's') this->setCurMana(this->getCurMana()-action->getManaCost());
+
     if(!action->isStatusEffectOnly()){
         int atcRoll, bonus,deathCount=0;
-
-        //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
-        if(action->getType() == 's') this->setCurMana(this->getCurMana()-action->getManaCost());
 
         //setting bonus
         if (action->getSpellCastMod() == "int") bonus=this->getINT();
         else if (action->getSpellCastMod() == "wis") bonus=this->getWIS();
+        else if (action->getSpellCastMod() == "str") bonus=this->getSTR();
+        else if (action->getSpellCastMod() == "dex") bonus=this->getDEX();
+        else if (action->getSpellCastMod() == "con") bonus=this->getCON();
         else bonus=this->getCHA();
 
         //attack roll

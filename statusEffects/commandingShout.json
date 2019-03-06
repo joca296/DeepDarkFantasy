@@ -1,0 +1,11 @@
+{
+  "Name": "Commanding Shout",
+  "Value": 5,
+  "DOT": false,
+  "SavingThrowSkill": "STR",
+  "SaveDC": 0,
+  "Duration": 5,
+  "Target": "Enemy",
+  "Affects": ["CurHP","MaxHP"],
+  "Description": "Gain 5 current and max health."
+}

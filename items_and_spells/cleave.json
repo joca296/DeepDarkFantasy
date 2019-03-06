@@ -1,0 +1,19 @@
+{
+  "type": "a",
+  "statusEffectOnly": false,
+  "name": "cleave",
+  "UIname": "Cleave",
+  "spellCastMod": "str",
+  "heal": false,
+  "spellCastModAddedToRoll": true,
+  "savingThrowFlag": false,
+  "savingThrowType": "",
+  "savingThrowDC": 0,
+  "statusEffectList": [],
+  "roll": 8,
+  "diceNumber": 1,
+  "rollType": "slash",
+  "numberOfTargets": 3,
+  "manaCost": 2,
+  "addtlEffects": []
+}
