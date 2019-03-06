@@ -16,7 +16,7 @@
   "maxRolls": 3,
   "combatDesc": "More giant rats infest these caverns, destroy them!",
   "roomDesc": "As you go further into the cave, you hear the sound of water",
-  "monsters": ["giantRat","giantRat","giantRat"],
+  "monsters": ["giantRat","giantRat"],
   "events": [],
   "Shrines": [],
   "connectedRooms": ["caveHallwayA","cavernCrossroad"],

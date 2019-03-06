@@ -16,7 +16,7 @@
   "maxRolls": 3,
   "combatDesc": "Swarms of rats fill the tunnel, they notice your approach and start attacking.",
   "roomDesc": "The tunnel splits into two ways, a hallway that continues in the general direction of this tunnel and a room to the right when looking away from the crossroad.",
-  "monsters": ["swarmOfRats","swarmOfRats","swarmOfRats"],
+  "monsters": ["swarmOfRats"],
   "events": [],
   "Shrines": [],
   "connectedRooms": ["caveHallwayKL","breedingChamber","cavernCrossroad"],

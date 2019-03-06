@@ -1,7 +1,7 @@
 {
   "hitDice" : 12,
-  "hp" : 5000,
-  "mana" : 120,
+  "hp" : 15,
+  "mana" : 0,
   "ac" : 8,
   "prof" : 3,
   "str" : 3,
@@ -12,10 +12,10 @@
   "cha" : -1,
   "actionsPerRound" : 1,
   "weapons" : ["greataxe","javelin"],
-  "spellBook" : ["firebolt","cure_wounds","fireball"],
+  "spellBook" : [],
   "armor" : "",
-  "inventory" : ["dagger","shortbow","crowbar","energyDrink"],
+  "inventory" : ["longbow","healingPotion","healingPotion","healingPotion"],
   "immunity" : [],
-  "resist" : ["slash","pierce"],
+  "resist" : [],
   "weakness" : []
 }
