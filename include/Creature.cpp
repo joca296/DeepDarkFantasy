@@ -730,7 +730,7 @@ int Creature::execWeaponAttack(Weapon *action, Creature* tar){
     }
 }
 int Creature::execSpellAttackST(Spell *action, Creature* tar){
-    if(action->isStatusEffectOnly() == false){
+    if(!action->isStatusEffectOnly()){
         int atcRoll, bonus,deathCount=0;
 
         //reducing mana from creature -- checks if you can cast the spell at all are done in actionChoose
@@ -743,9 +743,11 @@ int Creature::execSpellAttackST(Spell *action, Creature* tar){
 
         //attack roll
         bool critFlag = false;
-        atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),1);
-        if(atcRoll == 20) critFlag = true;
-        else atcRoll += bonus+this->getProf();
+        if(!action->isSavingThrowFlag()){
+            atcRoll = dRoll(20,this->getAdvantage("attackAdv")+this->getAdvantage("globalAdv"),1);
+            if(atcRoll == 20) critFlag = true;
+            else atcRoll += bonus+this->getProf();
+        }
 
         //attack success
         if(action->isSavingThrowFlag()? true : (critFlag || atcRoll >= tar->getAc())){
