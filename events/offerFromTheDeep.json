@@ -6,7 +6,7 @@
   "Skill": "Investigation",
   "CheckSUCC": "",
   "SaveDC": 0,
-  "Save": "",
+  "Save": "STR",
   "SaveSUCC": "",
   "SaveFAIL": "",
   "DisarmDC": 15,
