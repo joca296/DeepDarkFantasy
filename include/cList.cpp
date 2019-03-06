@@ -340,3 +340,16 @@ bool isInList(Creature* needle, struct cList* haystack){
     }
     return false;
 }
+
+int getMaxNameLength(struct cList* head)
+{
+    int max=0;
+    while(head!=NULL)
+    {
+      if(max<head->CPL->getName().length())max=head->CPL->getName().length();
+      head=head->next;
+
+    }
+    return max;
+
+}
