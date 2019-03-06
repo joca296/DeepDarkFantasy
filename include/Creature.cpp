@@ -449,12 +449,16 @@ Creature* Hero::chooseTarget(struct cList* actors){
     struct cList* tmp = actors;
     int numberOfTargets = 0;
     const int spaceForNames=getMaxNameLength(actors);
-    const int HPDigits = 3;
+    const int HPDigits = getMaxDigitsLength(actors,"MaxHP");
+    const int ManaDigits = getMaxDigitsLength(actors,"MaxMana");
+    cout<<"Mana Digits: "<<ManaDigits<<endl;
     int spaceForHP;
+    int spaceForMana;
     int outLen;
     cout<<"Choose your target (sorted by initiative) "<<endl;
     while(tmp!=NULL){
         spaceForHP= HPDigits*2+3;
+        spaceForMana=ManaDigits*2+spaceForHP+4;
         numberOfTargets++;
         string output = tmp->CPL->getName();
         outLen=output.length();
@@ -464,11 +468,11 @@ Creature* Hero::chooseTarget(struct cList* actors){
         outLen=output.length();
         for(int i=0; i<spaceForNames+spaceForHP-outLen;i++)output+=" ";
         output+="HP ";
-        spaceForHP= spaceForHP*2+1;
+       // spaceForHP= spaceForHP*2+1;
         if (tmp->CPL->isHero() == 1) {
             output +=to_string(tmp->CPL->getCurMana()) + "/" + to_string(tmp->CPL->getMaxMana());
             outLen=output.length();
-            for(int i=0; i<spaceForNames+spaceForHP-outLen;i++)output+=" ";
+            for(int i=0; i<spaceForNames+spaceForMana-outLen;i++)output+=" ";
             output+=" Mana";
         }
         cout<<numberOfTargets<<". ";
