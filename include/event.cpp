@@ -154,6 +154,7 @@ trap::trap(string name)
             ptr=make_shared<statusEffect>(a[i].GetString());
             eventStatusEffect.push_back(ptr);
         }
+        if(getCheckDC()==-1)eDisc=true;
 
     }
     else cout<<"trap file not open"<<endl;
