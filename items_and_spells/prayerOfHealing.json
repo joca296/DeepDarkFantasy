@@ -1,0 +1,19 @@
+{
+  "type": "a",
+  "statusEffectOnly": false,
+  "name": "prayerOfHealing",
+  "UIname": "Prayer Of Healing",
+  "spellCastMod": "wis",
+  "heal": true,
+  "spellCastModAddedToRoll": true,
+  "savingThrowFlag": false,
+  "savingThrowType": "",
+  "savingThrowDC": 0,
+  "statusEffectList": [],
+  "roll": 6,
+  "diceNumber": 2,
+  "rollType": "",
+  "numberOfTargets": 6,
+  "manaCost": 5,
+  "addtlEffects": []
+}

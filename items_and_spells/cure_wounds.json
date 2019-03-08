@@ -13,6 +13,6 @@
   "roll" : 8,
   "diceNumber" : 1,
   "rollType" : "",
-  "manaCost" : 4,
+  "manaCost" : 2,
   "addtlEffects" : []
 }

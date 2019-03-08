@@ -1,0 +1,18 @@
+{
+  "type": "s",
+  "statusEffectOnly": false,
+  "name": "searingFlame",
+  "UIname": "Searing Flame",
+  "spellCastMod": "wis",
+  "heal": false,
+  "spellCastModAddedToRoll": false,
+  "savingThrowFlag": true,
+  "savingThrowType": "dexAdv",
+  "savingThrowDC": 14,
+  "statusEffectList": [],
+  "roll": 1,
+  "diceNumber": 8,
+  "rollType": "radiant",
+  "manaCost": 2,
+  "addtlEffects": []
+}

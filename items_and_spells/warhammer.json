@@ -1,0 +1,14 @@
+{
+  "type": "w",
+  "name": "warhammer",
+  "finesse": false,
+  "roll": 8,
+  "diceNumber": 1,
+  "statusEffectList": [],
+  "desc": "",
+  "UIname": "Warhammer",
+  "itemType": "w",
+  "rollType": "bludgeon",
+  "addtlEffects": [
+  ]
+}

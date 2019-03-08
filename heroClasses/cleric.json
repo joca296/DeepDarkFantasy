@@ -1,0 +1,21 @@
+{
+  "hitDice" : 12,
+  "hp" : 20,
+  "mana" : 10,
+  "ac" : 10,
+  "prof" : 3,
+  "str" : 1,
+  "dex" : 0,
+  "con" : 3,
+  "int" : -1,
+  "wis" : 3,
+  "cha" : 1,
+  "actionsPerRound" : 1,
+  "weapons" : ["warhammer"],
+  "spellBook" : ["cure_wounds","prayerOfHealing","searingFlame"],
+  "armor" : "chainMail",
+  "inventory" : ["manaPotion","manaPotion","healingPotion","healingPotion"],
+  "immunity" : [],
+  "resist" : [],
+  "weakness" : []
+}
