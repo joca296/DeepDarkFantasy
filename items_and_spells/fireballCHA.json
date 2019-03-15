@@ -14,6 +14,6 @@
   "diceNumber": 8,
   "rollType": "fire",
   "numberOfTargets": 5,
-  "manaCost" : 16,
+  "manaCost" : 14,
   "addtlEffects": []
 }

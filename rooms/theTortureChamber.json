@@ -19,8 +19,8 @@
   "monsters" : ["wererat"],
   "events" : [],
   "Shrines" : [],
-  "connectedRooms" : [],
-  "connectedRoomsUI": [],
+  "connectedRooms" : ["caveHallwayKL"],
+  "connectedRoomsUI": ["Cave Hallway"],
   "GroundItems" : [],
   "HiddenItems": [],
   "SecretRooms" :
