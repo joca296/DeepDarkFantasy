@@ -11,7 +11,6 @@ int dRoll(int sideNum, int adv, int dNum)
             sum+=rand()%sideNum+1;
             //cout<<"sum = "<<sum<<" i = "<<i<<endl;
         }
-        cout<<"Rolled: "<<sum<<endl;
         return sum;
     }
     if(adv>0)

@@ -159,10 +159,10 @@ Spell::Spell() {}
 Spell::Spell(const Document& action) : Action(action){
     statusEffectOnly = action["statusEffectOnly"].GetBool();
     heal = action["heal"].GetBool();
+    manaCost = action["manaCost"].GetInt();
     if(!statusEffectOnly){
         spellCastMod = action["spellCastMod"].GetString();
         spellCastModAddedToRoll = action["spellCastModAddedToRoll"].GetBool();
-        manaCost = action["manaCost"].GetInt();
         savingThrowFlag = action["savingThrowFlag"].GetBool();
         if(savingThrowFlag){
             savingThrowType = action["savingThrowType"].GetString();
