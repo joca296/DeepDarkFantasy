@@ -10,8 +10,8 @@
   "savingThrowType": "dexAdv",
   "savingThrowDC": 14,
   "statusEffectList": [],
-  "roll": 1,
-  "diceNumber": 8,
+  "roll": 8,
+  "diceNumber": 1,
   "rollType": "radiant",
   "manaCost": 2,
   "addtlEffects": []
